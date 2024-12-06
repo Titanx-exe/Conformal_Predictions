@@ -37,7 +37,7 @@ def load_train_blink_Ranking_Model(device):
     print(args)
     params = args.__dict__
     #for lc-quad
-    #entities,documents,doc_to_ent=data_processing.process_lcquad_file("data/train/lcquad.json")
+    entities,documents,doc_to_ent=data_processing.process_lcquad_file("data/train/lcquad.json")
     #for mintaka
     #entities, documents, doc_to_ent = data_processing.process_minitaka_file("data/mintaka/mintaka_train.json")
 
@@ -48,9 +48,9 @@ def load_train_blink_Ranking_Model(device):
 
     #for aida
     dp=Aida_joint_el()
-    tk=BertTokenizer.from_pretrained(params["bert_model"], do_lower_case=params["lowercase"])
+    #tk=BertTokenizer.from_pretrained(params["bert_model"], do_lower_case=params["lowercase"])
     #entities, documents, doc_to_ent=dp.read_ds_to_list("data/aida/wikidata/aida_train",train_inst.model.tokenizer)
-    entities, documents, doc_to_ent = dp.read_ds_to_list("data/aida/wikidata/aida_train",tk)
+    #entities, documents, doc_to_ent = dp.read_ds_to_list("data/aida/wikidata/aida_train",tk)
 
     '''
     queries= {}
@@ -78,13 +78,19 @@ def load_train_blink_Ranking_Model(device):
     #evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,use_lcquad=False)
 
     #for aida
-    eval_entities, eval_documents, eval_doc_to_ent = dp.read_ds_to_list("data/aida/wikidata/aida_testa",tk )
+    #eval_entities, eval_documents, eval_doc_to_ent = dp.read_ds_to_list("data/aida/wikidata/aida_testa",tk )
     '''
     evaluator_inst = Evaluator.IndexEvaluator(params=params,collator=train_inst.collator,entities=eval_entities
                                               ,doc_to_ent=eval_doc_to_ent,documents=eval_documents)
                                               
     '''
-    evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator)
+    #filehandler=data_processing.process_lcquad_file
+
+    #evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,filehandler=dp.read_ds_to_list,file="data/aida/wikidata/aida_testa",tokenizer=tk)
+    #evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,
+    #                                          filehandler=data_processing.process_minitaka_file, file="data/mintaka/mintaka_test.json")
+    evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,
+                                              filehandler=data_processing.process_lcquad_file, file="data/test/lcquad.json")
     evaluator_inst.entities.extend(entities.keys())
     return train_inst,evaluator_inst, train_dataloader, optimizer,scheduler,entities,documents,doc_to_ent
 
@@ -151,7 +157,7 @@ def train(epochs):
                 torch.nn.utils.clip_grad_norm_(
                     trainer.model.parameters(), trainer.params["max_grad_norm"]
                 )
-                #noise.add_gausian_noise(optimizer, device)
+                noise.add_anticorrelated_noise_gradient(optimizer, device)
                 optimizer.step()
                 scheduler.step()
                 optimizer.zero_grad()
@@ -176,7 +182,7 @@ def train(epochs):
         print(results)
         encoding_map = encode_documents(documents, trainer.model, trainer.collator)
         epoch_output_folder_path = os.path.join(
-            "ranker_aida_e5", "epoch_{}".format(e)
+            "ranker_lcquad_test_noise", "epoch_{}".format(e)
         )
         save_model(trainer.model,trainer.tokenizer,  epoch_output_folder_path)
         trainer.model.train()

@@ -6,6 +6,7 @@ mu, sigma = 0, 1
 ds=numpy.random.normal(mu,sigma,100)
 print(ds)
 '''
+prev_noise=None
 
 def add_gausian_noise(optimizer,device,mu=0.0,sigma=1.0):
     for group in optimizer.param_groups:
@@ -29,9 +30,9 @@ def remove_noise(optimizer,noise_tensors):
 '''
 
 
-def add_anticorrelated_noise_prev_term(optimizer, device, alpha_0=0.1, sigma=1.0, prev_noise=None):
+def add_anticorrelated_noise_prev_term(optimizer, device, alpha_0=0.1, sigma=1.0):
     """Applies anticorrelated noise based on previous noise term with dynamic alpha."""
-
+    global prev_noise
     if prev_noise is None:
         # Initialize the previous noise as zero for each parameter
         prev_noise = {id(p): torch.zeros_like(p, device=device) for group in optimizer.param_groups for p in
@@ -50,8 +51,6 @@ def add_anticorrelated_noise_prev_term(optimizer, device, alpha_0=0.1, sigma=1.0
                 # Apply noise to parameter and update stored noise
                 p.data.add_(optimizer.defaults["lr"], noise_new)
                 prev_noise[id(p)] = noise_new  # Store new noise term as previous noise for next iteration
-
-    return prev_noise
 
 
 '''    

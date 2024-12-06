@@ -149,15 +149,20 @@ class EvaluatorBiEncoder:
         return results
 class IndexEvaluator:
 
-    def __init__(self, params,collator,use_lcquad=True):
+    def __init__(self, params,collator,filehandler,file,tokenizer=None):
         #self.data_loader = data_loader
         #self.candidate_size = candidate_size
         self.params = params
         self.collator=collator
+        if tokenizer is not None:
+            self.entities, self.documents, self.doc_to_ent = filehandler(file,tokenizer)
+        else: self.entities, self.documents, self.doc_to_ent = filehandler(file)
+        '''
         if use_lcquad:
             self.entities,self.documents,self.doc_to_ent=data_processing.process_lcquad_file("data/test/lcquad.json")
         else:
             self.entities, self.documents, self.doc_to_ent = data_processing.process_minitaka_file("data/mintaka/mintaka_test.json")
+        '''
         self.documents=list(self.documents)
         self.entities=list(self.entities.keys())
     '''
