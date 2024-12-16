@@ -179,7 +179,7 @@ def train(epochs):
         print("Start evaluation after epoch: " + str(e))
         trainer.model.eval()
         index,results = evaluator.evaluate(trainer.model)
-        print("---------------------------Results in Epoch:--------------------" + str(e))
+        print("---------------------------Results in Epoch------------------------:" + str(e))
         print(results)
         encoding_map = encode_documents(documents, trainer.model, trainer.collator)
         epoch_output_folder_path = os.path.join(
