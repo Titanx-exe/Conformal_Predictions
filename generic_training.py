@@ -157,7 +157,7 @@ def train(epochs):
                 torch.nn.utils.clip_grad_norm_(
                     trainer.model.parameters(), trainer.params["max_grad_norm"]
                 )
-                noise.add_anticorrelated_noise_gradient(optimizer, device)
+                #noise.add_anticorrelated_noise_gradient(optimizer, device)
                 optimizer.step()
                 scheduler.step()
                 optimizer.zero_grad()
