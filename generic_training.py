@@ -157,7 +157,7 @@ def train(epochs):
                 torch.nn.utils.clip_grad_norm_(
                     trainer.model.parameters(), trainer.params["max_grad_norm"]
                 )
-                noise.add_anticorrelated_noise_gradient(optimizer, device)
+                noise.add_anticorrelated_noise_prev_term(optimizer, device)
                 optimizer.step()
                 scheduler.step()
                 optimizer.zero_grad()
@@ -179,7 +179,12 @@ def train(epochs):
         print("Start evaluation after epoch: " + str(e))
         trainer.model.eval()
         index,results = evaluator.evaluate(trainer.model)
+        print("---------------------------Results in Epoch------------------------:" + str(e))
         print(results)
+        #Recall writing in a file
+        f = open('Results_Recall.txt', 'a+')
+        f.write("Results in Epoch: " + str(e)+ str(results)+ '\n')
+        f.close()
         encoding_map = encode_documents(documents, trainer.model, trainer.collator)
         epoch_output_folder_path = os.path.join(
             "ranker_lcquad_test_noise", "epoch_{}".format(e)
