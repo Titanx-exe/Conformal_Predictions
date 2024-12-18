@@ -73,7 +73,7 @@ def load_train_blink_Ranking_Model(device):
 
     optimizer, scheduler = train_inst.getOptimizerAndSheduler(len(entities))
     #for lcquad
-    evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator)
+    #evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator)
     #for minaka
     #evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,use_lcquad=False)
 
