@@ -84,7 +84,7 @@ def load_train_blink_Ranking_Model(device):
                                               ,doc_to_ent=eval_doc_to_ent,documents=eval_documents)
                                               
     '''
-    filehandler=data_processing.process_lcquad_file
+    #filehandler=data_processing.process_lcquad_file
 
     #evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,filehandler=dp.read_ds_to_list,file="data/aida/wikidata/aida_testa",tokenizer=tk)
     #evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,
@@ -181,6 +181,10 @@ def train(epochs):
         index,results = evaluator.evaluate(trainer.model)
         print("---------------------------Results in Epoch------------------------:" + str(e))
         print(results)
+        #Recall writing in a file
+        f = open('Results_Recall.txt', 'a+')
+        f.write("Results in Epoch: " + str(e)+ str(results)+ '\n')
+        f.close()
         encoding_map = encode_documents(documents, trainer.model, trainer.collator)
         epoch_output_folder_path = os.path.join(
             "ranker_lcquad_test_noise", "epoch_{}".format(e)
