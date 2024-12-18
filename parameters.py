@@ -154,6 +154,30 @@ class RankingParser(argparse.ArgumentParser):
             help="The output directory where generated output file (model, etc.) is to be dumped.",
         )
 
+    def general_args(self, args=None):
+        parser = self.add_argument_group("General Arguments")
+        parser.add_argument(
+            "--evaluate", action="store_true", help="Whether to run evaluation."
+        )
+        parser.add_argument(
+            "--dataset",
+            default="lcquad",
+            type=str,
+            help="choose between lcquad, mintaka and aida",
+        )
+        parser.add_argument(
+            "--found_model",
+            default="biencoder",
+            type=str,
+            help="choose between biencoder and e5",
+        )
+        parser.add_argument(
+            "--noise_approach",
+            default=None,
+            type=str,
+            help="choose between approach for noise Options: None, gausian_noise, anticorrelated_noise_prev_term, anticorrelated_noise_gradient",
+        )
+
 
     def add_training_args(self, args=None):
         """
