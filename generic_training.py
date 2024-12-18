@@ -44,9 +44,11 @@ def load_train_blink_Ranking_Model(device):
         entities, documents, doc_to_ent = data_processing.process_minitaka_file("data/mintaka/mintaka_train.json")
 
     #for E5
-    train_inst = Trainer.TrainerE5(params=params, evaluate_after_batch=params["eval_interval"], device=device)
+    if params["found_model"]=="e5":
+        train_inst = Trainer.TrainerE5(params=params, evaluate_after_batch=params["eval_interval"], device=device)
     # for BiEncoder
-    #train_inst = Trainer.TrainerRanker(params=params, evaluate_after_batch=params["eval_interval"], device=device)
+    if params["found_model"] == "biencoder":
+        train_inst = Trainer.TrainerRanker(params=params, evaluate_after_batch=params["eval_interval"], device=device)
 
     #for aida
     if params["dataset"] == "aida":
