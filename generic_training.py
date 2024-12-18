@@ -37,9 +37,9 @@ def load_train_blink_Ranking_Model(device):
     print(args)
     params = args.__dict__
     #for lc-quad
-    #entities,documents,doc_to_ent=data_processing.process_lcquad_file("data/train/lcquad.json")
+    entities,documents,doc_to_ent=data_processing.process_lcquad_file("data/train/lcquad.json")
     #for mintaka
-    entities, documents, doc_to_ent = data_processing.process_minitaka_file("data/mintaka/mintaka_train.json")
+    #entities, documents, doc_to_ent = data_processing.process_minitaka_file("data/mintaka/mintaka_train.json")
 
     #for E5
     train_inst = Trainer.TrainerE5(params=params, evaluate_after_batch=params["eval_interval"], device=device)
@@ -73,7 +73,7 @@ def load_train_blink_Ranking_Model(device):
 
     optimizer, scheduler = train_inst.getOptimizerAndSheduler(len(entities))
     #for lcquad
-    #evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator)
+    evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator)
     #for minaka
     #evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,use_lcquad=False)
 
@@ -84,13 +84,13 @@ def load_train_blink_Ranking_Model(device):
                                               ,doc_to_ent=eval_doc_to_ent,documents=eval_documents)
                                               
     '''
-    #filehandler=data_processing.process_lcquad_file
+    filehandler=data_processing.process_lcquad_file
 
     #evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,filehandler=dp.read_ds_to_list,file="data/aida/wikidata/aida_testa",tokenizer=tk)
-    evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,
-                                              filehandler=data_processing.process_minitaka_file, file="data/mintaka/mintaka_test.json")
     #evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,
-    #                                          filehandler=data_processing.process_lcquad_file, file="data/test/lcquad.json")
+    #                                          filehandler=data_processing.process_minitaka_file, file="data/mintaka/mintaka_test.json")
+    evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,
+                                              filehandler=data_processing.process_lcquad_file, file="data/test/lcquad.json")
     evaluator_inst.entities.extend(entities.keys())
     return train_inst,evaluator_inst, train_dataloader, optimizer,scheduler,entities,documents,doc_to_ent
 
