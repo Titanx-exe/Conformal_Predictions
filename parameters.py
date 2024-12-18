@@ -48,6 +48,7 @@ class RankingParser(argparse.ArgumentParser):
             self.add_ranking_args()
         if add_model_args:
             self.add_model_args()
+        self.add_general_args()
 
     def add_ranking_args(self, args=None):
         parser = self.add_argument_group("Common Arguments")
@@ -154,7 +155,7 @@ class RankingParser(argparse.ArgumentParser):
             help="The output directory where generated output file (model, etc.) is to be dumped.",
         )
 
-    def general_args(self, args=None):
+    def add_general_args(self, args=None):
         parser = self.add_argument_group("General Arguments")
         parser.add_argument(
             "--evaluate", action="store_true", help="Whether to run evaluation."

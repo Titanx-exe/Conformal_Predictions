@@ -37,9 +37,11 @@ def load_train_blink_Ranking_Model(device):
     print(args)
     params = args.__dict__
     #for lc-quad
-    entities,documents,doc_to_ent=data_processing.process_lcquad_file("data/train/lcquad.json")
+    if params["dataset"]=="lcquad":
+        entities,documents,doc_to_ent=data_processing.process_lcquad_file("data/train/lcquad.json")
     #for mintaka
-    #entities, documents, doc_to_ent = data_processing.process_minitaka_file("data/mintaka/mintaka_train.json")
+    elif params["dataset"]=="mintaka":
+        entities, documents, doc_to_ent = data_processing.process_minitaka_file("data/mintaka/mintaka_train.json")
 
     #for E5
     train_inst = Trainer.TrainerE5(params=params, evaluate_after_batch=params["eval_interval"], device=device)
@@ -47,9 +49,10 @@ def load_train_blink_Ranking_Model(device):
     #train_inst = Trainer.TrainerRanker(params=params, evaluate_after_batch=params["eval_interval"], device=device)
 
     #for aida
-    dp=Aida_joint_el()
-    #tk=BertTokenizer.from_pretrained(params["bert_model"], do_lower_case=params["lowercase"])
-    #entities, documents, doc_to_ent=dp.read_ds_to_list("data/aida/wikidata/aida_train",train_inst.model.tokenizer)
+    if params["dataset"] == "aida":
+        dp=Aida_joint_el()
+        tk = BertTokenizer.from_pretrained(params["bert_model"], do_lower_case=params["lowercase"])
+        entities, documents, doc_to_ent=dp.read_ds_to_list("data/aida/wikidata/aida_train",tk)
     #entities, documents, doc_to_ent = dp.read_ds_to_list("data/aida/wikidata/aida_train",tk)
 
     '''
@@ -85,12 +88,15 @@ def load_train_blink_Ranking_Model(device):
                                               
     '''
     #filehandler=data_processing.process_lcquad_file
-
-    #evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,filehandler=dp.read_ds_to_list,file="data/aida/wikidata/aida_testa",tokenizer=tk)
-    #evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,
-    #                                          filehandler=data_processing.process_minitaka_file, file="data/mintaka/mintaka_test.json")
-    evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,
-                                              filehandler=data_processing.process_lcquad_file, file="data/test/lcquad.json")
+    if params["dataset"] == "aida":
+        tk = BertTokenizer.from_pretrained(params["bert_model"], do_lower_case=params["lowercase"])
+        evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,filehandler=dp.read_ds_to_list,file="data/aida/wikidata/aida_testa",tokenizer=tk)
+    if params["dataset"] == "mintaka":
+        evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,
+                                              filehandler=data_processing.process_minitaka_file, file="data/mintaka/mintaka_test.json")
+    if params["dataset"] == "lcquad":
+        evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,
+                                                  filehandler=data_processing.process_lcquad_file, file="data/test/lcquad.json")
     evaluator_inst.entities.extend(entities.keys())
     return train_inst,evaluator_inst, train_dataloader, optimizer,scheduler,entities,documents,doc_to_ent
 
