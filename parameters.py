@@ -190,6 +190,12 @@ class RankingParser(argparse.ArgumentParser):
             type=str,
             help="folder for dumping models",
         )
+        parser.add_argument(
+            "--gpu_id",
+            default=1,
+            type=str,
+            help="gpu to use",
+        )
 
 
 

@@ -27,7 +27,7 @@ max_candsize=5
 add_gold_mention=True
 
 
-def load_train_blink_Ranking_Model(device):
+def load_train_blink_Ranking_Model():
     parser = RankingParser(add_model_args=True)
     parser.add_training_args()
     parser.add_eval_args()
@@ -36,6 +36,9 @@ def load_train_blink_Ranking_Model(device):
     args = parser.parse_args()
     print(args)
     params = args.__dict__
+    global device
+    device=torch.device(
+            "cuda:"+str(params["gpu_id"]) if torch.cuda.is_available() else "cpu")
     #for lc-quad
     if params["dataset"]=="lcquad":
         entities,documents,doc_to_ent=data_processing.process_lcquad_file("data/train/lcquad.json")
@@ -140,7 +143,7 @@ def encode_documents(documents,model,collator):
 
 def train(epochs):
     #trainer,evaluator, train_dataloader, optimizer, scheduler = load_train_only_Graph_Model(device)
-    trainer, evaluator, train_dataloader, optimizer, scheduler,entities,documents,doc_to_ent = load_train_blink_Ranking_Model(device)
+    trainer, evaluator, train_dataloader, optimizer, scheduler,entities,documents,doc_to_ent = load_train_blink_Ranking_Model()
     trainer.model.train()
     #print(evaluator.evaluate(trainer.model))
     index,results=evaluator.evaluate(trainer.model)
