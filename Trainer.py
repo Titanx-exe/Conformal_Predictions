@@ -66,7 +66,7 @@ class TrainerE5:
         self.evaluate_after = evaluate_after_batch
         #self.candidate_size = candidate_size
         self.device = device
-        self.model = E5Ranker()
+        self.model = E5Ranker(device)
         self.tokenizer = AutoTokenizer.from_pretrained('intfloat/e5-base-v2')
         self.collator = E5collator(tokenizer=self.tokenizer,device=self.device)
 
