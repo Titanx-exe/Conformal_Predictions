@@ -4,13 +4,16 @@ from torch import Tensor
 from transformers import AutoTokenizer, AutoModel
 
 class E5Ranker(torch.nn.Module):
-    def __init__(self):
+    def __init__(self,device=None):
         super(E5Ranker, self).__init__()
         self.model = AutoModel.from_pretrained('intfloat/e5-base-v2')
         #self.loss_fn = InfoNCE()
-        self.device = torch.device(
-            "cuda" if torch.cuda.is_available() else "cpu"
-        )
+        if device==None:
+            self.device = torch.device(
+                "cuda" if torch.cuda.is_available() else "cpu"
+            )
+        else:
+            self.device=device
     def average_pool(self,last_hidden_states: Tensor,
                  attention_mask: Tensor) -> Tensor:
         last_hidden = last_hidden_states.masked_fill(~attention_mask[..., None].bool(), 0.0)
