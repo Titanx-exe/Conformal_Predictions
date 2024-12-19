@@ -178,6 +178,13 @@ class RankingParser(argparse.ArgumentParser):
             type=str,
             help="choose between approach for noise Options: None, gausian_noise, anticorrelated_noise_prev_term, anticorrelated_noise_gradient",
         )
+        parser.add_argument(
+            "--training_result_update_file",
+            default="Results_Recall.txt",
+            type=str,
+            help="file for printing the results after each epoch",
+        )
+
 
 
     def add_training_args(self, args=None):

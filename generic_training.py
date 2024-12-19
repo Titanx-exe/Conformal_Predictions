@@ -196,7 +196,7 @@ def train(epochs):
         print("---------------------------Results in Epoch------------------------:" + str(e))
         print(results)
         #Recall writing in a file
-        f = open('Results_Recall.txt', 'a+')
+        f = open(trainer.params["training_result_update_file"], 'a+')
         f.write("Results in Epoch: " + str(e)+ str(results)+ '\n')
         f.close()
         encoding_map = encode_documents(documents, trainer.model, trainer.collator)
