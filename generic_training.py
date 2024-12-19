@@ -201,7 +201,7 @@ def train(epochs):
         f.close()
         encoding_map = encode_documents(documents, trainer.model, trainer.collator)
         epoch_output_folder_path = os.path.join(
-            "ranker_lcquad_test_noise", "epoch_{}".format(e)
+            trainer.params["model_dump_folder"], "epoch_{}".format(e)
         )
         save_model(trainer.model,trainer.tokenizer,  epoch_output_folder_path)
         trainer.model.train()

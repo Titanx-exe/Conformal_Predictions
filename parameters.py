@@ -184,6 +184,12 @@ class RankingParser(argparse.ArgumentParser):
             type=str,
             help="file for printing the results after each epoch",
         )
+        parser.add_argument(
+            "--model_dump_folder",
+            default="Results_Recall.txt",
+            type=str,
+            help="folder for dumping models",
+        )
 
 
 
