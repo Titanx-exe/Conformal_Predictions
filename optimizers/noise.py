@@ -60,7 +60,7 @@ prev_noise = add_anticorrelated_noise_method2_dynamic_alpha(optimizer, device, a
 '''
 
 
-def add_anticorrelated_noise_gradient(optimizer, device, beta_0=10, sigma=50):
+def add_anticorrelated_noise_gradient(optimizer, device, beta_0=10, sigma=1):
     """Applies gradient-based anticorrelated noise with dynamic beta."""
 
     for group in optimizer.param_groups:
