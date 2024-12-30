@@ -208,4 +208,4 @@ def train(epochs):
         )
         #save_model(trainer.model,trainer.tokenizer,  epoch_output_folder_path)
         trainer.model.train()
-train(20)
+train(10)
