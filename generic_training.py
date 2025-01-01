@@ -208,6 +208,10 @@ def train(epochs):
         f = open(trainer.params["training_result_update_file"], 'a+')
         f.write("Results in Epoch: " + str(e)+ str(results)+ '\n')
         f.close()
+        #writing mrrs
+        f1 = open('Results_Mrr.txt', 'a+')
+        f1.write("Results in Epoch: " + str(e) + str(mrr) + '\n')
+        f1.close()
         encoding_map = encode_documents(documents, trainer.model, trainer.collator)
         epoch_output_folder_path = os.path.join(
             trainer.params["model_dump_folder"], "epoch_{}".format(e)
