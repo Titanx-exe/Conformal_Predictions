@@ -18,6 +18,7 @@ args = parser.parse_args()
 print(args)
 params = args.__dict__
 results_all=[]
+results_mrr=[] #mrr AS
 for i in range(10):
     #for biencoder
     #params["path_to_model"]="ranker_aida/epoch_"+str(i)+"/pytorch_model.bin"
@@ -53,7 +54,11 @@ for i in range(10):
 
     evaluator.entities.extend(entities_train.keys())
     _,results=evaluator.evaluate(model)
+    _,mrr= evaluator.evaluate_mrr(model) #return mrr
     results_all.append(results)
+    results_mrr.append(mrr) #return mrr
     print(f"epoch{i}: {results}")
+    print(f"epoch{i}: {mrr}")
 for i in range(10):
     print(f"epoch{i}: {results_all[i]}")
+    print(f"epoch{i}: {results_mrr[i]}")
