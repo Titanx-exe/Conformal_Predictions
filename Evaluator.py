@@ -147,6 +147,10 @@ class EvaluatorBiEncoder:
         print("Eval accuracy: %.5f" % normalized_eval_accuracy)
         results["normalized_accuracy"] = normalized_eval_accuracy
         return results
+
+
+
+
 class IndexEvaluator:
 
     def __init__(self, params,collator,filehandler,file,tokenizer=None):
@@ -228,5 +232,46 @@ class IndexEvaluator:
         results=all_found/(all_not_found+all_found)
         #print(result)
         return index,results
+
+    def evaluate_mrr(self, model, random_samples=True, k=10):
+        index = indexing.index_entities(model, self.entities, self.collator)
+
+        data_loader = DataLoader(self.documents, shuffle=False, batch_size=100,
+                                 collate_fn=self.collator.collate_context)
+
+        if self.params["silent"]:
+            iter_ = data_loader
+        else:
+            iter_ = tqdm(data_loader, desc="Encode Eval Queries")
+
+        doc_encodings = []
+        for step, batch in enumerate(iter_):
+            if not isinstance(model, E5Ranker):
+                context_input = batch["context_input"]
+                encodings = model.encode_context(context_input).tolist()
+            else:
+                encodings = model.encode_context(batch)
+            doc_encodings.extend(encodings)
+
+        found_ents = index.search(doc_encodings, k)
+        all_rr = []  # List to store reciprocal ranks for MRR calculation
+
+        for i in range(len(self.documents)):
+            correct_entities = set(self.doc_to_ent[self.documents[i]])  # Set of correct entities
+            prediction = found_ents[i]  # Predicted entities
+
+            # Find the rank of the first correct entity
+            reciprocal_rank = 0
+            for rank, entity in enumerate(prediction, start=1):
+                if entity in correct_entities:
+                    reciprocal_rank = 1 / rank
+                    break
+
+            all_rr.append(reciprocal_rank)
+
+        mrr = sum(all_rr) / len(all_rr) if all_rr else 0
+        print(f"Mean Reciprocal Rank (MRR): {mrr:.5f}")
+
+        return index, mrr
 
 
