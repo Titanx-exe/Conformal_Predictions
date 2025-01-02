@@ -15,7 +15,7 @@ class TrainerRanker:
         self.evaluate_after = evaluate_after_batch
         #self.candidate_size = candidate_size
         self.device = device
-        self.model = BiEncoderRanker(params)
+        self.model = BiEncoderRanker(params,device=device)
         self.collator = Biencoder_Collator(tokenizer=self.model.tokenizer, args=params,
                                  device=device)
 
