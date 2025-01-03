@@ -249,15 +249,15 @@ class IndexEvaluator:
         for step, batch in enumerate(iter_):
             if not isinstance(model, E5Ranker):
 
-            context_input = batch["context_input"]
-            # candidate_input = batch["candidate_input"]
-            # labels=[0 for i in range(batch["candidate_input"].size(0))]
-            # label_input = torch.LongTensor(torch.zeros(candidate_input.size(0),dtype=torch.int64)).to(device)
-            # context_input, candidate_input, label_input = batch
-            encodings = model.encode_context(context_input).tolist()
-        else:
-            encodings = model.encode_context(batch)
-        doc_encodings.extend(encodings)
+                context_input = batch["context_input"]
+                # candidate_input = batch["candidate_input"]
+                # labels=[0 for i in range(batch["candidate_input"].size(0))]
+                # label_input = torch.LongTensor(torch.zeros(candidate_input.size(0),dtype=torch.int64)).to(device)
+                # context_input, candidate_input, label_input = batch
+                encodings = model.encode_context(context_input).tolist()
+            else:
+                encodings = model.encode_context(batch)
+            doc_encodings.extend(encodings)
         found_ents = index.search(doc_encodings, k)
         all_labels = []
         all_scores = []
