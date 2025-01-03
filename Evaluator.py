@@ -191,7 +191,7 @@ class IndexEvaluator:
                         candidates.append(cnd)
                 samples.append((doc,candidates))
         return samples
-
+    '''
     def evaluate(self, model, random_samples=True, max_k=100):
         index = indexing.index_entities(model, self.entities, self.collator)
 
@@ -231,9 +231,9 @@ class IndexEvaluator:
         print("Recall@20: {:.5f}".format(recalls[20]))
         print("Recall@30: {:.5f}".format(recalls[30]))
         print("Recall@100: {:.5f}".format(recalls[100]))
-
-        return index, recalls
     
+        return index, recalls
+    '''
     def evaluate_mrr(self, model, random_samples=True, k=10):
         index = indexing.index_entities(model, self.entities, self.collator)
 
