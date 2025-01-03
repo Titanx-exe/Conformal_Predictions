@@ -212,23 +212,23 @@ class IndexEvaluator:
             doc_encodings.extend(encodings)
 
         found_ents = index.search(doc_encodings, max_k)
-        recalls = {5: 0, 10: 0, 30: 0, 100: 0}
-        total_correct = 0
+        recalls = {5: 0, 10: 0, 20: 0, 30: 0, 100: 0}
+        total_documents = len(self.documents)
 
-        for i in range(len(self.documents)):
+        for i in range(total_documents):
             correct_entities = set(self.doc_to_ent[self.documents[i]])
             prediction = found_ents[i]
 
             for k in recalls.keys():
                 if any(entity in correct_entities for entity in prediction[:k]):
                     recalls[k] += 1
-            total_correct += len(correct_entities)
 
         for k, count in recalls.items():
-            recalls[k] = count / len(self.documents)
+            recalls[k] = count / total_documents
 
         print("Recall@5: {:.5f}".format(recalls[5]))
         print("Recall@10: {:.5f}".format(recalls[10]))
+        print("Recall@20: {:.5f}".format(recalls[20]))
         print("Recall@30: {:.5f}".format(recalls[30]))
         print("Recall@100: {:.5f}".format(recalls[100]))
 
@@ -272,6 +272,52 @@ class IndexEvaluator:
 
         mrr = sum(all_rr) / len(all_rr) if all_rr else 0
         print(f"Mean Reciprocal Rank (MRR): {mrr:.5f}")
+
+        '''
+        #Old evaluation
+        def evaluate(self,model,random_samples=True,k=10):
+            index = indexing.index_entities(model,self.entities, self.collator)
+
+            data_loader=DataLoader(self.documents, shuffle=False, batch_size=100,
+                                  collate_fn=self.collator.collate_context)
+            if self.params["silent"]:
+                iter_ = data_loader
+            else:
+                iter_ = tqdm(data_loader, desc="Encode Eval Queries")
+            doc_encodings=[]
+            for step, batch in enumerate(iter_):
+                if not isinstance(model,E5Ranker):
+
+                context_input = batch["context_input"]
+                #candidate_input = batch["candidate_input"]
+                #labels=[0 for i in range(batch["candidate_input"].size(0))]
+                 # label_input = torch.LongTensor(torch.zeros(candidate_input.size(0),dtype=torch.int64)).to(
+device)
+                # context_input, candidate_input, label_input = batch
+                encodings=model.encode_context(context_input).tolist()
+            else:
+                encodings=model.encode_context(batch)
+            doc_encodings.extend(encodings)
+            found_ents=index.search(doc_encodings,k)
+            all_labels=[]
+            all_scores=[]
+            indexes=[]
+            all_found=0
+            all_not_found=0
+            for i in range(len(self.documents)):
+                correct_entities=self.doc_to_ent[self.documents[i]]
+                prediction=found_ents[i]
+                for en in correct_entities:
+                    if en in prediction:
+                        all_found+=1
+                    else:
+                        all_not_found+=1
+            print("found:"+str(all_found)+" not found:"+str(all_not_found))
+            results=all_found/(all_not_found+all_found)
+            #print(result)
+            return index,results
+
+        '''
 
         return index, mrr
 
