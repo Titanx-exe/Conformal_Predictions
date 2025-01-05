@@ -8,7 +8,7 @@ print(ds)
 '''
 prev_noise=None
 
-def add_gausian_noise(optimizer,device,mu=0.0,sigma=1.0):
+def add_gausian_noise(optimizer,device,mu=0.0,sigma=50):
     for group in optimizer.param_groups:
         for p in group['params']:
             if p.requires_grad:
