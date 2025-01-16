@@ -206,10 +206,10 @@ def train(epochs):
     trainer, evaluator, optimizer, scheduler,handler = load_train_blink_Ranking_Model()
     trainer.model.train()
     # print(evaluator.evaluate(trainer.model))
-    _, results = evaluator.evaluate(trainer.model)
-    # index, mrr = evaluator.evaluate_mrr(trainer.model)
-    #print(results)
-    # print(mrr)
+    _, results, mrr = evaluator.evaluate(trainer.model)
+    # results, mrr = evaluator.evaluate_mrr(trainer.model)
+    print(results)
+    print(mrr)
     #encoding_map = encode_documents(documents, trainer.model, trainer.collator)
     handler.reload_current_data(trainer.model,trainer.collator,reload_full=True)
     for e in range(epochs):
@@ -247,13 +247,13 @@ def train(epochs):
             if float(num_batch) == trainer.params["training_steps_per_split"]/2:
                 print("Start evaluation in epoch:" + str(e) + " batch: " + str(num_batch))
                 trainer.model.eval()
-                # print(evaluator.evaluate(trainer.model))
+                #print(evaluator.evaluate(trainer.model))
                 # print(evaluator.evaluate_mrr(trainer.model))
-                _, results = evaluator.evaluate(trainer.model)
+                _, results, mrr = evaluator.evaluate(trainer.model)
                 handler.reload_current_data(trainer.model, trainer.collator)
                 # index, mrr = evaluator.evaluate_mrr(trainer.model)
                 print(results)
-                # print(mrr)
+                print(mrr)
                 #encoding_map = encode_documents(documents, trainer.model, trainer.collator)
                 # epoch_output_folder_path = os.path.join(
                 #    "ranker_gr", "epoch_{}_{}".format(e, num_batch))
@@ -262,7 +262,7 @@ def train(epochs):
 
         print("Start evaluation after epoch: " + str(e))
         trainer.model.eval()
-        index, results = evaluator.evaluate(trainer.model)
+        index, results, mrr = evaluator.evaluate(trainer.model)
         # index, mrr = evaluator.evaluate_mrr(trainer.model)
         print("---------------------------Results in Epoch------------------------:" + str(e))
         print(results)
@@ -271,14 +271,14 @@ def train(epochs):
         f.write("Results in Epoch: " + str(e) + str(results) + '\n')
         f.close()
         # writing mrrs
-        # f1 = open('Results_Mrr.txt', 'a+')
-        # f1.write("Results in Epoch: " + str(e) + str(mrr) + '\n')
-        # f1.close()
+        f1 = open('Results_Mrr.txt', 'a+')
+        f1.write("Results in Epoch: " + str(e) + str(mrr) + '\n')
+        f1.close()
         #encoding_map = encode_documents(documents, trainer.model, trainer.collator)
         epoch_output_folder_path = os.path.join(
             trainer.params["model_dump_folder"], "epoch_{}".format(e)
         )
-        # save_model(trainer.model,trainer.tokenizer,  epoch_output_folder_path)
+        save_model(trainer.model,trainer.tokenizer,  epoch_output_folder_path)
         trainer.model.train()
 
 

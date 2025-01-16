@@ -215,6 +215,7 @@ class IndexEvaluator:
                 encodings=model.encode_context(batch)
             doc_encodings.extend(encodings)
         found_ents=index.search(doc_encodings,k)
+        mrr = self.evaluate_mrr(found_ents)
         all_labels=[]
         all_scores=[]
         indexes=[]
@@ -231,9 +232,10 @@ class IndexEvaluator:
         print("found:"+str(all_found)+" not found:"+str(all_not_found))
         results=all_found/(all_not_found+all_found)
         #print(result)
-        return index,results
+        return index,results, mrr
 
-    def evaluate_mrr(self, model, random_samples=True, k=10):
+    def evaluate_mrr(self, found_ents, random_samples=True, k=10):
+        '''
         index = indexing.index_entities(model, self.entities, self.collator)
 
         data_loader = DataLoader(self.documents, shuffle=False, batch_size=100,
@@ -254,6 +256,7 @@ class IndexEvaluator:
             doc_encodings.extend(encodings)
 
         found_ents = index.search(doc_encodings, k)
+        '''
         all_rr = []  # List to store reciprocal ranks for MRR calculation
 
         for i in range(len(self.documents)):
@@ -272,6 +275,6 @@ class IndexEvaluator:
         mrr = sum(all_rr) / len(all_rr) if all_rr else 0
         print(f"Mean Reciprocal Rank (MRR): {mrr:.5f}")
 
-        return index, mrr
+        return mrr
 
 
