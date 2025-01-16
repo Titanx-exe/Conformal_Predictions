@@ -51,7 +51,7 @@ def load_train_blink_Ranking_Model():
         train_inst = Trainer.TrainerE5(params=params, evaluate_after_batch=params["eval_interval"], device=device)
     # for BiEncoder
     if params["found_model"] == "biencoder":
-        train_inst = Trainer.TrainerRanker(params=params, evaluate_after_batch=params["eval_interval"], device=device)
+        train_inst = Trainer.TrainerRankerHuggingface(params=params, evaluate_after_batch=params["eval_interval"], device=device)
 
     #for aida
     if params["dataset"] == "aida":
@@ -126,7 +126,7 @@ def encode_documents(documents,model,collator):
     doc_encodings = []
     for step, batch in enumerate(data_loader):
         if not isinstance(model,E5Ranker):
-            context_input = batch["context_input"]
+            context_input = batch
             # candidate_input = batch["candidate_input"]
             # labels=[0 for i in range(batch["candidate_input"].size(0))]
             # label_input = batch[0]["label_idx"].to(device)
@@ -147,9 +147,9 @@ def train(epochs):
     trainer.model.train()
     #print(evaluator.evaluate(trainer.model))
     index,results=evaluator.evaluate(trainer.model)
-    index, mrr = evaluator.evaluate_mrr(trainer.model)
+    #index, mrr = evaluator.evaluate_mrr(trainer.model)
     print(results)
-    print(mrr)
+    #print(mrr)
     encoding_map=encode_documents(documents,trainer.model,trainer.collator)
     for e in range(epochs):
         num_batch = 0
@@ -186,12 +186,12 @@ def train(epochs):
             if num_batch % trainer.evaluate_after == 0:
                 print("Start evaluation in epoch:" + str(e) + " batch: " + str(num_batch))
                 trainer.model.eval()
-                print(evaluator.evaluate(trainer.model))
-                print(evaluator.evaluate_mrr(trainer.model))
+                #print(evaluator.evaluate(trainer.model))
+                #print(evaluator.evaluate_mrr(trainer.model))
                 index,results = evaluator.evaluate(trainer.model)
-                index, mrr = evaluator.evaluate_mrr(trainer.model)
+                #index, mrr = evaluator.evaluate_mrr(trainer.model)
                 print(results)
-                print(mrr)
+                #print(mrr)
                 encoding_map = encode_documents(documents, trainer.model, trainer.collator)
                 #epoch_output_folder_path = os.path.join(
                 #    "ranker_gr", "epoch_{}_{}".format(e, num_batch))

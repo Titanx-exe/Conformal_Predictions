@@ -11,8 +11,8 @@ from pytorch_transformers.modeling_bert import (
     BertModel,
 )
 
-from pytorch_transformers.tokenization_bert import BertTokenizer
-#from transformers import AutoTokenizer, AutoModel
+#from pytorch_transformers.tokenization_bert import BertTokenizer
+from transformers import AutoTokenizer, AutoModel
 #from blinkRanker.model.ranker_base import BertEncoder, get_model_obj
 
 
@@ -28,10 +28,10 @@ def load_biencoder(params):
 class BiEncoderModule(torch.nn.Module):
     def __init__(self, params):
         super(BiEncoderModule, self).__init__()
-        #ctxt_bert = AutoModel.from_pretrained(params["bert_model"])
-        #cand_bert = AutoModel.from_pretrained(params["bert_model"])
-        ctxt_bert = BertModel.from_pretrained(params["bert_model"])
-        cand_bert = BertModel.from_pretrained(params['bert_model'])
+        ctxt_bert = AutoModel.from_pretrained(params["bert_model"])
+        cand_bert = AutoModel.from_pretrained(params["bert_model"])
+        #ctxt_bert = BertModel.from_pretrained(params["bert_model"])
+        #cand_bert = BertModel.from_pretrained(params['bert_model'])
         self.context_encoder = BertEncoder(
             ctxt_bert,
             params["out_dim"],
@@ -48,22 +48,19 @@ class BiEncoderModule(torch.nn.Module):
 
     def forward(
             self,
-            token_idx_ctxt,
-            segment_idx_ctxt,
-            mask_ctxt,
-            token_idx_cands,
-            segment_idx_cands,
-            mask_cands,
+            batch_context,
+            batch_candidate
+
     ):
         embedding_ctxt = None
-        if token_idx_ctxt is not None:
+        if batch_context is not None:
             embedding_ctxt = self.context_encoder(
-                token_idx_ctxt, segment_idx_ctxt, mask_ctxt
+                batch_context
             )
         embedding_cands = None
-        if token_idx_cands is not None:
+        if batch_candidate is not None:
             embedding_cands = self.cand_encoder(
-                token_idx_cands, segment_idx_cands, mask_cands
+                batch_candidate
             )
         return embedding_ctxt, embedding_cands
 
@@ -83,10 +80,10 @@ class BiEncoderRanker(torch.nn.Module):
         self.NULL_IDX = 0
         self.START_TOKEN = "[CLS]"
         self.END_TOKEN = "[SEP]"
-        #self.tokenizer =AutoTokenizer.from_pretrained(params["bert_model"], do_lower_case=params["lowercase"])
-        self.tokenizer = BertTokenizer.from_pretrained(
-            params["bert_model"], do_lower_case=params["lowercase"]
-        )
+        self.tokenizer =AutoTokenizer.from_pretrained(params["bert_model"], do_lower_case=params["lowercase"])
+        #self.tokenizer = BertTokenizer.from_pretrained(
+        #    params["bert_model"], do_lower_case=params["lowercase"]
+        #)
         # init model
         self.build_model()
         model_path = params.get("path_to_model", None)
@@ -132,20 +129,20 @@ class BiEncoderRanker(torch.nn.Module):
     '''
 
     def encode_context(self, cands):
-        token_idx_cands, segment_idx_cands, mask_cands = to_bert_input(
+        '''token_idx_cands, segment_idx_cands, mask_cands = to_bert_input(
             cands, self.NULL_IDX
-        )
+        )'''
         embedding_context, _ = self.model(
-            token_idx_cands, segment_idx_cands, mask_cands, None, None, None
+            cands,None
         )
         return embedding_context.cpu().detach()
 
     def encode_candidate(self, cands):
-        token_idx_cands, segment_idx_cands, mask_cands = to_bert_input(
+        '''token_idx_cands, segment_idx_cands, mask_cands = to_bert_input(
             cands, self.NULL_IDX
-        )
+        )'''
         _, embedding_cands = self.model(
-            None, None, None, token_idx_cands, segment_idx_cands, mask_cands
+            None, cands
         )
         return embedding_cands.cpu().detach()
         # TODO: why do we need cpu here?
@@ -161,17 +158,19 @@ class BiEncoderRanker(torch.nn.Module):
             cand_encs=None,  # pre-computed candidate encoding.
     ):
 
-        batch_size = cand_vecs.size(0)
-        candidate_size = cand_vecs.size(1)
+        batch_size = cand_vecs.data["input_ids"].size(0)
+        candidate_size = cand_vecs.data["input_ids"].size(1)
         if not random_negs:
             cand_vecs = cand_vecs.view(batch_size * candidate_size, self.params["max_cand_length"])
         # ret=cand_vecs_view.view(10,5,128)
         # Encode contexts first
+        '''
         token_idx_ctxt, segment_idx_ctxt, mask_ctxt = to_bert_input(
             text_vecs, self.NULL_IDX
         )
+        '''
         embedding_ctxt, _ = self.model(
-            token_idx_ctxt, segment_idx_ctxt, mask_ctxt, None, None, None
+            text_vecs, None
         )
 
         # Candidate encoding is given, do not need to re-compute
@@ -180,11 +179,13 @@ class BiEncoderRanker(torch.nn.Module):
             return embedding_ctxt.mm(cand_encs.t())
 
         # Train time. We compare with all elements of the batch
+        '''
         token_idx_cands, segment_idx_cands, mask_cands = to_bert_input(
             cand_vecs, self.NULL_IDX
         )
+        '''
         _, embedding_cands = self.model(
-            None, None, None, token_idx_cands, segment_idx_cands, mask_cands
+            None,cand_vecs
         )
         #embedding_cands = embedding_cands.view(batch_size, candidate_size, embedding_cands.size(1))
         if random_negs:
@@ -202,7 +203,8 @@ class BiEncoderRanker(torch.nn.Module):
     # label_input -- negatives provided
     # If label_input is None, train on in-batch negatives
     def forward(self, context_input, cand_input, label_input=None):
-        flag = label_input is None
+        #flag = label_input is None
+        flag=True
         scores = self.score_candidate(context_input, cand_input, flag)
         bs = scores.size(0)
         if label_input is None:
@@ -245,15 +247,16 @@ class BertEncoder(nn.Module):
         else:
             self.additional_linear = None
 
-    def forward(self, token_ids, segment_ids, attention_mask):
-        output_bert, output_pooler = self.bert_model(
-            token_ids, segment_ids, attention_mask
+    def forward(self, batch):
+        output_bert = self.bert_model(
+            **batch
         )
         # get embedding of [CLS] token
         if self.additional_linear is not None:
-            embeddings = output_pooler
+            embeddings = output_bert.pooler_output
         else:
-            embeddings = output_bert[:, 0, :]
+            #embeddings = output_bert[:, 0, :]
+            embeddings = output_bert.last_hidden_state[:,0,:]
 
         # in case of dimensionality reduction
         if self.additional_linear is not None:

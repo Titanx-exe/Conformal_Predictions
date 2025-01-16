@@ -194,7 +194,7 @@ class IndexEvaluator:
     def evaluate(self,model,random_samples=True,k=10):
         index = indexing.index_entities(model,self.entities, self.collator)
 
-        data_loader=DataLoader(self.documents, shuffle=False, batch_size=100,
+        data_loader=DataLoader(self.documents, shuffle=False, batch_size=50,
                                   collate_fn=self.collator.collate_context)
         if self.params["silent"]:
             iter_ = data_loader
@@ -204,7 +204,7 @@ class IndexEvaluator:
         for step, batch in enumerate(iter_):
             if not isinstance(model,E5Ranker):
 
-                context_input = batch["context_input"]
+                context_input = batch
                 #candidate_input = batch["candidate_input"]
                 #labels=[0 for i in range(batch["candidate_input"].size(0))]
                 #label_input = batch[0]["label_idx"].to(device)
@@ -247,7 +247,7 @@ class IndexEvaluator:
         doc_encodings = []
         for step, batch in enumerate(iter_):
             if not isinstance(model, E5Ranker):
-                context_input = batch["context_input"]
+                context_input = batch
                 encodings = model.encode_context(context_input).tolist()
             else:
                 encodings = model.encode_context(batch)

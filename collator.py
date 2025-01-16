@@ -3,6 +3,8 @@ import pickle
 import torch
 from tqdm import tqdm, trange
 
+#from generic_training import save_model
+
 
 class RankingCollator:
     def __init__(self, tokenizer, max_context_length,max_cand_length, device):
@@ -141,6 +143,44 @@ class RankingCollator:
         return candidate_representaions
 
 
+
+class Biencoder_Collator_Huggingface():
+    def __init__(self,tokenizer,args,device="cpu"):
+        self.tokenizer = tokenizer
+        self.args = args
+        self.device=device
+        self.entity_text_dict=pickle.load(open("data/entity_descriptions.pkl","rb"))
+
+
+    def collate_entities(self,batch):
+        candidates = ["[CLS]" + cand if not cand in self.entity_text_dict
+                            else "[CLS]" + self.entity_text_dict[cand] for cand in batch]
+        batch = self.tokenizer(candidates, max_length=512, padding=True, truncation=True, return_tensors='pt')
+        return batch.to(self.device)
+
+
+    def collate_batch_train(self,batch):
+        #question_input = []
+        candidate_batch=self.collate_entities([el[1]for el in batch])
+        question_batch=self.collate_context(el[0]for el in batch)
+
+        return {"context_input": question_batch,
+                "candidate_input": candidate_batch}
+
+    def collate_batch_eval(self,batch):
+        candidate_batch = self.collate_entities([el[1] for el in batch])
+        question_batch = self.collate_context(el[0] for el in batch)
+        labels=[1 for el in batch[0][0]]
+        return {"context_input": question_batch,
+                "candidate_input": candidate_batch,
+                "labels":labels}
+
+    def collate_context(self,batch):
+        questions=["[CLS]" + question for question in batch]
+        batch = self.tokenizer(questions, max_length=512, padding=True, truncation=True, return_tensors='pt')
+        return batch.to(self.device)
+
+
 class Biencoder_Collator():
     def __init__(self,tokenizer,args,device="cpu"):
         self.tokenizer = tokenizer
@@ -220,7 +260,7 @@ class Biencoder_Collator():
         for sample in batch:
             qt, _,_ = self.process_sample(sample)
             question_input.append(qt)
-        return {"context_input": torch.tensor(question_input, device=self.device)}
+        return torch.tensor(question_input, device=self.device)
 class E5collator:
     def __init__(self,tokenizer,device):
         self.tokenizer=tokenizer
