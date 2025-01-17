@@ -37,6 +37,7 @@ class TrainerRankerHuggingface:
         #self.candidate_size = candidate_size
         self.device = device
         self.model = BiEncoderRanker(params,device=device)
+        self.tokenizer = self.model.tokenizer
         self.collator = Biencoder_Collator(tokenizer=self.model.tokenizer,args=params
                                            ,queries=handler.queries, device=device)
 
