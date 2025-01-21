@@ -8,6 +8,8 @@ from collator import Biencoder_Collator,E5collator
 from transformers import AutoTokenizer
 from torch.utils.data import DataLoader
 
+import torch
+
 class TrainerRanker:
     def __init__(self, params, evaluate_after_batch,  device):
         self.grad_acc_steps = params["gradient_accumulation_steps"]
@@ -47,6 +49,7 @@ class TrainerRanker:
         scheduler = standard_optimizer.get_scheduler(self.params, optimizer, len_train_Data)
         return optimizer, scheduler
 
+
     def make_forward_pass(self, batch, step):
         input=self.collator.collate_batch_train(batch)
         candidate_input = input["candidate_input"]
@@ -57,6 +60,9 @@ class TrainerRanker:
 
         loss, logits = self.model(context_input,candidate_input)
         return logits, loss
+
+
+
 
 
 class TrainerE5:
@@ -97,6 +103,7 @@ class TrainerE5:
                 fp16=self.params.get("fp16"))
         scheduler = standard_optimizer.get_scheduler(self.params, optimizer, len_train_Data)
         return optimizer, scheduler
+
 
     def make_forward_pass(self, batch, step):
         queries=[sample[1]for sample in batch]

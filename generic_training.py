@@ -17,6 +17,7 @@ import data_processing
 import Evaluator
 import logging
 from data_processing import Aida_joint_el
+#from data_processing import apply_label_smoothing  # Import the function
 logging.disable(logging.WARNING)
 device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")
@@ -141,7 +142,10 @@ def encode_documents(documents,model,collator):
         encoding_map[documents[i]]=doc_encodings[i]
     return encoding_map
 
+
+
 def train(epochs):
+    
     #trainer,evaluator, train_dataloader, optimizer, scheduler = load_train_only_Graph_Model(device)
     trainer, evaluator, train_dataloader, optimizer, scheduler,entities,documents,doc_to_ent = load_train_blink_Ranking_Model()
     trainer.model.train()
@@ -218,4 +222,82 @@ def train(epochs):
         )
         #save_model(trainer.model,trainer.tokenizer,  epoch_output_folder_path)
         trainer.model.train()
+
+'''
+def train(epochs):
+    trainer, evaluator, train_dataloader, optimizer, scheduler, entities, documents, doc_to_ent = load_train_blink_Ranking_Model()
+    trainer.model.train()
+    index, results = evaluator.evaluate(trainer.model)
+    index, mrr = evaluator.evaluate_mrr(trainer.model)
+    print(results)
+    print(mrr)
+    encoding_map = encode_documents(documents, trainer.model, trainer.collator)
+
+    smoothing_factor = 0.1  # Label smoothing factor
+
+    for e in range(epochs):
+        num_batch = 0
+        iter_ = tqdm(train_dataloader, desc="Training")
+        for step, batch in enumerate(iter_):
+            # Create batch and apply label smoothing
+            batch = data_processing.create_batch_index(batch[0], entities, list(entities[batch[0]]), encoding_map,
+                                                       index, doc_to_ent)
+
+            # Smooth the labels in the batch
+            if "labels" in batch:
+                batch["labels"] = apply_label_smoothing(batch["labels"], smoothing_factor)
+
+            # Forward pass
+            logits, loss = trainer.make_forward_pass(batch, step)
+
+            if trainer.grad_acc_steps > 1:
+                loss = loss / trainer.grad_acc_steps
+            loss.backward()
+
+            if (step + 1) % trainer.grad_acc_steps == 0:
+                torch.nn.utils.clip_grad_norm_(
+                    trainer.model.parameters(), trainer.params["max_grad_norm"]
+                )
+                noise_function = trainer.params["noise_approach"]
+                if noise_function == "anticorrelated_noise_prev_term":
+                    noise.add_anticorrelated_noise_prev_term(optimizer, device)
+                if noise_function == "gausian_noise":
+                    noise.add_gausian_noise(optimizer, device)
+                if noise_function == "anticorrelated_noise_gradient":
+                    noise.add_anticorrelated_noise_gradient(optimizer, device)
+                optimizer.step()
+                scheduler.step()
+                optimizer.zero_grad()
+
+            num_batch += 1
+            if num_batch % trainer.evaluate_after == 0:
+                print("Start evaluation in epoch:" + str(e) + " batch: " + str(num_batch))
+                trainer.model.eval()
+                index, results = evaluator.evaluate(trainer.model)
+                index, mrr = evaluator.evaluate_mrr(trainer.model)
+                print(results)
+                print(mrr)
+                encoding_map = encode_documents(documents, trainer.model, trainer.collator)
+                trainer.model.train()
+
+        print("Start evaluation after epoch: " + str(e))
+        trainer.model.eval()
+        index, results = evaluator.evaluate(trainer.model)
+        index, mrr = evaluator.evaluate_mrr(trainer.model)
+        print("---------------------------Results in Epoch------------------------:" + str(e))
+        print(results)
+        with open(trainer.params["training_result_update_file"], 'a+') as f:
+            f.write("Results in Epoch: " + str(e) + str(results) + '\n')
+        with open('Results_Mrr.txt', 'a+') as f1:
+            f1.write("Results in Epoch: " + str(e) + str(mrr) + '\n')
+        encoding_map = encode_documents(documents, trainer.model, trainer.collator)
+        epoch_output_folder_path = os.path.join(
+            trainer.params["model_dump_folder"], "epoch_{}".format(e)
+        )
+        trainer.model.train()
+
+'''
+
+
+
 train(10)

@@ -4,6 +4,9 @@ import random
 from SPARQLWrapper import SPARQLWrapper, JSON
 import pickle
 from nif import NIFDocument,NIFContent
+
+
+
 def process_lcquad_file(file_path):
     input=json.load(open(file_path,"r",encoding="utf-8"))
     entities={}
