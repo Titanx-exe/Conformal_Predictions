@@ -6,8 +6,10 @@ from torch import Tensor
 from transformers import AutoTokenizer, AutoModel
 
 class E5Ranker(torch.nn.Module):
-    def __init__(self,device=None):
+    def __init__(self,device=None, params=None):
         super(E5Ranker, self).__init__()
+        self.params =params
+        print("+++++++++++++++++params*****************", self.params['label_smoothness'])
         self.model = AutoModel.from_pretrained('intfloat/e5-base-v2')
         #self.loss_fn = InfoNCE()
         if device==None:
@@ -112,7 +114,7 @@ class E5Ranker(torch.nn.Module):
 
         return loss, scores
 
-    '''
+    
     def forward(self, input, smoothing_factor=-5.0, smoothing_size=1):
         """
         Forward pass with boundary smoothing.
@@ -165,9 +167,9 @@ class E5Ranker(torch.nn.Module):
         target = torch.LongTensor(torch.arange(bs))
         target = target.to(self.device)
 
-        loss = F.cross_entropy(scores, target, reduction="mean", label_smoothing=-0.1)
+        loss = F.cross_entropy(scores, target, reduction="mean", label_smoothing=self.params['label_smoothness'])
         return loss,scores
-    '''
+
 # Each input text should start with "query: " or "passage: ".
 # For tasks other than retrieval, you can simply use the "query: " prefix.
 '''
