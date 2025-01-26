@@ -147,7 +147,7 @@ def train(epochs):
     trainer.model.train()
     #print(evaluator.evaluate(trainer.model))
     #index,results=evaluator.evaluate(trainer.model)
-    _, results, mrr = evaluator.evaluate(trainer.model)
+    index, results, mrr = evaluator.evaluate(trainer.model)
     #index, mrr = evaluator.evaluate_mrr(trainer.model)
     print(results)
     print(mrr)
