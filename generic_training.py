@@ -146,10 +146,11 @@ def train(epochs):
     trainer, evaluator, train_dataloader, optimizer, scheduler,entities,documents,doc_to_ent = load_train_blink_Ranking_Model()
     trainer.model.train()
     #print(evaluator.evaluate(trainer.model))
-    index,results=evaluator.evaluate(trainer.model)
+    #index,results=evaluator.evaluate(trainer.model)
+    _, results, mrr = evaluator.evaluate(trainer.model)
     #index, mrr = evaluator.evaluate_mrr(trainer.model)
     print(results)
-    #print(mrr)
+    print(mrr)
     encoding_map=encode_documents(documents,trainer.model,trainer.collator)
     for e in range(epochs):
         num_batch = 0
@@ -188,10 +189,11 @@ def train(epochs):
                 trainer.model.eval()
                 #print(evaluator.evaluate(trainer.model))
                 #print(evaluator.evaluate_mrr(trainer.model))
-                index,results = evaluator.evaluate(trainer.model)
+                #index,results = evaluator.evaluate(trainer.model)
+                _, results, mrr = evaluator.evaluate(trainer.model)
                 #index, mrr = evaluator.evaluate_mrr(trainer.model)
                 print(results)
-                #print(mrr)
+                print(mrr)
                 encoding_map = encode_documents(documents, trainer.model, trainer.collator)
                 #epoch_output_folder_path = os.path.join(
                 #    "ranker_gr", "epoch_{}_{}".format(e, num_batch))
@@ -200,8 +202,9 @@ def train(epochs):
 
         print("Start evaluation after epoch: " + str(e))
         trainer.model.eval()
-        index,results = evaluator.evaluate(trainer.model)
-        index, mrr = evaluator.evaluate_mrr(trainer.model)
+        #index,results = evaluator.evaluate(trainer.model)
+        #index, mrr = evaluator.evaluate_mrr(trainer.model)
+        _, results, mrr = evaluator.evaluate(trainer.model)
         print("---------------------------Results in Epoch------------------------:" + str(e))
         print(results)
         #Recall writing in a file
