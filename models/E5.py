@@ -28,7 +28,7 @@ class E5Ranker(torch.nn.Module):
         embeddings = self.average_pool(outputs.last_hidden_state, batch['attention_mask'])
         return embeddings.cpu().detach()
 
-    def forward(self,input):
+    def forward_diag(self,input):
         #model_input=torch.cat((context_input,document_input),0)
         outputs = self.encode(input)
         embeddings = self.average_pool(outputs.last_hidden_state, input['attention_mask'])
@@ -40,7 +40,9 @@ class E5Ranker(torch.nn.Module):
         loss = F.cross_entropy(scores, target, reduction="mean")
         return loss,scores
 
-    def forward(self,doc_input,context_len,target=None):
+    def forward(self,doc_input,context_len=None,target=None):
+        if context_len is None:
+            return self.forward_diag(doc_input)
         output = self.encode(doc_input)
         embeddings = self.average_pool(output.last_hidden_state, doc_input['attention_mask'])
         context_embeddings, candidate_embeddings = torch.split(embeddings, [context_len,embeddings.size(0)-context_len])
