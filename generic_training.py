@@ -150,6 +150,7 @@ def train(epochs, label_smoothness):
     
     #trainer,evaluator, train_dataloader, optimizer, scheduler = load_train_only_Graph_Model(device)
     trainer, evaluator, train_dataloader, optimizer, scheduler,entities,documents,doc_to_ent = load_train_blink_Ranking_Model(label_smoothness)
+
     trainer.model.train()
     #print(evaluator.evaluate(trainer.model))
     index,results=evaluator.evaluate(trainer.model)
@@ -199,7 +200,7 @@ def train(epochs, label_smoothness):
                 index, mrr = evaluator.evaluate_mrr(trainer.model)
                 print(results)
                 print(mrr)
-                final_output = mrr
+                final_output = results
                 encoding_map = encode_documents(documents, trainer.model, trainer.collator)
                 #epoch_output_folder_path = os.path.join(
                 #    "ranker_gr", "epoch_{}_{}".format(e, num_batch))
@@ -229,7 +230,7 @@ def train(epochs, label_smoothness):
         #save_model(trainer.model,trainer.tokenizer,  epoch_output_folder_path)
         trainer.model.train()
 
-        return final_output
+    return final_output
 
 
 '''

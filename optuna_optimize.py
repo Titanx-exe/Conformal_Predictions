@@ -6,14 +6,16 @@ from functools import partial
 def objective(trial):
 
     epoch = 5
-    label_smoothing_rate = trial.suggest_float("label_smoothing_rate", -10, 0.1)
+    label_smoothing_rate = trial.suggest_float("label_smoothing_rate", -10, 0.3)
 
     final_val = train(epoch, label_smoothing_rate)
-
+    f1 = open('Results_Recall.txt', 'a+')
+    f1.write("smoothing factor is: " + str(trial) + str(label_smoothing_rate) + '\n')
+    f1.close()
 
     return final_val
 
-number_of_runs = 10
+number_of_runs = 50
 
 study = optuna.create_study(direction="maximize")
 objective_with_params = partial(objective)
