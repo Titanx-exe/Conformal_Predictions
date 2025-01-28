@@ -30,7 +30,7 @@ def remove_noise(optimizer,noise_tensors):
 '''
 
 
-def add_anticorrelated_noise_prev_term(optimizer, device, alpha_0=0.4, sigma=50.0):
+def add_anticorrelated_noise_prev_term(optimizer, device, alpha_0=0.1, sigma=50.0):
     """Applies anticorrelated noise based on previous noise term with dynamic alpha."""
     global prev_noise
     if prev_noise is None:
