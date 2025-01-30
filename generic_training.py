@@ -51,7 +51,7 @@ def load_train_blink_Ranking_Model():
         train_inst = Trainer.TrainerE5(params=params, evaluate_after_batch=params["eval_interval"], device=device)
     # for BiEncoder
     if params["found_model"] == "biencoder":
-        train_inst = Trainer.TrainerRankerHuggingface(params=params, evaluate_after_batch=params["eval_interval"], device=device)
+        train_inst = Trainer.TrainerRanker(params=params, evaluate_after_batch=params["eval_interval"], device=device)
 
     #for aida
     if params["dataset"] == "aida":
