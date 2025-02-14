@@ -41,7 +41,7 @@ def load_queries(filename_queries,filename_relevant):
     return queries
 #docs=pickle.load(open("data/msmarco/doc_dictionary","rb"))
 queries=load_queries("data/msmarco/msmarco-docdev-queries.tsv.gz","data/msmarco/msmarco-docdev-qrels.tsv.gz")
-pickle.dump(queries,open("data/msmarco/eval_queries","wb"))
+#pickle.dump(queries,open("data/msmarco/eval_queries","wb"))
 
 
 all_gold_documents={}
@@ -55,14 +55,14 @@ with gzip.open("data/msmarco/msmarco-docs.tsv.gz", 'rt', encoding='utf8') as f:
         else:
             current_documents[l[0]]=[l[1],l[2],l[3]]
         if len(current_documents)==1000000:
-            negatives=random.sample(list(current_documents.keys()),2000)
+            negatives=random.sample(list(current_documents.keys()),40000)
             for el in negatives:
                 all_gold_documents[el]=current_documents[el]
             #pickle.dump(current_documents, open("data/msmarco/doc_dictionary_split_"+str(count), "wb"))
             current_documents={}
             count+=1
 #pickle.dump(current_documents,open("data/msmarco/doc_dictionary_split_"+str(count),"wb"))
-pickle.dump(all_gold_documents,open("data/msmarco/eval_documents","wb"))
+pickle.dump(all_gold_documents,open("data/msmarco/eval_documents_100000","wb"))
 print("finished_preprocessing")
 
 #index,idToIndex=index_data(model,list(queries.keys()),collator.collate_context,model.encode_context)
