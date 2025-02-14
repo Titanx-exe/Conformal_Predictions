@@ -1,17 +1,17 @@
 # Robust Entity Ranking
-## installation:
+## Installation:
 Run pip install -r requirements.txt
 
-## training/ evaluation
+## Training/ Evaluation
 Run the script generic_training.py
 for further settings see parameters.py
 
 The evaluation scores are computed on the fly during training
 
-## evaluation MS MARCO
+## Evaluation MS MARCO
 Use the scrip eval_ms_marco_model.py
 
-## noise
+## Noise
 the implementation for the noise can be seen in the file optimizers/noise.py
 
 ## 
