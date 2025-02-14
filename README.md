@@ -1,4 +1,4 @@
-# Robust Entity Ranking
+# Robust Ranking
 ## Installation:
 Run pip install -r requirements.txt
 
