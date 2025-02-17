@@ -8,8 +8,7 @@ from transformers import AutoTokenizer, AutoModel
 class E5Ranker(torch.nn.Module):
     def __init__(self,device=None, params=None):
         super(E5Ranker, self).__init__()
-        self.params =params
-        print("+++++++++++++++++params*****************", self.params['label_smoothness'])
+        self.params= params
         self.model = AutoModel.from_pretrained('intfloat/e5-base-v2')
         #self.loss_fn = InfoNCE()
         if device==None:
@@ -31,6 +30,46 @@ class E5Ranker(torch.nn.Module):
         outputs = self.encode(batch)
         embeddings = self.average_pool(outputs.last_hidden_state, batch['attention_mask'])
         return embeddings.cpu().detach()
+    #negative label smoothing
+    def forward(self, input, smoothing_factor=None):
+        """
+        Forward pass with negative label smoothing.
+        :param input: Tokenized input data.
+        :param smoothing_factor: Float, label smoothing factor (0 disables smoothing).
+        :return: Loss and scores.
+        """
+        smoothing_factor = self.params['label_smoothness']
+        # Encode the input and compute embeddings
+        outputs = self.encode(input)
+        embeddings = self.average_pool(outputs.last_hidden_state, input['attention_mask'])
+        context_embed, document_embed = torch.split(embeddings, int(embeddings.size(0) / 2))
+
+        # Compute similarity scores
+        scores = context_embed @ document_embed.T
+        bs = scores.size(0)
+
+        # Generate negative smoothed labels
+        target = torch.arange(bs).to(self.device)  # True labels
+
+        smoothed_labels = torch.full((bs, bs), smoothing_factor / (bs - 1), device=self.device)
+        smoothed_labels.scatter_(1, target.unsqueeze(1), 1.0 - smoothing_factor)
+
+
+        # Apply Negative Label Smoothing (NLS)
+        if smoothing_factor < 0:
+            neg_factor = -smoothing_factor
+            smoothed_labels = (1 + neg_factor) * smoothed_labels - (neg_factor / (bs - 1))
+            # **Renormalize to ensure sum = 1**
+            smoothed_labels = smoothed_labels / smoothed_labels.sum(dim=1, keepdim=True)
+
+        #print("-------------------smoothed labels are:_--------------------------")
+        #print(smoothed_labels)
+        # Compute loss using smoothed labels
+        log_probs = F.log_softmax(scores, dim=-1)
+        loss = F.kl_div(log_probs, smoothed_labels, reduction="batchmean")  # KL-Divergence for soft labels
+
+        return loss, scores
+
     #label_smoothed forward
     '''
     def forward(self, input, smoothing_factor=-0.1):
@@ -155,7 +194,7 @@ class E5Ranker(torch.nn.Module):
 
         return loss, scores
     
-    '''
+    
     #Ordinary forward
     def forward(self,input):
         #model_input=torch.cat((context_input,document_input),0)
@@ -169,7 +208,7 @@ class E5Ranker(torch.nn.Module):
 
         loss = F.cross_entropy(scores, target, reduction="mean", label_smoothing=self.params['label_smoothness'])
         return loss,scores
-
+    '''
 # Each input text should start with "query: " or "passage: ".
 # For tasks other than retrieval, you can simply use the "query: " prefix.
 '''
