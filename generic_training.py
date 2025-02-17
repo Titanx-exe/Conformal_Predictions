@@ -150,6 +150,7 @@ def train(epochs, label_smoothness):
     
     #trainer,evaluator, train_dataloader, optimizer, scheduler = load_train_only_Graph_Model(device)
     trainer, evaluator, train_dataloader, optimizer, scheduler,entities,documents,doc_to_ent = load_train_blink_Ranking_Model(label_smoothness)
+
     trainer.model.train()
     #print(evaluator.evaluate(trainer.model))
     index,results=evaluator.evaluate(trainer.model)
