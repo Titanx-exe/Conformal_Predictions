@@ -59,7 +59,7 @@ class E5Ranker(torch.nn.Module):
         if smoothing_factor < 0:
             neg_factor = -smoothing_factor
             smoothed_labels = (1 + neg_factor) * smoothed_labels - (neg_factor / (bs - 1))
-            # **Renormalize to ensure sum = 1**
+            #Renormalize to ensure sum = 1
             smoothed_labels = smoothed_labels / smoothed_labels.sum(dim=1, keepdim=True)
 
         #print("-------------------smoothed labels are:_--------------------------")
