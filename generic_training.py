@@ -28,12 +28,13 @@ max_candsize=5
 add_gold_mention=True
 
 
-def load_train_blink_Ranking_Model(label_smoothness):
+def load_train_blink_Ranking_Model(label_smoothness, epochs):
     parser = RankingParser(add_model_args=True)
     parser.add_training_args()
 
     parser.add_eval_args()
     parser.add_argument("--label_smoothness", type=float, default=label_smoothness)
+    parser.add_argument("--epochs", type=int, default=epochs)
 
     # args = argparse.Namespace(**params)
     args = parser.parse_args()
@@ -149,7 +150,7 @@ def encode_documents(documents,model,collator):
 def train(epochs, label_smoothness):
     
     #trainer,evaluator, train_dataloader, optimizer, scheduler = load_train_only_Graph_Model(device)
-    trainer, evaluator, train_dataloader, optimizer, scheduler,entities,documents,doc_to_ent = load_train_blink_Ranking_Model(label_smoothness)
+    trainer, evaluator, train_dataloader, optimizer, scheduler,entities,documents,doc_to_ent = load_train_blink_Ranking_Model(label_smoothness, epochs)
 
     trainer.model.train()
     #print(evaluator.evaluate(trainer.model))
@@ -171,6 +172,9 @@ def train(epochs, label_smoothness):
         final_output = 0
         # step=0
         iter_ = tqdm(train_dataloader, desc="Training")
+        EPOCH_FILE = "epoch.txt"
+        with open(EPOCH_FILE, "w") as f:
+            f.write(str(e))
 
 
         for step, batch in enumerate(iter_):
