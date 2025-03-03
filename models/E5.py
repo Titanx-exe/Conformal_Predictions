@@ -31,7 +31,7 @@ class E5Ranker(torch.nn.Module):
         embeddings = self.average_pool(outputs.last_hidden_state, batch['attention_mask'])
         return embeddings.cpu().detach()
     #negative label smoothing
-    def forward(self, input, smoothing_factor=None):
+    def nls_forward(self, input, smoothing_factor=None):
         """
         Forward pass with negative label smoothing.
         :param input: Tokenized input data.
@@ -66,7 +66,12 @@ class E5Ranker(torch.nn.Module):
         #print(smoothed_labels)
         # Compute loss using smoothed labels
         log_probs = F.log_softmax(scores, dim=-1)
+        f = open('prediction_file.txt', 'a+')
+        f.write("Epoch: " + ' ' + str(e) + '\n')
+        f.write("log_probs is: " + ' ' + str(log_probs) + '\n' + "smoothed l")
+        f.close()
         loss = F.kl_div(log_probs, smoothed_labels, reduction="batchmean")  # KL-Divergence for soft labels
+        print("+++++++++++++++++ the loss is !!!!!!!!!!!!!!!!!!!!!!!!!!!!", loss)
 
         return loss, scores
 
@@ -194,21 +199,52 @@ class E5Ranker(torch.nn.Module):
 
         return loss, scores
     
-    
+    '''
+
+    def loss_gls(self, logits, labels):
+        # logits: model prediction logits before the soft-max, with size [batch_size, classes]
+        # labels: the (noisy) labels for evaluation, with size [batch_size]
+        # smooth_rate: could go either positive or negative,
+        # smooth_rate candidates we adopted in the paper: [0.8, 0.6, 0.4, 0.2, 0.0, -0.2, -0.4, -0.6, -0.8, -1.0, -2.0, -4.0, -6.0, -8.0].
+        #print("labels are...............................", labels)
+        #print("labels are...............................", logits)
+        smooth_rate = self.params['label_smoothness']
+        confidence = 1. - smooth_rate
+        logprobs = F.log_softmax(logits, dim=-1)
+        nll_loss = -logprobs.gather(dim=-1, index=labels.unsqueeze(1))
+        nll_loss = nll_loss.squeeze(1)
+        smooth_loss = -logprobs.mean(dim=-1)
+        loss = confidence * nll_loss + smooth_rate * smooth_loss
+        loss_numpy = loss.data.cpu().numpy()
+        num_batch = len(loss_numpy)
+        return torch.sum(loss) / num_batch
+
     #Ordinary forward
     def forward(self,input):
-        #model_input=torch.cat((context_input,document_input),0)
+        smoothing_factor = self.params['label_smoothness']
+        EPOCH_FILE = "epoch.txt"
+        with open(EPOCH_FILE, "r") as f:
+            epoch = int(f.read().strip())
+
         outputs = self.encode(input)
         embeddings = self.average_pool(outputs.last_hidden_state, input['attention_mask'])
-        context_embed,document_embed=torch.split(embeddings,int(embeddings.size(0)/2))
+        context_embed, document_embed = torch.split(embeddings, int(embeddings.size(0) / 2))
         scores = (context_embed @ document_embed.T)
         bs = scores.size(0)
         target = torch.LongTensor(torch.arange(bs))
         target = target.to(self.device)
+        if smoothing_factor < 0.0:
+            #loss, scores = self.nls_forward(input)
+            loss = self.loss_gls(scores, target)
+            #print("+++++++++++++++++ the loss is !!!!!!!!!!!!!!!!!!!!!!!!!!!!", loss)
+            #print("----------------------")
+        else:
+            #print("#######################")
+            #model_input=torch.cat((context_input,document_input),0)
+            loss = F.cross_entropy(scores, target, reduction="mean", label_smoothing=smoothing_factor)
 
-        loss = F.cross_entropy(scores, target, reduction="mean", label_smoothing=self.params['label_smoothness'])
         return loss,scores
-    '''
+
 # Each input text should start with "query: " or "passage: ".
 # For tasks other than retrieval, you can simply use the "query: " prefix.
 '''

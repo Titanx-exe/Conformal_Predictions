@@ -232,6 +232,18 @@ class RankingParser(argparse.ArgumentParser):
             help="Number of training epochs.",
         )
         parser.add_argument(
+            "--adaptive_label_smoothing",
+            default='no',
+            type=str,
+            help="Applying adaptive label smoothing or not: yes or no",
+        )
+        parser.add_argument(
+            "--base_smoothing_rate",
+            default=0.05,
+            type=float,
+            help="Applying smoothing rate",
+        )
+        parser.add_argument(
             "--print_interval", type=int, default=10,
             help="Interval of loss printing",
         )

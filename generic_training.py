@@ -1,5 +1,7 @@
 import json
 import pickle
+
+from sqlalchemy.testing.util import total_size
 from torch.utils.data import DataLoader
 #from transformers import AutoTokenizer
 import torch
@@ -146,43 +148,90 @@ def encode_documents(documents,model,collator):
     return encoding_map
 
 
+def adaptive_smoothing_loss(prev_loss, current_loss, base_smoothing=0.05, min_smoothing=-2.0, max_smoothing=0.3):
+    """
+    Adjusts label smoothing dynamically based on loss trends.
 
-def train(epochs, label_smoothness):
+    :param prev_loss: Loss from the previous epoch
+    :param current_loss: Loss from the current epoch
+    :param base_smoothing: Default smoothing factor
+    :param min_smoothing: Minimum smoothing factor (negative for NLS)
+    :param max_smoothing: Maximum smoothing factor (positive for PLS)
+    :return: Adjusted smoothing factor
+    """
+    loss_change = current_loss - prev_loss  # Difference between epochs
+    print("***************** previous loss is ***************************", prev_loss)
+    print("***************** current loss is ***************************", current_loss)
+    if loss_change > 0.1:  # Large loss increase → Increase PLS more aggressively
+        smoothing_factor = min(base_smoothing + 0.2, max_smoothing)  # Increase rapidly
+    elif loss_change > 0.05:  # Moderate loss increase → Increase PLS normally
+        smoothing_factor = min(base_smoothing + 0.1, max_smoothing)
+    elif loss_change < -0.1:  # Large loss decrease → Reduce PLS or apply NLS aggressively
+        smoothing_factor = max(base_smoothing - 0.2, min_smoothing)
+    elif loss_change < -0.05:  # Moderate loss decrease → Reduce PLS normally
+        smoothing_factor = max(base_smoothing - 0.1, min_smoothing)
+    else:  # Loss is stable → Apply small jitter to avoid stagnation
+        #smoothing_factor = max(base_smoothing + random.uniform(-0.05, 0.05), min_smoothing)
+        smoothing_factor = max(base_smoothing - 0.1, min_smoothing)
+
+    return smoothing_factor
+
+
+def train(epochs, label_smoothness=0.0):
     
     #trainer,evaluator, train_dataloader, optimizer, scheduler = load_train_only_Graph_Model(device)
     trainer, evaluator, train_dataloader, optimizer, scheduler,entities,documents,doc_to_ent = load_train_blink_Ranking_Model(label_smoothness, epochs)
 
     trainer.model.train()
+    prev_loss = float("inf")
     #print(evaluator.evaluate(trainer.model))
     index,results=evaluator.evaluate(trainer.model)
     index, mrr = evaluator.evaluate_mrr(trainer.model)
     print(results)
     print(mrr)
     encoding_map=encode_documents(documents,trainer.model,trainer.collator)
-    f = open(trainer.params["training_result_update_file"], 'a+')
-    f.write("Smoothing factor taken as: " + str(label_smoothness)+'\n')
-    f.close()
-    # writing mrrs
-    f = open('Results_Mrr.txt', 'a+')
-    f.write("Smoothing factor taken as: " + str(label_smoothness)+'\n')
-    f.close()
+
+    base_smoothing = float(trainer.params['base_smoothing_rate'])
+    smoothing_factor = label_smoothness
+    avg_loss = []
     for e in range(epochs):
         num_batch = 0
-
+        total_loss = 0.0
         final_output = 0
+
+        avg_epoch_loss = 0.0
+
         # step=0
         iter_ = tqdm(train_dataloader, desc="Training")
         EPOCH_FILE = "epoch.txt"
         with open(EPOCH_FILE, "w") as f:
             f.write(str(e))
-
-
         for step, batch in enumerate(iter_):
+            trainer.params["label_smoothness"] = smoothing_factor  # Use current smoothing factor
             #batch=data_processing.create_batch_ent(batch[0],list(entities[batch[0]]),random.sample(list(documents),1000),doc_to_ent)
             batch=data_processing.create_batch_index(batch[0],entities,list(entities[batch[0]]),encoding_map,index,doc_to_ent)
             #batch = data_processing.create_batch_index_document(batch[0], entities,  encoding_map,
             #                                           index, doc_to_ent)
             logits, loss = trainer.make_forward_pass(batch,step)
+            #f = open('loss_file.txt', 'a+')
+            #f.write("Epoch: " + ' ' + str(e) + '\n')
+            #f.write("forward loss is: " + ' ' + str(loss.item()) + '\n')
+            #f.close()
+            total_loss = total_loss + loss.item() #Adding up the loss
+            if trainer.params['adaptive_label_smoothing'] == 'yes':
+                if e == 0:
+                    trainer.params["label_smoothness"] = base_smoothing
+                else:
+                    trainer.params["label_smoothness"] = smoothing_factor  # Use current smoothing factor
+            else:
+                trainer.params["label_smoothness"] = label_smoothness
+                smoothing_factor = label_smoothness
+            if torch.isnan(loss):
+                print("Warning: total_loss became NaN! Resetting to 0.0")
+                total_loss = 0.0
+            # Adaptive smoothing based on loss trend
+            #current_loss = total_loss / (step + 1)
+
 
             if trainer.grad_acc_steps > 1:
                 loss = loss / trainer.grad_acc_steps
@@ -220,7 +269,22 @@ def train(epochs, label_smoothness):
                 #save_model(model, model.tokenizer, epoch_output_folder_path)
                 trainer.model.train()
 
+        # **Epoch-Level Loss Computation**
+        avg_epoch_loss = total_loss / len(train_dataloader)
+        # **Update smoothing factor AFTER the epoch completes**
+        if trainer.params['adaptive_label_smoothing'] == 'yes':
+            if avg_loss:  # Ensure there's a previous loss recorded
+                smoothing_factor = adaptive_smoothing_loss(avg_loss[e-1], avg_epoch_loss, base_smoothing)
+            else:
+                smoothing_factor = trainer.params['base_smoothing_rate']
 
+        avg_loss.append(avg_epoch_loss)  # Store epoch loss for next iteration
+        f = open('loss_file.txt', 'a+')
+        f.write("Smoothing factor taken as: " + ' ' + str(smoothing_factor) + '\n'
+                + "Average loss in this epoch" + ' ' + str(avg_epoch_loss) + '\n'
+                + "Total loss so far is:" + ' ' + str(avg_loss) + '\n')
+        f.close()
+        print(f"Epoch {e}: Loss = {avg_epoch_loss:.4f}, Updated Smoothing Factor = {smoothing_factor:.4f}")
 
         print("Start evaluation after epoch: " + str(e))
         trainer.model.eval()
@@ -230,12 +294,13 @@ def train(epochs, label_smoothness):
         print(results)
         #Recall writing in a file
         f = open(trainer.params["training_result_update_file"], 'a+')
-        f.write("Results in Epoch: " + str(e)+ ' ' + str(results)+ '\n')
-
+        f.write("Smoothing factor taken as: " + ' ' + str(smoothing_factor) + '\n'
+                 + '\n' + "Results in Epoch: " + str(e) + ' ' + str(results) + '\n')
         f.close()
         #writing mrrs
         f1 = open('Results_Mrr.txt', 'a+')
-        f1.write("Results in Epoch: " + str(e) + ' ' + str(mrr) + '\n')
+        f1.write( "Smoothing factor taken as: " + ' ' +  str(smoothing_factor) + '\n'
+                 + "Results in Epoch: " + str(e) + ' ' + str(results) + '\n')
         f1.close()
         encoding_map = encode_documents(documents, trainer.model, trainer.collator)
         epoch_output_folder_path = os.path.join(
@@ -243,6 +308,7 @@ def train(epochs, label_smoothness):
         )
         #save_model(trainer.model,trainer.tokenizer,  epoch_output_folder_path)
         trainer.model.train()
+
 
     return final_output
 
