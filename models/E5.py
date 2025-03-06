@@ -213,6 +213,7 @@ class E5Ranker(torch.nn.Module):
         logprobs = F.log_softmax(logits, dim=-1)
         nll_loss = -logprobs.gather(dim=-1, index=labels.unsqueeze(1))
         nll_loss = nll_loss.squeeze(1)
+        print()
         smooth_loss = -logprobs.mean(dim=-1)
         loss = confidence * nll_loss + smooth_rate * smooth_loss
         loss_numpy = loss.data.cpu().numpy()

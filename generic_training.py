@@ -191,9 +191,16 @@ def train(epochs, label_smoothness=0.0):
     print(mrr)
     encoding_map=encode_documents(documents,trainer.model,trainer.collator)
 
+
     base_smoothing = float(trainer.params['base_smoothing_rate'])
     smoothing_factor = label_smoothness
     avg_loss = []
+    f = open(trainer.params["training_result_update_file"], 'a+')
+    f.write("Smoothing factor taken as: " + ' ' + str(smoothing_factor) + '\n')
+    f.close()
+    f = open("Results_Mrr.txt", 'a+')
+    f.write("Smoothing factor taken as: " + ' ' + str(smoothing_factor) + '\n')
+    f.close()
     for e in range(epochs):
         num_batch = 0
         total_loss = 0.0
@@ -294,13 +301,11 @@ def train(epochs, label_smoothness=0.0):
         print(results)
         #Recall writing in a file
         f = open(trainer.params["training_result_update_file"], 'a+')
-        f.write("Smoothing factor taken as: " + ' ' + str(smoothing_factor) + '\n'
-                 + '\n' + "Results in Epoch: " + str(e) + ' ' + str(results) + '\n')
+        f.write("Results in Epoch: " + str(e) + ' ' + str(results) + '\n')
         f.close()
         #writing mrrs
         f1 = open('Results_Mrr.txt', 'a+')
-        f1.write( "Smoothing factor taken as: " + ' ' +  str(smoothing_factor) + '\n'
-                 + "Results in Epoch: " + str(e) + ' ' + str(results) + '\n')
+        f1.write("Results in Epoch: " + str(e) + ' ' + str(results) + '\n')
         f1.close()
         encoding_map = encode_documents(documents, trainer.model, trainer.collator)
         epoch_output_folder_path = os.path.join(

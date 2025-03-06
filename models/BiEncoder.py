@@ -229,91 +229,53 @@ class BiEncoderRanker(torch.nn.Module):
 
     # label_input -- negatives provided
 
-    def loss_gls_mod(self, bs, target, scores):
-        smoothing_factor = self.params['label_smoothness']
-        # Encode the input and compute embeddings
 
-        smoothed_labels = torch.full((bs, bs), smoothing_factor / (bs - 1), device=self.device)
-        smoothed_labels.scatter_(1, target.unsqueeze(1), 1.0 - smoothing_factor)
-
-        # Apply Negative Label Smoothing (NLS)
-        if smoothing_factor < 0:
-            neg_factor = -smoothing_factor
-            smoothed_labels = (1 + neg_factor) * smoothed_labels - (neg_factor / (bs - 1))
-            # Renormalize to ensure sum = 1
-            smoothed_labels = smoothed_labels / smoothed_labels.sum(dim=1, keepdim=True)
-
-        #print("-------------------smoothed labels are:_--------------------------")
-        #print(smoothed_labels)
-        # Compute loss using smoothed labels
-        print(scores)
-        # Step 1: Mean-center logits (Row-wise normalization)
-        scores = scores - scores.mean(dim=1, keepdim=True)
-        # Step 2: Apply temperature scaling
-        scores = scores / 0.1
-        # Step 3: Clamp extreme values (Only if necessary)
-        scores = torch.clamp(scores, min=-50, max=50)
-        # Step 4: Compute log-softmax
-        log_probs = F.log_softmax(scores, dim=-1)
-        print(log_probs)
-
-        loss = F.kl_div(log_probs, smoothed_labels, reduction="batchmean")  # KL-Divergence for soft labels
-        #loss = -torch.sum(smoothed_labels * log_probs, dim=-1).mean()
-
-
-        return loss
-
-    # If label_input is None, train on in-batch negatives
-    # new forward function calling negative label_smoothing
-    def ls_forward(self, context_input, cand_input, label_input=None):
-        """
-        Forward pass with Negative Label Smoothing (NLS) support.
-        :param context_input: Context embeddings.
-        :param cand_input: Candidate embeddings.
-        :param label_input: Ground-truth labels (optional).
-        :return: Loss and scores.
-        """
-        flag = label_input is None
-        scores = self.score_candidate(context_input, cand_input, flag)
-        bs = scores.size(0)
-
-        if label_input is None:
-
-            #target = torch.arange(bs, dtype=torch.long, device=self.device)
-            target = torch.LongTensor(torch.arange(bs))
-            target = target.to(self.device)
-            loss = self.loss_gls_mod(bs, target, scores)
-        else:
-
-            loss = self.loss_gls_mod(bs, label_input, scores)
-
-        return loss, scores
-
+    #negative label smoothing
+    def loss_gls(self, logits, labels):
+        # logits: model prediction logits before the soft-max, with size [batch_size, classes]
+        # labels: the (noisy) labels for evaluation, with size [batch_size]
+        # smooth_rate: could go either positive or negative,
+        # smooth_rate candidates we adopted in the paper: [0.8, 0.6, 0.4, 0.2, 0.0, -0.2, -0.4, -0.6, -0.8, -1.0, -2.0, -4.0, -6.0, -8.0].
+        #print("labels are...............................", labels)
+        #print("labels are...............................", logits)
+        print("Applying gls##############################")
+        smooth_rate = self.params['label_smoothness']
+        confidence = 1. - smooth_rate
+        logprobs = F.log_softmax(logits, dim=-1)
+        nll_loss = -logprobs.gather(dim=-1, index=labels.unsqueeze(1))
+        nll_loss = nll_loss.squeeze(1)
+        print()
+        smooth_loss = -logprobs.mean(dim=-1)
+        loss = confidence * nll_loss + smooth_rate * smooth_loss
+        loss_numpy = loss.data.cpu().numpy()
+        num_batch = len(loss_numpy)
+        return torch.sum(loss) / num_batch
 
     #original forward function
 
     def forward(self, context_input, cand_input, label_input=None):
+        smoothing_factor = self.params['label_smoothness']
         EPOCH_FILE = "epoch.txt"
         with open(EPOCH_FILE, "r") as f:
             epoch = int(f.read().strip())
 
-        if epoch < 10:
-            loss, scores = self.ls_forward(context_input, cand_input, label_input)
-            #print("----------------Now applying SMOOTHING------------------", epoch)
+        flag = label_input is None
+        scores = self.score_candidate(context_input, cand_input, flag)
+        bs = scores.size(0)
+        if label_input is None:
+            target = torch.LongTensor(torch.arange(bs))
+            target = target.to(self.device)
         else:
-            #print("----------------Now applying CROSS ENTROPY------------------", epoch)
-            flag = label_input is None
-            scores = self.score_candidate(context_input, cand_input, flag)
-            bs = scores.size(0)
-            if label_input is None:
-                target = torch.LongTensor(torch.arange(bs))
-                target = target.to(self.device)
-                #if epoch > 3:
-                loss = F.cross_entropy(scores, target, reduction="mean")
-            else:
-                # loss_fct = nn.BCEWithLogitsLoss(reduction="mean")
-                # TODO: add parameters?
-                loss = F.cross_entropy(scores, label_input, reduction="mean")
+            target = label_input
+
+        if smoothing_factor < 0.0:
+            loss = self.loss_gls(scores, target)
+        else:
+            #print("############### target is ################", target)
+            #print("+++++++++++++++++ score is +++++++++++++++++", scores)
+            #print()
+            loss = F.cross_entropy(scores, target, reduction="mean", label_smoothing=smoothing_factor)
+
         return loss, scores
 
     def predict(self, context_input, cand_input):
