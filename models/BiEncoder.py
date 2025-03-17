@@ -244,7 +244,7 @@ class BiEncoderRanker(torch.nn.Module):
         logprobs = F.log_softmax(logits, dim=-1)
         nll_loss = -logprobs.gather(dim=-1, index=labels.unsqueeze(1))
         nll_loss = nll_loss.squeeze(1)
-        print()
+        #print()
         smooth_loss = -logprobs.mean(dim=-1)
         loss = confidence * nll_loss + smooth_rate * smooth_loss
         loss_numpy = loss.data.cpu().numpy()
@@ -254,11 +254,20 @@ class BiEncoderRanker(torch.nn.Module):
     #original forward function
 
     def forward(self, context_input, cand_input, label_input=None):
-        smoothing_factor = self.params['label_smoothness']
         EPOCH_FILE = "epoch.txt"
         with open(EPOCH_FILE, "r") as f:
             epoch = int(f.read().strip())
 
+        if self.params['adaptive_epoch'] == 'yes':
+            if epoch > self.params['epoch_bound']:
+                self.params['label_smoothness'] = self.params['label_smoothness'] - 4.0
+                #self.params["learning_rate"] = 3e-12
+
+
+        smoothing_factor = self.params['label_smoothness']
+        #f = open('loss_file.txt', 'a+')
+        #f.write("Smoothing factor taken as: " + ' ' + str(smoothing_factor) + '\n')
+        #f.close()
         flag = label_input is None
         scores = self.score_candidate(context_input, cand_input, flag)
         bs = scores.size(0)

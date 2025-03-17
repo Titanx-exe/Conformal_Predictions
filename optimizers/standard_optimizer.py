@@ -59,6 +59,7 @@ def get_bert_optimizer(models, type_optimization, learning_rate, fp16=False):
     print('The following parameters will be optimized WITHOUT decay:')
     print(ellipse(parameters_without_decay_names, 5, ' , '))
 
+
     optimizer_grouped_parameters = [
         {'params': parameters_with_decay, 'weight_decay': 0.01},
         {'params': parameters_without_decay, 'weight_decay': 0.0},

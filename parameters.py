@@ -244,6 +244,18 @@ class RankingParser(argparse.ArgumentParser):
             help="Applying smoothing rate",
         )
         parser.add_argument(
+            "--epoch_bound",
+            default=5,
+            type=int,
+            help="Epoch after which the training switch to NLS",
+        )
+        parser.add_argument(
+            "--adaptive_epoch",
+            default='no',
+            type=str,
+            help="Applying adaptive NLS based on epoch changes: yes or no",
+        )
+        parser.add_argument(
             "--print_interval", type=int, default=10,
             help="Interval of loss printing",
         )

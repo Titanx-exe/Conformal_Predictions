@@ -43,6 +43,9 @@ class TrainerRanker:
         return train_dataloader, test_dataloader
     '''
     def getOptimizerAndSheduler(self, len_train_Data):
+        f = open('learn_rate.txt', 'a+')
+        f.write("learning rate: " + ' ' + str(self.params["learning_rate"]) + '\n')
+        f.close()
         optimizer = standard_optimizer.get_bert_optimizer([self.model], self.params["type_optimization"],
             self.params["learning_rate"],
                 fp16=self.params.get("fp16"))

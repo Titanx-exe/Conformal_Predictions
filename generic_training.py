@@ -164,15 +164,15 @@ def adaptive_smoothing_loss(prev_loss, current_loss, base_smoothing=0.05, min_sm
     print("***************** current loss is ***************************", current_loss)
     if loss_change > 0.1:  # Large loss increase → Increase PLS more aggressively
         smoothing_factor = min(base_smoothing + 0.2, max_smoothing)  # Increase rapidly
-    elif loss_change > 0.05:  # Moderate loss increase → Increase PLS normally
+    elif loss_change > 0.05:  # Moderate loss increase
         smoothing_factor = min(base_smoothing + 0.1, max_smoothing)
-    elif loss_change < -0.1:  # Large loss decrease → Reduce PLS or apply NLS aggressively
+    elif loss_change < -0.1:  # Large loss decrease
         smoothing_factor = max(base_smoothing - 0.2, min_smoothing)
-    elif loss_change < -0.05:  # Moderate loss decrease → Reduce PLS normally
-        smoothing_factor = max(base_smoothing - 0.1, min_smoothing)
-    else:  # Loss is stable → Apply small jitter to avoid stagnation
+    elif loss_change < -0.05:  # Moderate loss decrease
+        smoothing_factor = max(base_smoothing - 0.5, min_smoothing)
+    else:  # Loss is stable
         #smoothing_factor = max(base_smoothing + random.uniform(-0.05, 0.05), min_smoothing)
-        smoothing_factor = max(base_smoothing - 0.1, min_smoothing)
+        smoothing_factor = max(base_smoothing - 0.2, min_smoothing)
 
     return smoothing_factor
 
@@ -205,6 +205,9 @@ def train(epochs, label_smoothness=0.0):
         num_batch = 0
         total_loss = 0.0
         final_output = 0
+        print("Updated learning rate is ---------------::::::::::::::::::::", trainer.params["learning_rate"])
+        for param_group in optimizer.param_groups:
+            param_group['lr'] = trainer.params["learning_rate"]
 
         avg_epoch_loss = 0.0
 
@@ -219,12 +222,7 @@ def train(epochs, label_smoothness=0.0):
             batch=data_processing.create_batch_index(batch[0],entities,list(entities[batch[0]]),encoding_map,index,doc_to_ent)
             #batch = data_processing.create_batch_index_document(batch[0], entities,  encoding_map,
             #                                           index, doc_to_ent)
-            logits, loss = trainer.make_forward_pass(batch,step)
-            #f = open('loss_file.txt', 'a+')
-            #f.write("Epoch: " + ' ' + str(e) + '\n')
-            #f.write("forward loss is: " + ' ' + str(loss.item()) + '\n')
-            #f.close()
-            total_loss = total_loss + loss.item() #Adding up the loss
+
             if trainer.params['adaptive_label_smoothing'] == 'yes':
                 if e == 0:
                     trainer.params["label_smoothness"] = base_smoothing
@@ -233,6 +231,14 @@ def train(epochs, label_smoothness=0.0):
             else:
                 trainer.params["label_smoothness"] = label_smoothness
                 smoothing_factor = label_smoothness
+
+            logits, loss = trainer.make_forward_pass(batch,step)
+            #f = open('loss_file.txt', 'a+')
+            #f.write("Epoch: " + ' ' + str(e) + '\n')
+            #f.write("forward loss is: " + ' ' + str(loss.item()) + '\n')
+            #f.close()
+            total_loss = total_loss + loss.item() #Adding up the loss
+
             if torch.isnan(loss):
                 print("Warning: total_loss became NaN! Resetting to 0.0")
                 total_loss = 0.0
@@ -243,6 +249,14 @@ def train(epochs, label_smoothness=0.0):
             if trainer.grad_acc_steps > 1:
                 loss = loss / trainer.grad_acc_steps
             loss.backward()
+            # Compute total gradient norm
+            total_grad_norm = torch.sqrt(
+                sum(p.grad.norm() ** 2 for p in trainer.model.parameters() if p.grad is not None))
+            #print(f"Total Gradient Norm at Step {step}: {total_grad_norm.item()}")
+            #f = open('gradients.txt', 'a+')
+            #f.write("Total Gradient Norm at Step " + str(step) + ' ' + str(total_grad_norm.item()) + '\n')
+            #f.close()
+
             if (step + 1) % trainer.grad_acc_steps == 0:
                 torch.nn.utils.clip_grad_norm_(
                     trainer.model.parameters(), trainer.params["max_grad_norm"]
@@ -254,6 +268,7 @@ def train(epochs, label_smoothness=0.0):
                     noise.add_gausian_noise(optimizer, device)
                 if noise_function == "anticorrelated_noise_gradient":
                     noise.add_anticorrelated_noise_gradient(optimizer, device)
+
                 optimizer.step()
                 scheduler.step()
                 optimizer.zero_grad()
@@ -287,8 +302,8 @@ def train(epochs, label_smoothness=0.0):
 
         avg_loss.append(avg_epoch_loss)  # Store epoch loss for next iteration
         f = open('loss_file.txt', 'a+')
-        f.write("Smoothing factor taken as: " + ' ' + str(smoothing_factor) + '\n'
-                + "Average loss in this epoch" + ' ' + str(avg_epoch_loss) + '\n'
+        f.write("Smoothing factor taken as: " + ' ' + str(trainer.params['label_smoothness']) + '\n'+
+                "Average loss in this epoch" + ' ' + str(avg_epoch_loss) + '\n'
                 + "Total loss so far is:" + ' ' + str(avg_loss) + '\n')
         f.close()
         print(f"Epoch {e}: Loss = {avg_epoch_loss:.4f}, Updated Smoothing Factor = {smoothing_factor:.4f}")
@@ -305,7 +320,7 @@ def train(epochs, label_smoothness=0.0):
         f.close()
         #writing mrrs
         f1 = open('Results_Mrr.txt', 'a+')
-        f1.write("Results in Epoch: " + str(e) + ' ' + str(results) + '\n')
+        f1.write("Results in Epoch: " + str(e) + ' ' + str(mrr) + '\n')
         f1.close()
         encoding_map = encode_documents(documents, trainer.model, trainer.collator)
         epoch_output_folder_path = os.path.join(
