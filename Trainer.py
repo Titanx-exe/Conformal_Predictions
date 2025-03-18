@@ -1,5 +1,6 @@
 import pickle
 from optimizers import standard_optimizer
+import torch
 #from blinkRanker import collator
 from models.BiEncoder import BiEncoderRanker
 from models.BiEncoderHuggingface import BiEncoderRanker as hf_Ranker
@@ -49,6 +50,16 @@ class TrainerRanker:
         return optimizer, scheduler
 
     def make_forward_pass(self, batch, step):
+        context_input=self.collator.collate_context(batch[0])
+        candidate_input =self.collator.collate_entities(batch[1])
+        labels=torch.tensor(batch[2],device=self.device)
+        # label_input = batch[0]["label_idx"].to(device)
+        # label_input = torch.LongTensor(torch.zeros(candidate_input.size(0),dtype=torch.int64)).to(device)
+        # context_input, candidate_input, label_input = batch
+
+        loss, logits = self.model(context_input,candidate_input,labels)
+
+        '''
         input=self.collator.collate_batch_train(batch)
         candidate_input = input["candidate_input"]
         context_input = input["context_input"]
@@ -57,6 +68,7 @@ class TrainerRanker:
         # context_input, candidate_input, label_input = batch
 
         loss, logits = self.model(context_input,candidate_input)
+        '''
         return logits, loss
 
 class TrainerRankerHuggingface:
@@ -148,6 +160,21 @@ class TrainerE5:
         return optimizer, scheduler
 
     def make_forward_pass(self, batch, step):
+        queries = batch[0]
+        queries = self.collator.collate(queries, is_passage=False)
+        documents = batch[1]
+
+        documents = self.collator.collate(documents, is_passage=True)
+        queries.extend(documents)
+        token_input = self.tokenizer(queries, max_length=512, padding=True, truncation=True, return_tensors='pt')
+        token_input.to(self.device)
+        labels = torch.tensor(batch[2], device=self.device)
+        # label_input = batch[0]["label_idx"].to(device)
+        # label_input = torch.LongTensor(torch.zeros(candidate_input.size(0),dtype=torch.int64)).to(device)
+        # context_input, candidate_input, label_input = batch
+
+        loss, logits = self.model(token_input, len(batch[0]), labels)
+        '''
         queries=[sample[1]for sample in batch]
         queries=self.collator.collate(queries,is_passage=False)
         documents = [sample[0] for sample in batch]
@@ -161,4 +188,5 @@ class TrainerE5:
         # context_input, candidate_input, label_input = batch
 
         loss, logits = self.model(documents)
+        '''
         return logits, loss

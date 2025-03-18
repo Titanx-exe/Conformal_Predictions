@@ -203,7 +203,7 @@ class BiEncoderRanker(torch.nn.Module):
     # If label_input is None, train on in-batch negatives
     def forward(self, context_input, cand_input, label_input=None):
         flag = label_input is None
-        scores = self.score_candidate(context_input, cand_input, flag)
+        scores = self.score_candidate(context_input, cand_input, True)
         bs = scores.size(0)
         if label_input is None:
             target = torch.LongTensor(torch.arange(bs))
