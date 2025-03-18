@@ -162,13 +162,13 @@ class RankingParser(argparse.ArgumentParser):
         )
         parser.add_argument(
             "--dataset",
-            default="lcquad",
+            default="mintaka",
             type=str,
             help="choose between lcquad, mintaka and aida",
         )
         parser.add_argument(
             "--found_model",
-            default="biencoder",
+            default="e5",
             type=str,
             help="choose between biencoder and e5",
         )
@@ -192,7 +192,7 @@ class RankingParser(argparse.ArgumentParser):
         )
         parser.add_argument(
             "--gpu_id",
-            default=1,
+            default=0,
             type=str,
             help="gpu to use",
         )
@@ -220,8 +220,8 @@ class RankingParser(argparse.ArgumentParser):
         parser.add_argument("--max_grad_norm", default=1.0, type=float)
         parser.add_argument(
             "--learning_rate",
-            #default=3e-6,
-            default=3e-8,
+            default=3e-6,
+            #default=3e-8,
             type=float,
             help="The initial learning rate for Adam.",
         )
@@ -285,12 +285,31 @@ class RankingParser(argparse.ArgumentParser):
         parser.add_argument(
             "--type_optimization",
             type=str,
-            default="all_encoder_layers_e5",
+            #default="all_encoder_layers_e5",
+            default="all_encoder_layers",
             help="Which type of layers to optimize in BERT",
         )
         parser.add_argument(
             "--shuffle", type=bool, default=True,
             help="Whether to shuffle train data",
+        )
+        parser.add_argument(
+            "--max_queries_per_step",
+            type=int,
+            default=3000,
+            help="Only used for MSmarco. Defines how many queries are used in a set of optimization steps",
+        )
+        parser.add_argument(
+            "--max_negatives_per_step",
+            type=int,
+            default=10000,
+            help="Only used for MSmarco. Defines how many total negative documents are used in a set of optimization steps",
+        )
+        parser.add_argument(
+            "--training_steps_per_split",
+            type=int,
+            default=5000,
+            help="Only used for MSmarco. Defines how many training steps should be performed per data split",
         )
 
     def add_eval_args(self, args=None):

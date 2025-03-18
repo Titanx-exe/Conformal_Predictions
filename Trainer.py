@@ -8,8 +8,6 @@ from collator import Biencoder_Collator,E5collator
 from transformers import AutoTokenizer
 from torch.utils.data import DataLoader
 
-import torch
-
 class TrainerRanker:
     def __init__(self, params, evaluate_after_batch,  device):
         self.grad_acc_steps = params["gradient_accumulation_steps"]
@@ -43,15 +41,11 @@ class TrainerRanker:
         return train_dataloader, test_dataloader
     '''
     def getOptimizerAndSheduler(self, len_train_Data):
-        f = open('learn_rate.txt', 'a+')
-        f.write("learning rate: " + ' ' + str(self.params["learning_rate"]) + '\n')
-        f.close()
         optimizer = standard_optimizer.get_bert_optimizer([self.model], self.params["type_optimization"],
             self.params["learning_rate"],
                 fp16=self.params.get("fp16"))
         scheduler = standard_optimizer.get_scheduler(self.params, optimizer, len_train_Data)
         return optimizer, scheduler
-
 
     def make_forward_pass(self, batch, step):
         input=self.collator.collate_batch_train(batch)
@@ -65,9 +59,6 @@ class TrainerRanker:
         return logits, loss
 
 
-
-
-
 class TrainerE5:
     def __init__(self, params, evaluate_after_batch,  device):
         self.grad_acc_steps = params["gradient_accumulation_steps"]
@@ -75,7 +66,7 @@ class TrainerE5:
         self.evaluate_after = evaluate_after_batch
         #self.candidate_size = candidate_size
         self.device = device
-        self.model = E5Ranker(device, params)
+        self.model = E5Ranker(device)
         self.tokenizer = AutoTokenizer.from_pretrained('intfloat/e5-base-v2')
         self.collator = E5collator(tokenizer=self.tokenizer,device=self.device)
 
@@ -106,7 +97,6 @@ class TrainerE5:
                 fp16=self.params.get("fp16"))
         scheduler = standard_optimizer.get_scheduler(self.params, optimizer, len_train_Data)
         return optimizer, scheduler
-
 
     def make_forward_pass(self, batch, step):
         queries=[sample[1]for sample in batch]

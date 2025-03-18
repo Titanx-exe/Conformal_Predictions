@@ -11,14 +11,12 @@ from pytorch_transformers.modeling_bert import (
     BertModel,
 )
 
-from pytorch_transformers.tokenization_bert import BertTokenizer
-#from transformers import AutoTokenizer, AutoModel
+#from pytorch_transformers.tokenization_bert import BertTokenizer
+from transformers import AutoTokenizer, AutoModel
 #from blinkRanker.model.ranker_base import BertEncoder, get_model_obj
 
 
 # from biencoderup.common.optimizer import get_bert_optimizer
-
-
 
 
 def load_biencoder(params):
@@ -30,10 +28,10 @@ def load_biencoder(params):
 class BiEncoderModule(torch.nn.Module):
     def __init__(self, params):
         super(BiEncoderModule, self).__init__()
-        #ctxt_bert = AutoModel.from_pretrained(params["bert_model"])
-        #cand_bert = AutoModel.from_pretrained(params["bert_model"])
-        ctxt_bert = BertModel.from_pretrained(params["bert_model"])
-        cand_bert = BertModel.from_pretrained(params['bert_model'])
+        ctxt_bert = AutoModel.from_pretrained(params["bert_model"])
+        cand_bert = AutoModel.from_pretrained(params["bert_model"])
+        #ctxt_bert = BertModel.from_pretrained(params["bert_model"])
+        #cand_bert = BertModel.from_pretrained(params['bert_model'])
         self.context_encoder = BertEncoder(
             ctxt_bert,
             params["out_dim"],
@@ -50,22 +48,19 @@ class BiEncoderModule(torch.nn.Module):
 
     def forward(
             self,
-            token_idx_ctxt,
-            segment_idx_ctxt,
-            mask_ctxt,
-            token_idx_cands,
-            segment_idx_cands,
-            mask_cands,
+            batch_context,
+            batch_candidate
+
     ):
         embedding_ctxt = None
-        if token_idx_ctxt is not None:
+        if batch_context is not None:
             embedding_ctxt = self.context_encoder(
-                token_idx_ctxt, segment_idx_ctxt, mask_ctxt
+                batch_context
             )
         embedding_cands = None
-        if token_idx_cands is not None:
+        if batch_candidate is not None:
             embedding_cands = self.cand_encoder(
-                token_idx_cands, segment_idx_cands, mask_cands
+                batch_candidate
             )
         return embedding_ctxt, embedding_cands
 
@@ -85,10 +80,10 @@ class BiEncoderRanker(torch.nn.Module):
         self.NULL_IDX = 0
         self.START_TOKEN = "[CLS]"
         self.END_TOKEN = "[SEP]"
-        #self.tokenizer =AutoTokenizer.from_pretrained(params["bert_model"], do_lower_case=params["lowercase"])
-        self.tokenizer = BertTokenizer.from_pretrained(
-            params["bert_model"], do_lower_case=params["lowercase"]
-        )
+        self.tokenizer =AutoTokenizer.from_pretrained(params["bert_model"], do_lower_case=params["lowercase"])
+        #self.tokenizer = BertTokenizer.from_pretrained(
+        #    params["bert_model"], do_lower_case=params["lowercase"]
+        #)
         # init model
         self.build_model()
         model_path = params.get("path_to_model", None)
@@ -111,36 +106,7 @@ class BiEncoderRanker(torch.nn.Module):
     def build_model(self):
         self.model = BiEncoderModule(self.params)
 
-    # this function is added to compute negative label smoothing
     '''
-    def loss_gls(self, logits, labels):
-        """
-        Computes Generalized Label Smoothing (GLS) loss.
-        :param logits: Model logits before softmax, shape [batch_size, num_classes].
-        :param labels: True labels, shape [batch_size].
-        :return: Smoothed loss.
-        """
-        batch_size, num_classes = logits.shape
-        log_probs = F.log_softmax(logits, dim=-1)
-
-        smoothing_factor = self.params['label_smoothness']
-        # Create smoothed label distribution
-        confidence = 1.0 - smoothing_factor
-        smoothed_labels = torch.full((batch_size, num_classes), smoothing_factor / (num_classes - 1),
-                                     device=self.device)
-        smoothed_labels.scatter_(1, labels.unsqueeze(1), confidence)
-
-        
-
-        # Apply Negative Label Smoothing (NLS)
-        if smoothing_factor < 0:
-            neg_factor = -smoothing_factor
-            smoothed_labels = (1 + neg_factor) * smoothed_labels - (neg_factor / (num_classes - 1))
-            smoothed_labels = smoothed_labels / smoothed_labels.sum(dim=1, keepdim=True)  # Normalize
-        #print("performing negative label_smoothing-------------", smoothed_labels)
-        return F.kl_div(log_probs, smoothed_labels, reduction="batchmean")
-
-    
     def save_model(self, output_dir):
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
@@ -163,20 +129,20 @@ class BiEncoderRanker(torch.nn.Module):
     '''
 
     def encode_context(self, cands):
-        token_idx_cands, segment_idx_cands, mask_cands = to_bert_input(
+        '''token_idx_cands, segment_idx_cands, mask_cands = to_bert_input(
             cands, self.NULL_IDX
-        )
+        )'''
         embedding_context, _ = self.model(
-            token_idx_cands, segment_idx_cands, mask_cands, None, None, None
+            cands,None
         )
         return embedding_context.cpu().detach()
 
     def encode_candidate(self, cands):
-        token_idx_cands, segment_idx_cands, mask_cands = to_bert_input(
+        '''token_idx_cands, segment_idx_cands, mask_cands = to_bert_input(
             cands, self.NULL_IDX
-        )
+        )'''
         _, embedding_cands = self.model(
-            None, None, None, token_idx_cands, segment_idx_cands, mask_cands
+            None, cands
         )
         return embedding_cands.cpu().detach()
         # TODO: why do we need cpu here?
@@ -192,17 +158,19 @@ class BiEncoderRanker(torch.nn.Module):
             cand_encs=None,  # pre-computed candidate encoding.
     ):
 
-        batch_size = cand_vecs.size(0)
-        candidate_size = cand_vecs.size(1)
+        batch_size = cand_vecs.data["input_ids"].size(0)
+        candidate_size = cand_vecs.data["input_ids"].size(1)
         if not random_negs:
             cand_vecs = cand_vecs.view(batch_size * candidate_size, self.params["max_cand_length"])
         # ret=cand_vecs_view.view(10,5,128)
         # Encode contexts first
+        '''
         token_idx_ctxt, segment_idx_ctxt, mask_ctxt = to_bert_input(
             text_vecs, self.NULL_IDX
         )
+        '''
         embedding_ctxt, _ = self.model(
-            token_idx_ctxt, segment_idx_ctxt, mask_ctxt, None, None, None
+            text_vecs, None
         )
 
         # Candidate encoding is given, do not need to re-compute
@@ -211,11 +179,13 @@ class BiEncoderRanker(torch.nn.Module):
             return embedding_ctxt.mm(cand_encs.t())
 
         # Train time. We compare with all elements of the batch
+        '''
         token_idx_cands, segment_idx_cands, mask_cands = to_bert_input(
             cand_vecs, self.NULL_IDX
         )
+        '''
         _, embedding_cands = self.model(
-            None, None, None, token_idx_cands, segment_idx_cands, mask_cands
+            None,cand_vecs
         )
         #embedding_cands = embedding_cands.view(batch_size, candidate_size, embedding_cands.size(1))
         if random_negs:
@@ -231,63 +201,20 @@ class BiEncoderRanker(torch.nn.Module):
             return scores
 
     # label_input -- negatives provided
-
-
-    #negative label smoothing
-    def loss_gls(self, logits, labels):
-        # logits: model prediction logits before the soft-max, with size [batch_size, classes]
-        # labels: the (noisy) labels for evaluation, with size [batch_size]
-        # smooth_rate: could go either positive or negative,
-        # smooth_rate candidates we adopted in the paper: [0.8, 0.6, 0.4, 0.2, 0.0, -0.2, -0.4, -0.6, -0.8, -1.0, -2.0, -4.0, -6.0, -8.0].
-        #print("labels are...............................", labels)
-        #print("labels are...............................", logits)
-        print("Applying gls##############################")
-        smooth_rate = self.params['label_smoothness']
-        confidence = 1. - smooth_rate
-        logprobs = F.log_softmax(logits, dim=-1)
-        nll_loss = -logprobs.gather(dim=-1, index=labels.unsqueeze(1))
-        nll_loss = nll_loss.squeeze(1)
-        #print()
-        smooth_loss = -logprobs.mean(dim=-1)
-        loss = confidence * nll_loss + smooth_rate * smooth_loss
-        loss_numpy = loss.data.cpu().numpy()
-        num_batch = len(loss_numpy)
-        return torch.sum(loss) / num_batch
-
-    #original forward function
-
+    # If label_input is None, train on in-batch negatives
     def forward(self, context_input, cand_input, label_input=None):
-        EPOCH_FILE = "epoch.txt"
-        with open(EPOCH_FILE, "r") as f:
-            epoch = int(f.read().strip())
-
-        if self.params['adaptive_epoch'] == 'yes':
-            if epoch > self.params['epoch_bound']:
-                self.params['label_smoothness'] = self.params['label_smoothness'] - 4.0
-                #self.params["learning_rate"] = 3e-12
-
-
-        smoothing_factor = self.params['label_smoothness']
-        #f = open('loss_file.txt', 'a+')
-        #f.write("Smoothing factor taken as: " + ' ' + str(smoothing_factor) + '\n')
-        #f.close()
-        flag = label_input is None
+        #flag = label_input is None
+        flag=True
         scores = self.score_candidate(context_input, cand_input, flag)
         bs = scores.size(0)
         if label_input is None:
             target = torch.LongTensor(torch.arange(bs))
             target = target.to(self.device)
+            loss = F.cross_entropy(scores, target, reduction="mean")
         else:
-            target = label_input
-
-        if smoothing_factor < 0.0:
-            loss = self.loss_gls(scores, target)
-        else:
-            #print("############### target is ################", target)
-            #print("+++++++++++++++++ score is +++++++++++++++++", scores)
-            #print()
-            loss = F.cross_entropy(scores, target, reduction="mean", label_smoothing=smoothing_factor)
-
+            # loss_fct = nn.BCEWithLogitsLoss(reduction="mean")
+            # TODO: add parameters?
+            loss = F.cross_entropy(scores, label_input, reduction="mean")
         return loss, scores
 
     def predict(self, context_input, cand_input):
@@ -320,15 +247,16 @@ class BertEncoder(nn.Module):
         else:
             self.additional_linear = None
 
-    def forward(self, token_ids, segment_ids, attention_mask):
-        output_bert, output_pooler = self.bert_model(
-            token_ids, segment_ids, attention_mask
+    def forward(self, batch):
+        output_bert = self.bert_model(
+            **batch
         )
         # get embedding of [CLS] token
         if self.additional_linear is not None:
-            embeddings = output_pooler
+            embeddings = output_bert.pooler_output
         else:
-            embeddings = output_bert[:, 0, :]
+            #embeddings = output_bert[:, 0, :]
+            embeddings = output_bert.last_hidden_state[:,0,:]
 
         # in case of dimensionality reduction
         if self.additional_linear is not None:

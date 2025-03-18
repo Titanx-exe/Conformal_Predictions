@@ -246,6 +246,19 @@ class E5Ranker(torch.nn.Module):
 
         return loss,scores
 
+    def forward(self,doc_input,context_len,target=None):
+        output = self.encode(doc_input)
+        embeddings = self.average_pool(output.last_hidden_state, doc_input['attention_mask'])
+        context_embeddings, candidate_embeddings = torch.split(embeddings, [context_len,embeddings.size(0)-context_len])
+        scores = (context_embeddings @ candidate_embeddings.T)
+        if target is None:
+            bs = scores.size(0)
+            target = torch.LongTensor(torch.arange(bs))
+            target = target.to(self.device)
+        loss = F.cross_entropy(scores, target, reduction="mean")
+        return loss, scores
+
+
 # Each input text should start with "query: " or "passage: ".
 # For tasks other than retrieval, you can simply use the "query: " prefix.
 '''

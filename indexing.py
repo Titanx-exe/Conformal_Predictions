@@ -2,11 +2,11 @@ from tqdm import tqdm
 import numpy
 import faiss
 import torch
-from collator import Biencoder_Collator
+#from collator import Biencoder_Collator
 from torch.utils.data import DataLoader
-import data_processing
+#import data_processing
 from parameters import RankingParser
-from models.BiEncoder import BiEncoderRanker
+#from models.BiEncoder import BiEncoderRanker
 
 class DenseIndexer(object):
     def __init__(self, buffer_size: int = 50000):
@@ -139,6 +139,18 @@ def generateVectors(entities,model,batchsize,collator):
         encodings.extend(encs)
     return encodings
 
+def generateVectors_generic(entities,batchsize,collate_fn,model_fn):
+    encodings=[]
+
+    dataloader = DataLoader(
+    entities, shuffle=False, batch_size=batchsize,collate_fn=collate_fn
+    )
+    iter_ = tqdm(dataloader)
+    for step, batch in enumerate(iter_):
+        encs = model_fn(batch).tolist()
+        encodings.extend(encs)
+    return encodings
+
 def generate_vectors_query(queries,model,batchsize,collator):
     encodings=[]
 
@@ -147,7 +159,7 @@ def generate_vectors_query(queries,model,batchsize,collator):
     )
     iter_ = tqdm(dataloader)
     for step, batch in enumerate(iter_):
-        encs = model.encode_candidate(batch).tolist()
+        encs = model.encode_context(batch).tolist()
         encodings.extend(encs)
     return encodings
 
@@ -163,7 +175,7 @@ print("load entities")
 def index_queries(model,queries,collator):
     print("encode entities")
     model.eval()
-    encodings = generateVectors(queries,model,100,collator)
+    encodings = generate_vectors_query(queries,model,100,collator)
     idToIndex={}
     print("start geneationg vectors")
     x_dim=len(encodings)
@@ -185,7 +197,7 @@ def index_queries(model,queries,collator):
 def index_entities(model,entities,collator):
     print("encode entities")
     model.eval()
-    encodings = generateVectors(entities,model,100,collator)
+    encodings = generateVectors(entities,model,25,collator)
     idToIndex={}
     print("start geneationg vectors")
     x_dim=len(encodings)
@@ -205,6 +217,30 @@ def index_entities(model,entities,collator):
     print("finished")
     print("index entities")
     return index
+
+def index_data(model,entities,collate_fn,model_fn):
+    print("encode entities")
+    model.eval()
+    encodings = generateVectors_generic(entities,200,collate_fn,model_fn)
+    idToIndex={}
+    print("start geneationg vectors")
+    x_dim=len(encodings)
+    y_dim=len(encodings[0])
+    vectors=numpy.zeros((x_dim,y_dim),dtype=numpy.float32)
+    for i in range(0,len(encodings)):
+        vectors[i] = numpy.asarray(encodings[i])
+        idToIndex.update({i:entities[i]})
+    print("start indexing")
+    DenseFlatIndexer
+    index = DenseFlatIndexer(vector_sz=y_dim)
+    #index=DenseHNSWFlatIndexer(vector_sz=y_dim)
+    index.index_data(vectors)
+    index.index_id_to_db_id=idToIndex
+    print(index.index.ntotal)
+    #faiss.write_index(index.index,"faiss-hswf-index-test")
+    print("finished")
+    print("index entities")
+    return index,idToIndex
 
 device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")
