@@ -245,12 +245,18 @@ class RankingParser(argparse.ArgumentParser):
         )
         parser.add_argument(
             "--epoch_bound",
-            default=5,
+            default=1,
             type=int,
             help="Epoch after which the training switch to NLS",
         )
         parser.add_argument(
             "--adaptive_epoch",
+            default='no',
+            type=str,
+            help="Applying adaptive NLS based on epoch changes: yes or no",
+        )
+        parser.add_argument(
+            "--selective_nls",
             default='no',
             type=str,
             help="Applying adaptive NLS based on epoch changes: yes or no",

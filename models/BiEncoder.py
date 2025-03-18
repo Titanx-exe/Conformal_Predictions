@@ -230,8 +230,73 @@ class BiEncoderRanker(torch.nn.Module):
             scores = torch.squeeze(scores, dim=2)
             return scores
 
+    def loss_gls_select_nls(self, logits, labels):
+        """
+        Computes Generalized Label Smoothing (GLS) loss with adaptive smoothing rate.
+        """
+        print("Applying GLS with adaptive smoothing...")
+
+        # Ensure smoothing_rate is a tensor
+        #if not hasattr(self, 'smoothing_rate'):
+        #    self.smoothing_rate = torch.full((logits.size(0),), self.params['label_smoothness'], device=logits.device)
+
+        confidence = 1. - self.smoothing_rate  # This is now a tensor
+
+        logprobs = F.log_softmax(logits, dim=-1)
+        nll_loss = -logprobs.gather(dim=-1, index=labels.unsqueeze(1)).squeeze(1)
+        smooth_loss = -logprobs.mean(dim=-1)
+        print("nll_loss is --------------------", nll_loss)
+        print("smothing rate####################", self.smoothing_rate)
+        # Apply per-sample smoothing factor
+        loss = confidence * nll_loss + self.smoothing_rate * smooth_loss
+
+        return loss.mean()
+
     # label_input -- negatives provided
 
+    def selective_nls(self, logits: torch.Tensor, labels: torch.Tensor, min_conf=0.5, max_conf=0.9, max_smooth=-0.1):
+        """
+        Applies Negative Label Smoothing (NLS) **only when the model is overconfident in the correct label**.
+
+        Args:
+            logits (Tensor): Model outputs before softmax, shape [batch_size, num_classes].
+            labels (Tensor): Ground truth labels, shape [batch_size].
+            min_conf (float): Minimum confidence threshold before applying smoothing.
+            max_conf (float): Maximum confidence threshold for full smoothing.
+            max_smooth (float): Maximum smoothing factor applied at high confidence.
+
+        Returns:
+            Tensor: A tensor of shape [batch_size] containing per-sample smoothing factors.
+        """
+        if not isinstance(logits, torch.Tensor):
+            raise TypeError(f"Expected logits to be a Tensor, but got {type(logits)}")
+
+        # Compute softmax probabilities
+        probs = torch.softmax(logits, dim=-1)
+
+        # Get probability of the correct class
+        correct_probs = probs.gather(dim=-1, index=labels.unsqueeze(1)).squeeze(1)
+
+        # Initialize smoothing to zero (no smoothing)
+        adaptive_smooth = torch.zeros_like(correct_probs, device=logits.device)
+
+        # **Apply smoothing only to high-confidence samples**
+        high_conf_mask = correct_probs < min_conf
+
+        if high_conf_mask.any():  # Apply only if at least one sample is confident
+            scaling_factor = (correct_probs[high_conf_mask] - min_conf) / (max_conf - min_conf)
+            adaptive_smooth[high_conf_mask] = -0.2
+
+            #adaptive_smooth = torch.clamp(adaptive_smooth, min=0.0, max=max_smooth)  # Ensure valid range
+        self.smoothing_rate = adaptive_smooth
+        loss = self.loss_gls_select_nls(logits, labels)
+        # Logging confidence & smoothing values
+        with open('conf_smooth.txt', 'a+') as f1:
+            for i in range(len(correct_probs)):
+                f1.write(
+                    f"Sample {i}: confidence={correct_probs[i].item():.4f}, smoothing={adaptive_smooth[i].item():.4f}\n")
+
+        return loss, logits
 
     #negative label smoothing
     def loss_gls(self, logits, labels):
@@ -264,7 +329,7 @@ class BiEncoderRanker(torch.nn.Module):
         if self.params['adaptive_epoch'] == 'yes':
             if epoch > self.params['epoch_bound']:
                 self.params['label_smoothness'] = self.params['label_smoothness'] - 4.0
-                #self.params["learning_rate"] = 3e-12
+                self.params["learning_rate"] = 3e-5
 
 
         smoothing_factor = self.params['label_smoothness']
@@ -279,6 +344,11 @@ class BiEncoderRanker(torch.nn.Module):
             target = target.to(self.device)
         else:
             target = label_input
+        self.smoothing_rate = torch.full((target.size(0),), self.params['label_smoothness'], device=target.device)
+        if self.params['selective_nls'] == 'yes':
+            if epoch > self.params['epoch_bound']:
+                return self.selective_nls(scores, target)
+
 
         if smoothing_factor < 0.0:
             loss = self.loss_gls(scores, target)

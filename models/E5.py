@@ -144,7 +144,7 @@ class E5Ranker(torch.nn.Module):
                 if target[i].item() in neighbors:
                     neighbors.remove(target[i].item())  # Exclude the correct class
 
-            # Assign probabilities to neighbors
+            # Assign probabilities to neighbors0.24707357859531773
             for neighbor in neighbors:
                 smoothed_labels[i, neighbor] += smoothing_factor / len(neighbors)
 

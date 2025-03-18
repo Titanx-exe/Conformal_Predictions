@@ -23,5 +23,5 @@ best_trial = study.best_trial
 print("++++++++++++Best results after trials with Bayesian optimization++++++++++++", best_trial)
 '''
 
-final_val = train(10, 0.0)
+final_val = train(5, 0.0)
 
