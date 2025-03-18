@@ -73,7 +73,7 @@ class Ms_marco_data_handler:
         self.current_doc_encodings=self.encode_documents(self.curr_negative_docs,model,collator)
         self.current_query_index = index_queries(model,self.current_queries,  collator)
 
-    def create_batch_index(self,num_queries=5,rand_docs=2):
+    def create_batch_index(self,num_queries=5,rand_docs=2,num_noise_labels=0):
         random_docs=random.sample(self.curr_negative_docs,rand_docs)
         #candidate_queries = self.current_query_index.search([self.current_doc_encodings[document]], num_queries)[0]
         candidate_queries = self.current_query_index.search([self.current_doc_encodings[rd] for rd in random_docs], num_queries)
@@ -90,6 +90,11 @@ class Ms_marco_data_handler:
         #pairs.extend([(ind,document,False)for ind in candidate_queries])
         #random.shuffle(pairs)
         labels=[documents.index(correct_pairs[query])for query in list(correct_pairs.keys())]
+        for i in range(num_noise_labels):
+            update_ind = labels[i]
+            while update_ind == labels[i]:
+                update_ind = random.randrange(len(documents))
+            labels[i] = update_ind
         return all_queries,documents,labels
 '''
 device = torch.device(

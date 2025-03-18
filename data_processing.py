@@ -58,6 +58,37 @@ def create_batch_ent(entity,pos_docs,documents:list,doc_to_ent,batch_size=10):
                     break
     return batch
 
+def create_batch_label_noise(entity,entities,pos_docs,document_encodings:dict,entity_index,doc_to_ent,batch_size=10,num_noise_labels=0):
+    batch_docs=[]
+    batch_entities=[]
+    pos_document=random.choice(pos_docs)
+    batch_docs.append(pos_document)
+    batch_entities.append(entity)
+    #covered_entities=set()
+    covered_entities = set(doc_to_ent[pos_document])
+    candidate_entities=entity_index.search([document_encodings[pos_document]],100)[0]
+    documents=[]
+    for ent in candidate_entities:
+        if ent in entities:
+            documents.extend(list(entities[ent]))
+    for i in range(1,batch_size):
+        for doc in documents:
+            doc_ents=doc_to_ent[doc]
+            if len(doc_ents.intersection(covered_entities))==0:
+                if len(doc_ents)>0:
+                    b_ent=random.choice(list(doc_ents))
+                    batch_docs.append(doc)
+                    batch_entities.append(b_ent)
+                    covered_entities=covered_entities.union(doc_ents)
+                    break
+    labels=[i for i in range(0,batch_size)]
+    for i in range(num_noise_labels):
+        update_ind=i
+        while update_ind==i:
+            update_ind = random.randrange(10)
+        labels[i]=update_ind
+    return  batch_docs,batch_entities,labels
+
 def create_batch_index(entity,entities,pos_docs,document_encodings:dict,entity_index,doc_to_ent,batch_size=10):
     batch=[]
     pos_document=random.choice(pos_docs)

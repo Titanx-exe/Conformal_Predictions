@@ -337,7 +337,7 @@ class BiEncoderRanker(torch.nn.Module):
         #f.write("Smoothing factor taken as: " + ' ' + str(smoothing_factor) + '\n')
         #f.close()
         flag = label_input is None
-        scores = self.score_candidate(context_input, cand_input, flag)
+        scores = self.score_candidate(context_input, cand_input, True)
         bs = scores.size(0)
         if label_input is None:
             target = torch.LongTensor(torch.arange(bs))
