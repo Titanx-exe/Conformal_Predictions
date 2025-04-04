@@ -51,7 +51,7 @@ def load_train_blink_Ranking_Model():
         train_inst = Trainer.TrainerE5(params=params, evaluate_after_batch=params["eval_interval"], device=device)
     # for BiEncoder
     if params["found_model"] == "biencoder":
-        train_inst = Trainer.TrainerRankerHuggingface(params=params, evaluate_after_batch=params["eval_interval"], device=device)
+        train_inst = Trainer.TrainerRanker(params=params, evaluate_after_batch=params["eval_interval"], device=device)
 
     #for aida
     if params["dataset"] == "aida":
@@ -141,27 +141,56 @@ def encode_documents(documents,model,collator):
         encoding_map[documents[i]]=doc_encodings[i]
     return encoding_map
 
-def train(epochs):
+def train():
     #trainer,evaluator, train_dataloader, optimizer, scheduler = load_train_only_Graph_Model(device)
     trainer, evaluator, train_dataloader, optimizer, scheduler,entities,documents,doc_to_ent = load_train_blink_Ranking_Model()
     trainer.model.train()
+    epochs= trainer.params['num_epochs']
     #print(evaluator.evaluate(trainer.model))
-    index,results=evaluator.evaluate(trainer.model)
+    index,results, mrr =evaluator.evaluate(trainer.model)
     #index, mrr = evaluator.evaluate_mrr(trainer.model)
     print(results)
     #print(mrr)
+    # Recall writing in a file
+    f = open(trainer.params["training_result_update_file"], 'a+')
+    f.write("Smoothing factor taken as: " + ' ' + str(trainer.params['label_smoothness']) + '\n')
+    f.close()
+    # writing mrrs
+    f1 = open('Results_Mrr.txt', 'a+')
+    f1.write("Smoothing factor taken as: " + ' ' + str(trainer.params['label_smoothness']) + '\n')
+    f1.close()
+    encoding_map = encode_documents(documents, trainer.model, trainer.collator)
+
+    base_smoothing = float(trainer.params['base_smoothing_rate'])
+    avg_loss = []
     encoding_map=encode_documents(documents,trainer.model,trainer.collator)
     for e in range(epochs):
         num_batch = 0
+        total_loss = 0.0
+        final_output = 0
+        avg_epoch_loss = 0.0
 
         # step=0
         iter_ = tqdm(train_dataloader, desc="Training")
+        EPOCH_FILE = "epoch.txt"
+        with open(EPOCH_FILE, "w") as f:
+            f.write(str(e))
         for step, batch in enumerate(iter_):
             #batch=data_processing.create_batch_ent(batch[0],list(entities[batch[0]]),random.sample(list(documents),1000),doc_to_ent)
-            batch=data_processing.create_batch_index(batch[0],entities,list(entities[batch[0]]),encoding_map,index,doc_to_ent)
+            #batch=data_processing.create_batch_index(batch[0],entities,list(entities[batch[0]]),encoding_map,index,doc_to_ent)
             #batch = data_processing.create_batch_index_document(batch[0], entities,  encoding_map,
             #                                           index, doc_to_ent)
+            batch=data_processing.create_batch_label_noise(batch[0],entities,list(entities[batch[0]]),encoding_map,index,doc_to_ent,num_noise_labels=0)
             logits, loss = trainer.make_forward_pass(batch,step)
+
+            # Adding for adaptive label smoothing
+            total_loss = total_loss + loss.item()  # Adding up the loss
+            if trainer.params['adaptive_label_smoothing'] == 'yes':
+                if e == 0:
+                    trainer.params["label_smoothness"] = base_smoothing
+                else:
+                    trainer.params["label_smoothness"] = smoothing_factor  # Use current smoothing factor
+
 
             if trainer.grad_acc_steps > 1:
                 loss = loss / trainer.grad_acc_steps
@@ -188,7 +217,7 @@ def train(epochs):
                 trainer.model.eval()
                 #print(evaluator.evaluate(trainer.model))
                 #print(evaluator.evaluate_mrr(trainer.model))
-                index,results = evaluator.evaluate(trainer.model)
+                index,results, mrr = evaluator.evaluate(trainer.model)
                 #index, mrr = evaluator.evaluate_mrr(trainer.model)
                 print(results)
                 #print(mrr)
@@ -200,17 +229,34 @@ def train(epochs):
 
         print("Start evaluation after epoch: " + str(e))
         trainer.model.eval()
-        index,results = evaluator.evaluate(trainer.model)
-        index, mrr = evaluator.evaluate_mrr(trainer.model)
+        index,results, mrr = evaluator.evaluate(trainer.model)
+
         print("---------------------------Results in Epoch------------------------:" + str(e))
         print(results)
-        #Recall writing in a file
-        f = open(trainer.params["training_result_update_file"], 'a+')
-        f.write("Results in Epoch: " + str(e)+ str(results)+ '\n')
+        # **Epoch-Level Loss Computation**
+        avg_epoch_loss = total_loss / len(train_dataloader)
+        # **Update smoothing factor AFTER the epoch completes**
+        if trainer.params['adaptive_label_smoothing'] == 'yes':
+            if avg_loss:  # Ensure there's a previous loss recorded
+                smoothing_factor = adaptive_smoothing_loss(avg_loss[e - 1], avg_epoch_loss, base_smoothing)
+            else:
+                smoothing_factor = trainer.params['base_smoothing_rate']
+
+        avg_loss.append(avg_epoch_loss)  # Store epoch loss for next iteration
+        f = open('loss_file.txt', 'a+')
+        f.write("Smoothing factor taken as: " + ' ' + str(trainer.params["label_smoothness"]) + '\n'
+                + "Average loss in this epoch" + ' ' + str(avg_epoch_loss) + '\n'
+                + "Average loss in the previous epoch:" + ' ' + str(avg_loss[e - 1]) + '\n'
+                + "Total loss so far is:" + ' ' + str(avg_loss) + '\n')
         f.close()
-        #writing mrrs
+        #print(f"Epoch {e}: Loss = {avg_epoch_loss:.4f}, Updated Smoothing Factor = {smoothing_factor:.4f}")
+        # Recall writing in a file
+        f = open(trainer.params["training_result_update_file"], 'a+')
+        f.write("Results in Epoch " + str(e) + " : " + str(results) + '\n')
+        f.close()
+        # writing mrrs
         f1 = open('Results_Mrr.txt', 'a+')
-        f1.write("Results in Epoch: " + str(e) + str(mrr) + '\n')
+        f1.write("Results in Epoch " + str(e) + " : " + str(mrr) + '\n')
         f1.close()
         encoding_map = encode_documents(documents, trainer.model, trainer.collator)
         epoch_output_folder_path = os.path.join(
@@ -218,4 +264,5 @@ def train(epochs):
         )
         #save_model(trainer.model,trainer.tokenizer,  epoch_output_folder_path)
         trainer.model.train()
-train(10)
+    return results
+#train(10)

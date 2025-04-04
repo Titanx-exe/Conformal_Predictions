@@ -244,8 +244,20 @@ class RankingParser(argparse.ArgumentParser):
             help="Applying smoothing rate",
         )
         parser.add_argument(
+            "--label_smoothness",
+            default=0.0,
+            type=float,
+            help="Applying smoothing rate",
+        )
+        parser.add_argument(
+            "--num_epochs",
+            default=10,
+            type=int,
+            help="Number of epochs",
+        )
+        parser.add_argument(
             "--epoch_bound",
-            default=1,
+            default=0,
             type=int,
             help="Epoch after which the training switch to NLS",
         )

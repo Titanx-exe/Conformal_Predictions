@@ -71,9 +71,16 @@ class BiEncoderModule(torch.nn.Module):
 
 
 class BiEncoderRanker(torch.nn.Module):
-    def __init__(self, params, shared=None,device=None):
+    def __init__(self, params, shared=None,device=None,pos_lambda: float = 0.001,
+                 neg_lambda: float = 0.01,
+                 alpha: float = 0.001,    
+                 margin: float = 10):
         super(BiEncoderRanker, self).__init__()
         self.params = params
+        self.pos_lambda = pos_lambda
+        self.neg_lambda = neg_lambda
+        self.alpha = alpha
+        self.margin = margin
         if device==None:
             self.device = torch.device(
                 "cuda" if torch.cuda.is_available() else "cpu"
@@ -285,7 +292,7 @@ class BiEncoderRanker(torch.nn.Module):
 
         if high_conf_mask.any():  # Apply only if at least one sample is confident
             scaling_factor = (correct_probs[high_conf_mask] - min_conf) / (max_conf - min_conf)
-            adaptive_smooth[high_conf_mask] = -0.2
+            adaptive_smooth[high_conf_mask] = -0.5
 
             #adaptive_smooth = torch.clamp(adaptive_smooth, min=0.0, max=max_smooth)  # Ensure valid range
         self.smoothing_rate = adaptive_smooth
@@ -297,6 +304,90 @@ class BiEncoderRanker(torch.nn.Module):
                     f"Sample {i}: confidence={correct_probs[i].item():.4f}, smoothing={adaptive_smooth[i].item():.4f}\n")
 
         return loss, logits
+
+
+
+
+    def get_diff(self, scores):
+        max_values = scores.max(dim=1)
+        max_values = max_values.values.unsqueeze(dim=1).repeat(1, scores.shape[1])
+        diff = max_values - scores
+        return diff
+
+    def mbls_forward(self, scores, target):
+        alpha = 0.1
+        margin = 10
+        print("########################## applying mbls ###########################################")
+        if scores.dim() > 2:
+            scores = scores.view(scores.size(0), scores.size(1), -1)  # N,C,H,W => N,C,H*W
+            scores = scores.transpose(1, 2)    # N,C,H*W => N,H*W,C
+            scores = scores.contiguous().view(-1, scores.size(2))   # N,H*W,C => N*H*W,C
+            scores = scores.view(-1)
+            
+        loss_ce = F.cross_entropy(scores, target, reduction='mean')
+        
+        #print("scores is ++++++++++++++++++++++++++++++++++", scores)
+        # get logit distance
+        diff = self.get_diff(scores)
+        #print("differences are ...........................", diff)
+        # linear penalty where logit distances are larger than the margin
+        loss_margin = F.relu(diff-self.margin).mean()
+        loss = loss_ce + alpha * loss_margin
+        #print("loss ce is#################################", loss_ce)
+        #print("loss is%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", loss)
+
+        return loss, scores
+
+
+
+    def get_reg(self, inputs, targets):
+        max_values, indices = inputs.max(dim=1)
+        max_values = max_values.unsqueeze(dim=1).repeat(1, inputs.shape[1])
+        indicator = (max_values.clone().detach() == inputs.clone().detach()).float()
+
+        batch_size, num_classes = inputs.size()
+        num_pos = batch_size * 1.0
+        num_neg = batch_size * (num_classes - 1.0)
+
+        
+        
+        neg_dist = max_values.clone().detach() - inputs
+        
+        pos_dist_margin = F.relu(max_values - self.margin)
+        neg_dist_margin = F.relu(neg_dist - self.margin)
+
+        
+
+        pos = indicator * pos_dist_margin ** 2
+        neg = (1.0 - indicator) * (neg_dist_margin ** 2)
+
+        reg = self.pos_lambda * (pos.sum() / num_pos) + self.neg_lambda * (neg.sum() / num_neg)
+
+        print(f"Reg Pos Part: {(pos.sum() / num_pos).item():.4f}")
+        print(f"Reg Neg Part: {(neg.sum() / num_neg).item():.4f}")
+
+        
+        return reg
+
+
+    def acls_forward(self, scores, targets, alpha=0.1):
+        if scores.dim() > 2:
+            scores = scores.view(scores.size(0), scores.size(1), -1)  # N,C,H,W => N,C,H*W
+            scores = scores.transpose(1, 2)    # N,C,H*W => N,H*W,C
+            scores = scores.contiguous().view(-1, scores.size(2))   # N,H*W,C => N*H*W,C
+            targets = targets.view(-1)
+
+        loss_ce = F.cross_entropy(scores, targets, reduction="mean")
+        #print("????????????????????????????????cross entropy loss is_--------------------------")
+        #print(loss_ce)
+
+        loss_reg = self.get_reg(scores, targets)
+        loss = loss_ce + self.alpha * loss_reg
+
+        print("#################################### loss_reg is ++++++++++++++++++++++++++++")
+        print(loss_reg)
+        
+        return loss, scores
 
     #negative label smoothing
     def loss_gls(self, logits, labels):
@@ -327,9 +418,12 @@ class BiEncoderRanker(torch.nn.Module):
             epoch = int(f.read().strip())
 
         if self.params['adaptive_epoch'] == 'yes':
-            if epoch > self.params['epoch_bound']:
-                self.params['label_smoothness'] = self.params['label_smoothness'] - 4.0
-                self.params["learning_rate"] = 3e-5
+            if epoch <= self.params['epoch_bound']:
+                #continue
+                #self.params['label_smoothness'] = self.params['label_smoothness'] - 1.0
+                #self.params["learning_rate"] = 3e-5
+            #else:
+                self.params['label_smoothness'] = 0.0
 
 
         smoothing_factor = self.params['label_smoothness']
@@ -344,10 +438,18 @@ class BiEncoderRanker(torch.nn.Module):
             target = target.to(self.device)
         else:
             target = label_input
-        self.smoothing_rate = torch.full((target.size(0),), self.params['label_smoothness'], device=target.device)
+        
+        #self.smoothing_rate = torch.full((target.size(0),), self.params['label_smoothness'], device=target.device)
+        
         if self.params['selective_nls'] == 'yes':
             if epoch > self.params['epoch_bound']:
                 return self.selective_nls(scores, target)
+
+        if self.params['mbls'] == 'yes':
+            return self.mbls_forward(scores, target)
+
+        if self.params['acls'] == 'yes':
+            return self.acls_forward(scores, target)
 
 
         if smoothing_factor < 0.0:
