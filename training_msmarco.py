@@ -211,9 +211,26 @@ def train(epochs):
     # results, mrr = evaluator.evaluate_mrr(trainer.model)
     print(results)
     print(mrr)
+    f = open(trainer.params["training_result_update_file"], 'a+')
+    f.write("####Noise ratio taken as: " + ' ' + str(trainer.params['noise_ratio']) + '\n'
+            + "##Smoothing factor taken as: " + ' ' + str(trainer.params['label_smoothness']) + '\n')
+    f.close()
+    # writing mrrs
+    f1 = open('Results_Mrr.txt', 'a+')
+    f1.write("####Noise ratio taken as: " + ' ' + str(trainer.params['noise_ratio']) + '\n'
+             + "##Smoothing factor taken as: " + ' ' + str(trainer.params['label_smoothness']) + '\n')
+    f1.close()
     #encoding_map = encode_documents(documents, trainer.model, trainer.collator)
+    base_smoothing = float(trainer.params['base_smoothing_rate'])
+    avg_loss = []
     handler.reload_current_data(trainer.model,trainer.collator,reload_full=True)
     for e in range(epochs):
+        total_loss = 0.0
+        final_output = 0
+        avg_epoch_loss = 0.0
+        EPOCH_FILE = "epoch.txt"
+        with open(EPOCH_FILE, "w") as f:
+            f.write(str(e))
         num_batch = 0
         # step=0
         iter_ = tqdm(range(trainer.params["training_steps_per_split"]), desc="Training")
@@ -223,7 +240,7 @@ def train(epochs):
             # batch = data_processing.create_batch_index_document(batch[0], entities,  encoding_map,
             #                                           index, doc_to_ent)
             logits, loss = trainer.make_forward_pass(batch)
-
+            total_loss = total_loss + loss.item()  # Adding up the loss
             if trainer.grad_acc_steps > 1:
                 loss = loss / trainer.grad_acc_steps
             loss.backward()
@@ -260,13 +277,20 @@ def train(epochs):
                 #    "ranker_gr", "epoch_{}_{}".format(e, num_batch))
                 # save_model(model, model.tokenizer, epoch_output_folder_path)
                 trainer.model.train()
-
+        avg_epoch_loss = total_loss / len(range(trainer.params["training_steps_per_split"]))
         print("Start evaluation after epoch: " + str(e))
         trainer.model.eval()
         index, results, mrr = evaluator.evaluate(trainer.model)
         # index, mrr = evaluator.evaluate_mrr(trainer.model)
         print("---------------------------Results in Epoch------------------------:" + str(e))
         print(results)
+        avg_loss.append(avg_epoch_loss)  # Store epoch loss for next iteration
+        f = open('loss_file.txt', 'a+')
+        f.write("Smoothing factor taken as: " + ' ' + str(trainer.params["label_smoothness"]) + '\n'
+                + "Average loss in this epoch" + ' ' + str(avg_epoch_loss) + '\n'
+                + "Average loss in the previous epoch:" + ' ' + str(avg_loss[e - 1]) + '\n'
+                + "Total loss so far is:" + ' ' + str(avg_loss) + '\n')
+        f.close()
         # Recall writing in a file
         f = open(trainer.params["training_result_update_file"], 'a+')
         f.write("Results in Epoch " + str(e) + ' : ' + str(results) + '\n')
