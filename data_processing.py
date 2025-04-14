@@ -4,9 +4,6 @@ import random
 from SPARQLWrapper import SPARQLWrapper, JSON
 import pickle
 from nif import NIFDocument,NIFContent
-
-
-
 def process_lcquad_file(file_path):
     input=json.load(open(file_path,"r",encoding="utf-8"))
     entities={}
@@ -81,7 +78,7 @@ def create_batch_label_noise(entity,entities,pos_docs,document_encodings:dict,en
                     batch_entities.append(b_ent)
                     covered_entities=covered_entities.union(doc_ents)
                     break
-    labels=[i for i in range(0,batch_size)]
+    labels=[i for i in range(0,len(batch_docs))]
     for i in range(num_noise_labels):
         update_ind=i
         while update_ind==i:

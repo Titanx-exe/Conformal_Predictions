@@ -173,6 +173,12 @@ class RankingParser(argparse.ArgumentParser):
             help="choose between biencoder and e5",
         )
         parser.add_argument(
+            "--noise_ratio",
+            default=0,
+            type=int,
+            help="choose between 1,2,4,..10",
+        )
+        parser.add_argument(
             "--noise_approach",
             default=None,
             type=str,
@@ -251,7 +257,7 @@ class RankingParser(argparse.ArgumentParser):
         )
         parser.add_argument(
             "--num_epochs",
-            default=10,
+            default=6,
             type=int,
             help="Number of epochs",
         )
@@ -274,6 +280,24 @@ class RankingParser(argparse.ArgumentParser):
             help="Applying adaptive NLS based on epoch changes: yes or no",
         )
         parser.add_argument(
+            "--acls",
+            default='no',
+            type=str,
+            help="Applying ACLS based on epoch changes: yes or no",
+        )
+        parser.add_argument(
+            "--mbls",
+            default='no',
+            type=str,
+            help="Applying MBLS based on epoch changes: yes or no",
+        )
+        parser.add_argument(
+            "--label_relaxation",
+            default='no',
+            type=str,
+            help="Applying label relaxation: yes or no",
+        )
+        parser.add_argument(
             "--print_interval", type=int, default=10,
             help="Interval of loss printing",
         )
@@ -281,6 +305,12 @@ class RankingParser(argparse.ArgumentParser):
            "--eval_interval",
             type=int,
             default=1000,
+            help="Interval for evaluation during training",
+        )
+        parser.add_argument(
+            "--relaxation_param",
+            type=float,
+            default=0.1,
             help="Interval for evaluation during training",
         )
         parser.add_argument(

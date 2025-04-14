@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from tqdm import tqdm
+from label_relaxation import lr_torch
 
 from pytorch_transformers.modeling_bert import (
     BertPreTrainedModel,
@@ -436,11 +437,35 @@ class BiEncoderRanker(torch.nn.Module):
         if label_input is None:
             target = torch.LongTensor(torch.arange(bs))
             target = target.to(self.device)
+            print("------------target is ++++++++++++++++++++")
+            print(target)
         else:
             target = label_input
+
+
         
         #self.smoothing_rate = torch.full((target.size(0),), self.params['label_smoothness'], device=target.device)
-        
+
+        assert target.shape[0] == scores.shape[0], f"Mismatch: target {target.shape}, scores {scores.shape}"
+
+        if self.params['label_relaxation'] == 'yes':
+            batch_size, num_classes = scores.size()
+            loss_fn = lr_torch.LabelRelaxationLoss(
+                alpha=float(self.params['relaxation_param']),
+                dim=-1,
+                logits_provided=True,
+                one_hot_encode_trgts=True,
+                num_classes= num_classes # must match your actual number of classes
+            )
+            loss = loss_fn(scores, target)
+            #print("------------loss is ++++++++++++++++++++")
+            #print(loss)
+
+            #print("scores ................................")
+            #print(scores)
+            return loss, scores
+
+
         if self.params['selective_nls'] == 'yes':
             if epoch > self.params['epoch_bound']:
                 return self.selective_nls(scores, target)

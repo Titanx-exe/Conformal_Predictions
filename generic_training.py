@@ -151,13 +151,16 @@ def train():
     #index, mrr = evaluator.evaluate_mrr(trainer.model)
     print(results)
     #print(mrr)
-    # Recall writing in a file
     f = open(trainer.params["training_result_update_file"], 'a+')
-    f.write("Smoothing factor taken as: " + ' ' + str(trainer.params['label_smoothness']) + '\n')
+    f.write("####Noise ratio taken as: " + ' ' + str(trainer.params['noise_ratio']) + '\n'
+            + "##Label Relaxation applied?: " + ' ' + str(trainer.params['label_relaxation']) + '\n'
+            +"##Smoothing factor taken as: " + ' ' + str(trainer.params['relaxation_param']) + '\n')
     f.close()
     # writing mrrs
     f1 = open('Results_Mrr.txt', 'a+')
-    f1.write("Smoothing factor taken as: " + ' ' + str(trainer.params['label_smoothness']) + '\n')
+    f1.write("####Noise ratio taken as: " + ' ' + str(trainer.params['noise_ratio']) + '\n'
+            + "##Label Relaxation applied?: " + ' ' + str(trainer.params['label_relaxation']) + '\n'
+            +"##Smoothing factor taken as: " + ' ' + str(trainer.params['relaxation_param']) + '\n')
     f1.close()
     encoding_map = encode_documents(documents, trainer.model, trainer.collator)
 
@@ -180,7 +183,7 @@ def train():
             #batch=data_processing.create_batch_index(batch[0],entities,list(entities[batch[0]]),encoding_map,index,doc_to_ent)
             #batch = data_processing.create_batch_index_document(batch[0], entities,  encoding_map,
             #                                           index, doc_to_ent)
-            batch=data_processing.create_batch_label_noise(batch[0],entities,list(entities[batch[0]]),encoding_map,index,doc_to_ent,num_noise_labels=0)
+            batch=data_processing.create_batch_label_noise(batch[0],entities,list(entities[batch[0]]),encoding_map,index,doc_to_ent,num_noise_labels=trainer.params["noise_ratio"])
             logits, loss = trainer.make_forward_pass(batch,step)
 
             # Adding for adaptive label smoothing
