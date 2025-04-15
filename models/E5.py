@@ -253,7 +253,7 @@ class E5Ranker(torch.nn.Module):
             #loss, scores = self.nls_forward(scores, target)
             loss = self.loss_gls(scores, target)
         else:
-            #print("Applying cross entropy ######################")
+            print("Applying cross entropy with label_smoothness ######################", self.params['label_smoothness'])
             loss = F.cross_entropy(scores, target, reduction="mean", label_smoothing=self.params['label_smoothness'])
         #else:
             #print("Applying cross entropy ######################")
