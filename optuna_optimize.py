@@ -1,4 +1,5 @@
-from generic_training import train
+
+import training_msmarco, generic_training
 import optuna
 from functools import partial
 
@@ -23,5 +24,5 @@ best_trial = study.best_trial
 print("++++++++++++Best results after trials with Bayesian optimization++++++++++++", best_trial)
 '''
 
-final_val = train()
-
+#final_val = generic_training.train()
+final_val = training_msmarco.train()
