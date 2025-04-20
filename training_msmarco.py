@@ -236,7 +236,7 @@ def train(epochs):
         iter_ = tqdm(range(trainer.params["training_steps_per_split"]), desc="Training")
         for step, batch in enumerate(iter_):
             # batch=data_processing.create_batch_ent(batch[0],list(entities[batch[0]]),random.sample(list(documents),1000),doc_to_ent)
-            batch = handler.create_batch_index(num_noise_labels=0)
+            batch = handler.create_batch_index(num_noise_labels=trainer.params['noise_ratio'])
             # batch = data_processing.create_batch_index_document(batch[0], entities,  encoding_map,
             #                                           index, doc_to_ent)
             logits, loss = trainer.make_forward_pass(batch)

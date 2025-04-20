@@ -310,7 +310,7 @@ class RankingParser(argparse.ArgumentParser):
         parser.add_argument(
             "--relaxation_param",
             type=float,
-            default=0.1,
+            default=0.0,
             help="Interval for evaluation during training",
         )
         parser.add_argument(

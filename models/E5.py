@@ -2,6 +2,7 @@ import torch.nn.functional as F
 import torch
 from torch import Tensor
 from transformers import AutoTokenizer, AutoModel
+from label_relaxation import lr_torch
 
 class E5Ranker(torch.nn.Module):
     def __init__(self,device=None, params=None,pos_lambda: float = 0.001,
@@ -238,6 +239,23 @@ class E5Ranker(torch.nn.Module):
             target = target.to(self.device)
         #print("????????????????????????????????target is_--------------------------")
         #print(target)
+
+        if self.params['label_relaxation'] == 'yes':
+            batch_size, num_classes = scores.size()
+            loss_fn = lr_torch.LabelRelaxationLoss(
+                alpha=float(self.params['relaxation_param']),
+                dim=-1,
+                logits_provided=True,
+                one_hot_encode_trgts=True,
+                num_classes= num_classes # must match your actual number of classes
+            )
+            loss = loss_fn(scores, target)
+            #print("------------loss is ++++++++++++++++++++")
+            #print(loss)
+
+            #print("scores ................................")
+            #print(scores)
+            return loss, scores
 
         if self.params['mbls'] == 'yes':
             return self.mbls_forward(scores, target)

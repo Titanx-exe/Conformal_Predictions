@@ -153,14 +153,13 @@ def train():
     #print(mrr)
     f = open(trainer.params["training_result_update_file"], 'a+')
     f.write("####Noise ratio taken as: " + ' ' + str(trainer.params['noise_ratio']) + '\n'
-            + "##Label Relaxation applied?: " + ' ' + str(trainer.params['label_relaxation']) + '\n'
-            +"##Smoothing factor taken as: " + ' ' + str(trainer.params['relaxation_param']) + '\n')
+            + "##Relaxation factor taken as: " + ' ' + str(trainer.params['relaxation_param']) + '\n'
+            +"##Smoothing factor taken as: " + ' ' + str(trainer.params['label_smoothness']) + '\n')
     f.close()
     # writing mrrs
     f1 = open('Results_Mrr.txt', 'a+')
     f1.write("####Noise ratio taken as: " + ' ' + str(trainer.params['noise_ratio']) + '\n'
-            + "##Label Relaxation applied?: " + ' ' + str(trainer.params['label_relaxation']) + '\n'
-            +"##Smoothing factor taken as: " + ' ' + str(trainer.params['relaxation_param']) + '\n')
+            +"##Smoothing factor taken as: " + ' ' + str(trainer.params['label_smoothness']) + '\n')
     f1.close()
     encoding_map = encode_documents(documents, trainer.model, trainer.collator)
 
