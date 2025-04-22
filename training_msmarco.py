@@ -202,7 +202,7 @@ def save_model(model, tokenizer, output_dir):
 
 
 
-def train(epochs):
+def train():
     # trainer,evaluator, train_dataloader, optimizer, scheduler = load_train_only_Graph_Model(device)
     trainer, evaluator, optimizer, scheduler,handler = load_train_blink_Ranking_Model()
     trainer.model.train()
@@ -307,4 +307,4 @@ def train(epochs):
         trainer.model.train()
 
 
-train(10)
+#train(10)

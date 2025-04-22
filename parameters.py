@@ -233,7 +233,7 @@ class RankingParser(argparse.ArgumentParser):
         )
         parser.add_argument(
             "--num_train_epochs",
-            default=20,
+            default=6,
             type=int,
             help="Number of training epochs.",
         )
