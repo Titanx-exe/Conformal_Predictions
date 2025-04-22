@@ -225,6 +225,7 @@ class BiEncoderRanker(torch.nn.Module):
     # If label_input is None, train on in-batch negatives
     def forward(self, context_input, cand_input, label_input=None):
         #flag = label_input is None
+
         smoothing_factor = self.params['label_smoothness']
         flag=True
         scores = self.score_candidate(context_input, cand_input, flag)
@@ -243,6 +244,7 @@ class BiEncoderRanker(torch.nn.Module):
             if smoothing_factor < 0.0:
                 loss = self.loss_gls(scores, label_input)
             else:
+                print("################ Applying entropy", smoothing_factor)
                 loss = F.cross_entropy(scores, label_input, reduction="mean", label_smoothing=smoothing_factor)
 
         return loss, scores
