@@ -206,6 +206,7 @@ def train():
     # trainer,evaluator, train_dataloader, optimizer, scheduler = load_train_only_Graph_Model(device)
     trainer, evaluator, optimizer, scheduler,handler = load_train_blink_Ranking_Model()
     trainer.model.train()
+    epochs = trainer.params['num_epochs']
     # print(evaluator.evaluate(trainer.model))
     _, results, mrr = evaluator.evaluate(trainer.model)
     # results, mrr = evaluator.evaluate_mrr(trainer.model)
