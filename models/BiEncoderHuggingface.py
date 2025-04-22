@@ -1,4 +1,4 @@
-import os
+
 import numpy as np
 import torch
 import torch.nn as nn
@@ -200,21 +200,51 @@ class BiEncoderRanker(torch.nn.Module):
             scores = torch.squeeze(scores, dim=2)
             return scores
 
+        # negative label smoothing
+        def loss_gls(self, logits, labels):
+            # logits: model prediction logits before the soft-max, with size [batch_size, classes]
+            # labels: the (noisy) labels for evaluation, with size [batch_size]
+            # smooth_rate: could go either positive or negative,
+            # smooth_rate candidates we adopted in the paper: [0.8, 0.6, 0.4, 0.2, 0.0, -0.2, -0.4, -0.6, -0.8, -1.0, -2.0, -4.0, -6.0, -8.0].
+            # print("labels are...............................", labels)
+            # print("labels are...............................", logits)
+            print("Applying gls##############################")
+            smooth_rate = self.params['label_smoothness']
+            confidence = 1. - smooth_rate
+            logprobs = F.log_softmax(logits, dim=-1)
+            nll_loss = -logprobs.gather(dim=-1, index=labels.unsqueeze(1))
+            nll_loss = nll_loss.squeeze(1)
+            # print()
+            smooth_loss = -logprobs.mean(dim=-1)
+            loss = confidence * nll_loss + smooth_rate * smooth_loss
+            loss_numpy = loss.data.cpu().numpy()
+            num_batch = len(loss_numpy)
+            return torch.sum(loss) / num_batch
+
     # label_input -- negatives provided
     # If label_input is None, train on in-batch negatives
     def forward(self, context_input, cand_input, label_input=None):
         #flag = label_input is None
+        smoothing_factor = self.params['label_smoothness']
         flag=True
         scores = self.score_candidate(context_input, cand_input, flag)
         bs = scores.size(0)
         if label_input is None:
             target = torch.LongTensor(torch.arange(bs))
             target = target.to(self.device)
-            loss = F.cross_entropy(scores, target, reduction="mean")
+            if smoothing_factor < 0.0:
+                loss = self.loss_gls(scores, target)
+            else:
+                print("################ Applying entropy", smoothing_factor)
+                loss = F.cross_entropy(scores, target, reduction="mean", label_smoothing=smoothing_factor)
         else:
             # loss_fct = nn.BCEWithLogitsLoss(reduction="mean")
             # TODO: add parameters?
-            loss = F.cross_entropy(scores, label_input, reduction="mean")
+            if smoothing_factor < 0.0:
+                loss = self.loss_gls(scores, label_input)
+            else:
+                loss = F.cross_entropy(scores, label_input, reduction="mean", label_smoothing=smoothing_factor)
+
         return loss, scores
 
     def predict(self, context_input, cand_input):
