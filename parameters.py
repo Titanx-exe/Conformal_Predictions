@@ -298,6 +298,18 @@ class RankingParser(argparse.ArgumentParser):
             help="Applying label relaxation: yes or no",
         )
         parser.add_argument(
+            "--label_relaxation_pairwise",
+            default='no',
+            type=str,
+            help="Applying label relaxation pairwise: yes or no",
+        )
+        parser.add_argument(
+            "--smooth2relax",
+            default='no',
+            type=str,
+            help="Applying adaptive label relaxation: yes or no",
+        )
+        parser.add_argument(
             "--print_interval", type=int, default=10,
             help="Interval of loss printing",
         )

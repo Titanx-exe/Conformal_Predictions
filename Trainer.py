@@ -20,7 +20,7 @@ class TrainerRanker:
         self.model = BiEncoderRanker(params,device=device)
         self.collator = Biencoder_Collator(tokenizer=self.model.tokenizer, args=params,
                                  device=device)
-
+        self.tokenizer = self.model.tokenizer
         self.model.to(device)
         # self.optimizer,self.scheduler=self.getOptimizerAndSheduler()
 
@@ -128,7 +128,8 @@ class TrainerE5:
         #self.candidate_size = candidate_size
         self.device = device
         self.model = E5Ranker(device, params)
-        self.tokenizer = AutoTokenizer.from_pretrained('intfloat/e5-base-v2')
+        #self.tokenizer = AutoTokenizer.from_pretrained('intfloat/e5-base-v2')
+        self.tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
         self.collator = E5collator(tokenizer=self.tokenizer,device=self.device)
 
         self.model.to(device)

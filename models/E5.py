@@ -2,7 +2,7 @@ import torch.nn.functional as F
 import torch
 from torch import Tensor
 from transformers import AutoTokenizer, AutoModel
-from label_relaxation import lr_torch
+from label_relaxation import lr_torch, lr_pairwise
 
 class E5Ranker(torch.nn.Module):
     def __init__(self,device=None, params=None,pos_lambda: float = 0.001,
@@ -15,7 +15,8 @@ class E5Ranker(torch.nn.Module):
         self.neg_lambda = neg_lambda
         self.alpha = alpha
         self.margin = margin
-        self.model = AutoModel.from_pretrained('intfloat/e5-base-v2')
+        #self.model = AutoModel.from_pretrained('intfloat/e5-base-v2')
+        self.model = AutoModel.from_pretrained('bert-base-uncased')
         #self.loss_fn = InfoNCE()
         if device==None:
             self.device = torch.device(
@@ -219,7 +220,19 @@ class E5Ranker(torch.nn.Module):
         #print("loss is%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", loss)
 
         return loss, scores
-    
+
+    def per_example_calibration_error(self, logits, labels):
+        """
+        Compute |confidence - correctness| per example.
+        logits: [B, C] - model outputs
+        labels: [B] - true labels (e.g., diagonal: [0, 1, ..., B-1])
+        Returns a tensor of shape [B]
+        """
+        probs = torch.softmax(logits, dim=1)
+        confidences, predictions = probs.max(dim=1)
+        correctness = predictions.eq(labels).float()
+        return torch.abs(confidences - correctness)
+
     def forward(self,doc_input,context_len=None,target=None):
         EPOCH_FILE = "epoch.txt"
         with open(EPOCH_FILE, "r") as f:
@@ -240,9 +253,29 @@ class E5Ranker(torch.nn.Module):
         #print("????????????????????????????????target is_--------------------------")
         #print(target)
 
+        self.per_example_calibration_error(scores, target)
+
+        #if self.params['label_relaxation'] == 'yes' and epoch > 0 and self.params['smooth2relax'] == 'yes':
         if self.params['label_relaxation'] == 'yes':
             batch_size, num_classes = scores.size()
             loss_fn = lr_torch.LabelRelaxationLoss(
+                alpha=float(self.params['relaxation_param']),
+                dim=-1,
+                logits_provided=True,
+                one_hot_encode_trgts=True,
+                num_classes= num_classes # must match your actual number of classes
+            )
+            loss = loss_fn(scores, target)
+            #print("------------loss is ++++++++++++++++++++")
+            #print(loss)
+
+            #print("scores ................................")
+            #print(scores)
+            return loss, scores
+
+        if self.params['label_relaxation_pairwise'] == 'yes':
+            batch_size, num_classes = scores.size()
+            loss_fn = lr_pairwise.LabelRelaxationPairwiseLoss(
                 alpha=float(self.params['relaxation_param']),
                 dim=-1,
                 logits_provided=True,
@@ -271,6 +304,8 @@ class E5Ranker(torch.nn.Module):
             #loss, scores = self.nls_forward(scores, target)
             loss = self.loss_gls(scores, target)
         else:
+            if self.params['label_relaxation'] == 'yes' and self.params['smooth2relax'] == 'yes':
+                self.params['label_smoothness'] = self.params['relaxation_param'] - 0.05
             print("Applying cross entropy with label_smoothness ######################", self.params['label_smoothness'])
             loss = F.cross_entropy(scores, target, reduction="mean", label_smoothing=float(self.params['label_smoothness']))
         #else:

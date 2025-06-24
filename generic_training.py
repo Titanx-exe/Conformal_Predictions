@@ -264,7 +264,8 @@ def train():
         epoch_output_folder_path = os.path.join(
             trainer.params["model_dump_folder"], "epoch_{}".format(e)
         )
-        #save_model(trainer.model,trainer.tokenizer,  epoch_output_folder_path)
+
         trainer.model.train()
+    #save_model(trainer.model, trainer.tokenizer, epoch_output_folder_path)
     return results
 #train(10)
