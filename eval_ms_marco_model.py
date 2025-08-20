@@ -13,9 +13,43 @@ from models.BiEncoderHuggingface import BiEncoderRanker
 from models.E5 import E5Ranker
 import pickle
 from transformers import AutoTokenizer
+
+
+
+class ECEMetric:
+    def __init__(self, n_bins=15):
+        self.n_bins = n_bins
+
+    def __call__(self, logits, labels):
+        probs = torch.softmax(logits, dim=1)
+        confidences, predictions = torch.max(probs, 1)
+        accuracies = predictions.eq(labels)
+        ece = torch.zeros(1, device=logits.device)
+        bin_boundaries = torch.linspace(0, 1, self.n_bins + 1, device=logits.device)
+        for i in range(self.n_bins):
+            bin_lower = bin_boundaries[i]
+            bin_upper = bin_boundaries[i + 1]
+            mask = (confidences > bin_lower) & (confidences <= bin_upper)
+            num_in_bin = mask.sum().item()
+            if num_in_bin > 0:
+                accuracy_in_bin = accuracies[mask].float().mean()
+                avg_confidence_in_bin = confidences[mask].mean()
+                ece += (num_in_bin / len(logits)) * torch.abs(avg_confidence_in_bin - accuracy_in_bin)
+        return ece.item()
+
+
+
+
+
+
+
 parser = RankingParser(add_model_args=True)
 parser.add_training_args()
 parser.add_eval_args()
+
+
+
+
 
 # args = argparse.Namespace(**params)
 args = parser.parse_args()
@@ -119,6 +153,46 @@ for i in range(len(relevants)):
 
 mrr = sum(all_rr) / len(all_rr) if all_rr else 0
 print(f"Mean Reciprocal Rank (MRR): {mrr:.5f}")
+
+# ---------- Compute ECE ----------
+logits_list = []
+labels_list = []
+top_k = 10
+
+
+
+for i in range(len(relevants)):
+    query_vec = torch.tensor(query_encodings[i]).to(device)
+    candidates = [encodings[index.index_id_to_db_id[j]] for j in found[i]]
+    candidate_vecs = torch.tensor(candidates).to(device)
+
+    # Cosine similarity as logits
+    scores = torch.nn.functional.cosine_similarity(
+        query_vec.unsqueeze(0), candidate_vecs, dim=1
+    )  # shape: (top_k,)
+    logits_list.append(scores)
+
+    # Ground truth label: 1 if the retrieved doc is relevant, else 0
+    relevant_id = relevants[i]
+    label = [1 if relevant_id == index.index_id_to_db_id[j] else 0 for j in found[i]]
+    labels_list.append(torch.tensor(label).to(device))
+
+# Stack logits and labels
+logits_tensor = torch.stack(logits_list)  # shape [num_queries, top_k]
+labels_tensor = torch.stack(labels_list).argmax(dim=1)  # get index of relevant in top-k
+
+# Compute ECE
+ece_metric = ECEMetric(n_bins=15)
+ece = ece_metric(logits_tensor, labels_tensor)
+print(f"Expected Calibration Error for validation data (ECE): {ece:.5f}")
+
+with open("file.txt", "r") as f:
+    data = f.read()  # Reads entire content as a string
+    e = int(data)
+
+with open("val_ece_log.txt", "a+") as f_ece:
+    f_ece.write(f"Epoch {e}, Validation ECE = {ece:.4f}\n")
+
 
 
 

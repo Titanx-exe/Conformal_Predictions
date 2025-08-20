@@ -26,6 +26,8 @@ class DenseIndexer(object):
     def deserialize_from(self, index_file: str):
         self.index = faiss.read_index(index_file)
 
+    # Original version
+    '''
     def search(self, candidate_encodings,k):
         candidates=numpy.array(candidate_encodings,dtype=numpy.float32)
         found_uris=[]
@@ -38,6 +40,23 @@ class DenseIndexer(object):
                 found_uris.append(found)
                 found = []
         return found_uris
+    '''
+    # updated to compute ece
+    def search(self, candidate_encodings, k):
+        candidates = numpy.array(candidate_encodings, dtype=numpy.float32)
+        found_uris = []
+        self.last_scores = []  # <-- ADD THIS LINE
+
+        D, I = self.search_knn(candidates, k)
+
+        for d_row, i_row in zip(D, I):
+            self.last_scores.append(d_row)  # <-- ADD THIS LINE
+            found = [self.index_id_to_db_id[int(el)] for el in i_row]
+            found_uris.append(found)
+
+        self.last_scores = numpy.array(self.last_scores)  # Convert to array for ECE computation
+        return found_uris
+
 
 # DenseFlatIndexer does exact search
 class DenseFlatIndexer(DenseIndexer):

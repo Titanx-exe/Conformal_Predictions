@@ -304,6 +304,24 @@ class RankingParser(argparse.ArgumentParser):
             help="Applying label relaxation pairwise: yes or no",
         )
         parser.add_argument(
+            "--ambiguation_loss",
+            default='no',
+            type=str,
+            help="Applying ambiguation loss: yes or no",
+        )
+        parser.add_argument(
+            "--gce_loss",
+            default='no',
+            type=str,
+            help="Applying GCE loss: yes or no",
+        )
+        parser.add_argument(
+            "--nce_loss",
+            default='no',
+            type=str,
+            help="Applying NCE loss: yes or no",
+        )
+        parser.add_argument(
             "--smooth2relax",
             default='no',
             type=str,

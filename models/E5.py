@@ -1,8 +1,10 @@
 import torch.nn.functional as F
 import torch
+from pyparsing import alphas
 from torch import Tensor
 from transformers import AutoTokenizer, AutoModel
-from label_relaxation import lr_torch, lr_pairwise
+from label_relaxation import lr_torch, lr_pairwise, lr_beta, rda_ce
+from baseline_loss_functions import GCELoss, NCELoss
 
 class E5Ranker(torch.nn.Module):
     def __init__(self,device=None, params=None,pos_lambda: float = 0.001,
@@ -56,6 +58,68 @@ class E5Ranker(torch.nn.Module):
         #print(scores)
 
         #print("************************************************", self.params['mbls'])
+
+        if self.params['label_relaxation_pairwise'] == 'yes':
+            batch_size, num_classes = scores.size()
+            loss_fn = lr_pairwise.LabelRelaxationPairwiseLoss(
+                alpha=float(self.params['relaxation_param']),
+                dim=-1,
+                logits_provided=True,
+                one_hot_encode_trgts=True,
+                num_classes= num_classes # must match your actual number of classes
+            )
+            loss = loss_fn(scores, target)
+            print('relaxation parameter applied------------------:', self.params['relaxation_param'])
+            #print("------------loss is ++++++++++++++++++++")
+            #print(loss)
+
+            #print("scores ................................")
+            #print(scores)
+            return loss, scores
+
+        if self.params['ambiguation_loss'] == 'yes':
+            batch_size, num_classes = scores.size()
+            num_epochs= self.params['num_epochs']
+            loss_fn = rda_ce.BetaCompleteAmbiguationPairwiseLoss(
+                alpha=0.1, beta=0.2, num_classes=num_classes,
+                adaptive_beta=True,
+                epochs=num_epochs,
+                adaptive_start_beta=0.5,
+                adaptive_end_beta=0.1,
+                adaptive_type="linear"
+            )
+            loss = loss_fn(scores, target, epoch=epoch+1)
+            #print("------------loss is ++++++++++++++++++++")
+            #print(loss)
+            #print("Epochs ................................")
+            #print(epoch)
+            return loss, scores
+
+        if self.params['gce_loss'] == 'yes':
+            batch_size, num_classes = scores.size()
+            loss_fn = GCELoss.GCELoss(
+                num_classes=num_classes
+            )
+            loss = loss_fn(scores, target)
+            print('*****************************************************************************')
+            print("------------loss is ++++++++++++++++++++")
+            print(loss)
+            #print("Epochs ................................")
+            #print(epoch)
+            return loss, scores
+        if self.params['nce_loss'] == 'yes':
+            batch_size, num_classes = scores.size()
+            loss_fn = NCELoss.NCELoss(
+                num_classes=num_classes
+            )
+            loss = loss_fn(scores, target)
+            print('*****************************************************************************')
+            print("------------loss is ++++++++++++++++++++")
+            print(loss)
+            #print("Epochs ................................")
+            #print(epoch)
+            return loss, scores
+
         if self.params['mbls'] == 'yes':
             return self.mbls_forward(scores, target)
         if self.params['acls'] == 'yes':
@@ -233,6 +297,17 @@ class E5Ranker(torch.nn.Module):
         correctness = predictions.eq(labels).float()
         return torch.abs(confidences - correctness)
 
+    def compute_recall_at_k(self, scores, k=5):
+        """
+        scores: [B, B] similarity matrix
+        returns: recall@k
+        """
+        topk = torch.topk(scores, k=k, dim=1).indices  # top-k predictions for each row
+        targets = torch.arange(scores.size(0)).unsqueeze(1).to(scores.device)  # correct indices
+        match = (topk == targets).any(dim=1).float()  # check if correct is in top-k
+        recall_at_k = match.mean().item()
+        return recall_at_k
+
     def forward(self,doc_input,context_len=None,target=None):
         EPOCH_FILE = "epoch.txt"
         with open(EPOCH_FILE, "r") as f:
@@ -250,8 +325,7 @@ class E5Ranker(torch.nn.Module):
             bs = scores.size(0)
             target = torch.LongTensor(torch.arange(bs))
             target = target.to(self.device)
-        #print("????????????????????????????????target is_--------------------------")
-        #print(target)
+
 
         self.per_example_calibration_error(scores, target)
 
@@ -268,7 +342,7 @@ class E5Ranker(torch.nn.Module):
             loss = loss_fn(scores, target)
             #print("------------loss is ++++++++++++++++++++")
             #print(loss)
-
+            print("Label relaxation applied with parameter-----------------: "+ str(self.params['relaxation_param']))
             #print("scores ................................")
             #print(scores)
             return loss, scores
@@ -283,11 +357,63 @@ class E5Ranker(torch.nn.Module):
                 num_classes= num_classes # must match your actual number of classes
             )
             loss = loss_fn(scores, target)
+            print("Label relaxation applied with parameter-----------------: " + str(self.params['relaxation_param']))
             #print("------------loss is ++++++++++++++++++++")
             #print(loss)
 
             #print("scores ................................")
             #print(scores)
+            return loss, scores
+
+        if self.params['ambiguation_loss'] == 'yes':
+            batch_size, num_classes = scores.size()
+            num_epochs= self.params['num_epochs']
+            loss_fn = rda_ce.BetaCompleteAmbiguationPairwiseLoss(
+                alpha=0.1, beta=0.2, num_classes=num_classes,
+                adaptive_beta=True,
+                epochs=num_epochs,
+                adaptive_start_beta=0.5,
+                adaptive_end_beta=0.1,
+                adaptive_type="linear"
+            )
+            loss = loss_fn(scores, target, epoch=epoch+1)
+            #print("------------loss is ++++++++++++++++++++")
+            #print(loss)
+
+            #print("Epochs ................................")
+            #print(epoch)
+
+
+            recall_5 = self.compute_recall_at_k(scores, k=5)
+
+            return loss, scores
+
+        if self.params['gce_loss'] == 'yes':
+            batch_size, num_classes = scores.size()
+            loss_fn = GCELoss.GCELoss(
+                num_classes=num_classes
+            )
+            loss = loss_fn(scores, target)
+            #print("------------loss is ++++++++++++++++++++")
+            #print(loss)
+
+            #print("Epochs ................................")
+            #print(epoch)
+
+            return loss, scores
+
+        if self.params['nce_loss'] == 'yes':
+            batch_size, num_classes = scores.size()
+            loss_fn = NCELoss.NCELoss(
+                num_classes=num_classes
+            )
+            loss = loss_fn(scores, target)
+            #print("------------loss is ++++++++++++++++++++")
+            #print(loss)
+
+            #print("Epochs ................................")
+            #print(epoch)
+
             return loss, scores
 
         if self.params['mbls'] == 'yes':
@@ -315,30 +441,6 @@ class E5Ranker(torch.nn.Module):
         return loss, scores
 
 
-# Each input text should start with "query: " or "passage: ".
-# For tasks other than retrieval, you can simply use the "query: " prefix.
-'''
-context_texts = ['query: how much protein should a female eat',
-               'query: summit define',
-               ]
 
-document_texts = [
-                "passage: Definition of summit for English Language Learners. : 1  the highest point of a mountain : the top of a mountain. : 2  the highest level. : 3  a meeting or series of meetings between the leaders of two or more governments.",
-               "passage: As a general guideline, the CDC's average requirement of protein for women ages 19 to 70 is 46 grams per day. But, as you can see from this chart, you'll need to increase that if you're expecting or training for a marathon. Check out the chart below to see how much protein you should be eating each day."
-               ]
-tokenizer = AutoTokenizer.from_pretrained('intfloat/e5-base-v2')
-model = E5Ranker()
 
-context_texts.extend(document_texts)
-# Tokenize the input texts
 
-documents = tokenizer(context_texts, max_length=512, padding=True, truncation=True, return_tensors='pt')
-
-outputs = model(documents)
-'''
-
-# normalize embeddings
-#embeddings = F.normalize(embeddings, p=2, dim=1)
-#r=embeddings[:2] @ embeddings[2:].T
-#scores = (embeddings[:2] @ embeddings[2:].T) * 100
-#print(scores.tolist())

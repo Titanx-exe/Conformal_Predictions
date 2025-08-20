@@ -232,6 +232,42 @@ class IndexEvaluator:
         print("found:"+str(all_found)+" not found:"+str(all_not_found))
         results=all_found/(all_not_found+all_found)
         #print(result)
+
+        #Adding code for ece computation
+
+        # ---------------------- Compute ECE ----------------------
+        ece_metric = ECEMetric(n_bins=15)
+        confidences = []
+        labels = []
+
+        for i in range(len(self.documents)):
+            correct_entities = set(self.doc_to_ent[self.documents[i]])
+            prediction = found_ents[i]
+            top_pred = prediction[0]  # Top-1 entity
+
+            # If you have similarity scores returned by index.search()
+            # Make sure to store them in a variable like: index.last_scores[i]
+            # You may need to modify indexing.search() to return scores.
+            confidence = index.last_scores[i][0]  # top-1 score
+            confidences.append(confidence)
+
+            label = 1 if top_pred in correct_entities else 0
+            labels.append(label)
+
+        logits = torch.tensor(confidences).unsqueeze(1)  # shape (N, 1)
+        labels = torch.tensor(labels)
+        logits = torch.cat([logits, 1 - logits], dim=1)  # fake 2-class logits
+
+        ece_value = ece_metric(logits, labels)
+        print(f"**************************** Validation ECE: {ece_value:.5f}")
+        with open("epoch.txt", "r") as f:
+            data = f.read()  # Reads entire content as a string
+            e = int(data)
+
+        with open("val_ece_log.txt", "a+") as f_ece:
+            f_ece.write(f"Epoch {e}, Validation ECE = {ece_value:.4f}\n")
+        # ---------------------------------------------------------
+
         return index,results, mrr
 
     def evaluate_mrr(self, found_ents, random_samples=True, k=10):
@@ -277,4 +313,40 @@ class IndexEvaluator:
 
         return mrr
 
+
+
+class ECEMetric:
+    def __init__(self, n_bins=15):
+        self.n_bins = n_bins
+
+    def __call__(self, logits, labels):
+        """
+        Computes Expected Calibration Error (ECE).
+        Args:
+            logits: Tensor of shape (N, C) where C is the number of classes.
+            labels: Tensor of shape (N,) with integer class labels.
+        Returns:
+            Scalar ECE value.
+        """
+        # Convert logits to probabilities using softmax
+        probs = torch.softmax(logits, dim=1)
+        confidences, predictions = torch.max(probs, dim=1)
+        accuracies = predictions.eq(labels)
+
+        ece = torch.zeros(1, device=logits.device)
+        bin_boundaries = torch.linspace(0, 1, self.n_bins + 1, device=logits.device)
+
+        for i in range(self.n_bins):
+            bin_lower = bin_boundaries[i]
+            bin_upper = bin_boundaries[i + 1]
+
+            mask = (confidences > bin_lower) & (confidences <= bin_upper)
+            num_in_bin = mask.sum().item()
+
+            if num_in_bin > 0:
+                accuracy_in_bin = accuracies[mask].float().mean()
+                avg_confidence_in_bin = confidences[mask].mean()
+                ece += (num_in_bin / logits.size(0)) * torch.abs(avg_confidence_in_bin - accuracy_in_bin)
+
+        return ece.item()
 

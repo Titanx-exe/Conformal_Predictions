@@ -203,6 +203,7 @@ def save_model(model, tokenizer, output_dir):
 
 
 def train():
+
     # trainer,evaluator, train_dataloader, optimizer, scheduler = load_train_only_Graph_Model(device)
     trainer, evaluator, optimizer, scheduler,handler = load_train_blink_Ranking_Model()
     trainer.model.train()
@@ -217,7 +218,7 @@ def train():
             + "##Smoothing factor taken as: " + ' ' + str(trainer.params['label_smoothness']) + '\n')
     f.close()
     # writing mrrs
-    f1 = open('Results_Mrr.txt', 'a+')
+    f1 = open('Results_Mrr_rda_msmarco.txt', 'a+')
     f1.write("####Noise ratio taken as: " + ' ' + str(trainer.params['noise_ratio']) + '\n'
              + "##Smoothing factor taken as: " + ' ' + str(trainer.params['label_smoothness']) + '\n')
     f1.close()
@@ -226,6 +227,8 @@ def train():
     avg_loss = []
     handler.reload_current_data(trainer.model,trainer.collator,reload_full=True)
     for e in range(epochs):
+        all_logits = []
+        all_labels = []
         total_loss = 0.0
         final_output = 0
         avg_epoch_loss = 0.0
@@ -240,7 +243,30 @@ def train():
             batch = handler.create_batch_index(num_noise_labels=trainer.params['noise_ratio'])
             # batch = data_processing.create_batch_index_document(batch[0], entities,  encoding_map,
             #                                           index, doc_to_ent)
+
             logits, loss = trainer.make_forward_pass(batch)
+
+            # --- Begin ECE-safe padding logic ---
+            curr_width = logits.shape[1]
+            if len(all_logits) > 0:
+                max_width = max(curr_width, max(log.shape[1] for log in all_logits))
+            else:
+                max_width = curr_width
+
+            # Pad current logits if needed
+            if logits.shape[1] < max_width:
+                pad_width = max_width - logits.shape[1]
+                logits = torch.nn.functional.pad(logits, (0, pad_width), value=float('-inf'))
+
+            # Pad previous logits if needed
+            for i in range(len(all_logits)):
+                if all_logits[i].shape[1] < max_width:
+                    pad_width = max_width - all_logits[i].shape[1]
+                    all_logits[i] = torch.nn.functional.pad(all_logits[i], (0, pad_width), value=float('-inf'))
+
+            all_logits.append(logits.cpu())
+            all_labels.append(torch.tensor(batch[2]))
+
             total_loss = total_loss + loss.item()  # Adding up the loss
             if trainer.grad_acc_steps > 1:
                 loss = loss / trainer.grad_acc_steps
@@ -300,6 +326,26 @@ def train():
         f1 = open('Results_Mrr.txt', 'a+')
         f1.write("Results in Epoch " + str(e) + ' : ' + str(mrr) + '\n')
         f1.close()
+
+        #computing calibration error
+        ece_metric = ECEMetric(n_bins=15)
+        all_logits = torch.cat(all_logits)
+        all_labels = torch.cat(all_labels)
+        train_ece = ece_metric(all_logits, all_labels)
+
+        print(f"*********** [Epoch {e}] Training ECE ************: {train_ece:.4f}")
+        # Optionally log to file
+        with open("train_ece_log.txt", "a+") as f_ece:
+            f_ece.write(f"Epoch {e}, Training ECE = {train_ece:.4f}\n")
+
+        train_recall_at_5 = compute_recall_at_k(all_logits, all_labels, k=5)
+        print(f"*********** [Epoch {e}] Training Recall@5 ************: {train_recall_at_5:.4f}")
+
+        # Optional: write to log file
+        with open("train_recall_log.txt", "a+") as f_rec:
+            f_rec.write(f"Epoch {e}, Training Recall@5 = {train_recall_at_5:.4f}\n")
+
+        #print("*********** Expected calibration error after epoch: " + str(epoch) + " is " + str(ece_value))
         #encoding_map = encode_documents(documents, trainer.model, trainer.collator)
         epoch_output_folder_path = os.path.join(
             trainer.params["model_dump_folder"], "epoch_{}".format(e)
@@ -309,3 +355,52 @@ def train():
 
 
 #train(10)
+
+# Class for computing expected calibration error per epoch
+class ECEMetric:
+    def __init__(self, n_bins=15):
+        self.n_bins = n_bins
+
+    def __call__(self, logits, labels):
+        # Convert logits to probabilities
+        probs = torch.softmax(logits, dim=1)
+        confidences, predictions = torch.max(probs, 1)
+        accuracies = predictions.eq(labels)
+
+        ece = torch.zeros(1, device=logits.device)
+
+        bin_boundaries = torch.linspace(0, 1, self.n_bins + 1, device=logits.device)
+
+        for i in range(self.n_bins):
+            # Define bin range
+            bin_lower = bin_boundaries[i]
+            bin_upper = bin_boundaries[i + 1]
+
+            # Mask for predictions in this bin
+            mask = (confidences > bin_lower) & (confidences <= bin_upper)
+            num_in_bin = mask.sum().item()
+
+            if num_in_bin > 0:
+                accuracy_in_bin = accuracies[mask].float().mean()
+                avg_confidence_in_bin = confidences[mask].mean()
+                ece += (num_in_bin / len(logits)) * torch.abs(avg_confidence_in_bin - accuracy_in_bin)
+
+        return ece.item()
+
+
+def compute_recall_at_k(logits, labels, k=5):
+    """
+    Computes Recall@k over a batch of predictions.
+    `logits`: Tensor of shape (batch_size, num_candidates)
+    `labels`: Tensor of shape (batch_size,), containing the true index
+    """
+    # Get top-k predicted indices
+    topk_preds = torch.topk(logits, k, dim=1).indices  # shape: (batch_size, k)
+
+    # Expand labels to compare with top-k
+    labels = labels.view(-1, 1).expand_as(topk_preds)  # shape: (batch_size, k)
+
+    # Compare and compute recall
+    correct = (topk_preds == labels).any(dim=1).float()  # shape: (batch_size,)
+    recall_at_k = correct.mean().item()
+    return recall_at_k
