@@ -6,6 +6,8 @@ from tqdm import tqdm, trange
 import data_processing
 import indexing
 from models.E5 import E5Ranker
+from models.qwen3 import Qwen3Ranker
+from models.llama3 import Llama3Ranker
 from torchmetrics.retrieval import RetrievalMRR
 
 def accuracy(out, labels):
@@ -201,19 +203,20 @@ class IndexEvaluator:
         else:
             iter_ = tqdm(data_loader, desc="Encode Eval Queries")
         doc_encodings=[]
-        for step, batch in enumerate(iter_):
-            if not isinstance(model,E5Ranker):
+        with torch.no_grad():
+            for step, batch in enumerate(iter_):
+                if not isinstance(model,E5Ranker) and not isinstance(model, Qwen3Ranker) and not isinstance(model, Llama3Ranker):
 
-                context_input = batch
-                #candidate_input = batch["candidate_input"]
-                #labels=[0 for i in range(batch["candidate_input"].size(0))]
-                #label_input = batch[0]["label_idx"].to(device)
-                # label_input = torch.LongTensor(torch.zeros(candidate_input.size(0),dtype=torch.int64)).to(device)
-                # context_input, candidate_input, label_input = batch
-                encodings=model.encode_context(context_input).tolist()
-            else:
-                encodings=model.encode_context(batch)
-            doc_encodings.extend(encodings)
+                    context_input = batch
+                    #candidate_input = batch["candidate_input"]
+                    #labels=[0 for i in range(batch["candidate_input"].size(0))]
+                    #label_input = batch[0]["label_idx"].to(device)
+                    # label_input = torch.LongTensor(torch.zeros(candidate_input.size(0),dtype=torch.int64)).to(device)
+                    # context_input, candidate_input, label_input = batch
+                    encodings=model.encode_context(context_input).tolist()
+                else:
+                    encodings=model.encode_context(batch)
+                doc_encodings.extend(encodings)
         found_ents=index.search(doc_encodings,k)
         mrr = self.evaluate_mrr(found_ents)
         all_labels=[]

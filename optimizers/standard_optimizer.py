@@ -26,6 +26,9 @@ patterns_optimizer = {
     ],
     'all_encoder_layers': ['additional', 'bert_model.encoder.layer'],
     'all_encoder_layers_e5': ['additional', 'model.encoder.layer'],
+    'all_encoder_layers_qwen3': ['additional', 'model.layers'],
+    'all_encoder_layers_llama3': ['additional', 'model.layers'],
+    'all_encoder_layers_llama3_lbw': ['additional', 'model.layers'],
     'all': ['additional', 'bert_model.encoder.layer', 'bert_model.embeddings'],
 
 }

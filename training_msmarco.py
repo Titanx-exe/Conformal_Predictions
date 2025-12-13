@@ -7,6 +7,7 @@ from optimizers import standard_optimizer
 from tqdm import tqdm, trange
 from parameters import RankingParser
 from models.E5 import E5Ranker
+from models.llama3 import Llama3Ranker
 from models.BiEncoderHuggingface import BiEncoderRanker
 import random
 import os
@@ -18,7 +19,7 @@ import data_processing
 import Evaluator
 import logging
 from ms_marco_data_handler import Ms_marco_data_handler
-from MS_marco_collator import Biencoder_Collator,E5collator
+from MS_marco_collator import Biencoder_Collator,E5collator,Llama3Collator
 from data_processing import Aida_joint_el
 from transformers import AutoTokenizer
 
@@ -135,6 +136,49 @@ class TrainerE5:
         loss, logits = self.model(token_input,len(batch[0]),labels)
         return logits, loss
 
+class TrainerLlama3:
+    def __init__(self, params, evaluate_after_batch, handler, device):
+        self.grad_acc_steps = params["gradient_accumulation_steps"]
+        self.params = params
+        self.evaluate_after = evaluate_after_batch
+        self.device = device
+        
+        self.model = Llama3Ranker(device, params)
+        self.tokenizer = self.model.tokenizer
+        self.collator = Llama3Collator(tokenizer=self.tokenizer, queries=handler.queries, device=self.device)
+        # self.collator.set_documents(handler.documents)
+        self.model.to(device)
+        
+        print(f"Llama3Ranker initialized on {device} for MS MARCO")
+        print(f"Model parameters: {sum(p.numel() for p in self.model.parameters()) / 1e9:.2f}B")
+    
+    def getOptimizerAndSheduler(self, len_train_Data):
+        optimizer = standard_optimizer.get_bert_optimizer([self.model], self.params["type_optimization"],
+                                                          self.params["learning_rate"], fp16=self.params.get("fp16"))
+        scheduler = standard_optimizer.get_scheduler(self.params, optimizer, len_train_Data)
+        return optimizer, scheduler
+    
+    def make_forward_pass(self, batch):
+        original_query_count = len(batch[0])
+        
+        queries = batch[0]
+        queries = self.collator.collate(queries, is_passage=False)
+        
+        documents = batch[1]
+        documents = self.collator.collate(documents, is_passage=True)
+        
+        queries.extend(documents)
+        
+        max_length = self.params.get('max_seq_length', 128)
+        token_input = self.tokenizer(queries, max_length=max_length, padding=True, truncation=True, return_tensors='pt')
+        token_input = {k: v.to(self.device) for k, v in token_input.items()}
+        
+        labels = torch.tensor(batch[2], device=self.device)
+        loss, logits = self.model(token_input, original_query_count, labels)
+        
+        return logits, loss
+
+
 def handle_eval_file(queries,eval_documents="data/msmarco/eval_documents"):
     documents=set()
     queries=pickle.load(open(queries,"rb"))
@@ -163,6 +207,10 @@ def load_train_blink_Ranking_Model():
     # for E5
     if params["found_model"] == "e5":
         train_inst = TrainerE5(params=params, evaluate_after_batch=params["eval_interval"],handler=handler, device=device)
+    if params["found_model"] == "llama3":
+        train_inst = TrainerLlama3(params=params, evaluate_after_batch=params["eval_interval"],
+                                   handler=handler, device=device)
+        print("Using Llama3Ranker for MS MARCO dense retrieval")
     # for BiEncoder
     if params["found_model"] == "biencoder":
         train_inst = TrainerRankerHuggingface(params=params, evaluate_after_batch=params["eval_interval"],handler=handler,
@@ -404,3 +452,5 @@ def compute_recall_at_k(logits, labels, k=5):
     correct = (topk_preds == labels).any(dim=1).float()  # shape: (batch_size,)
     recall_at_k = correct.mean().item()
     return recall_at_k
+
+train()

@@ -4,7 +4,22 @@ from pyparsing import alphas
 from torch import Tensor
 from transformers import AutoTokenizer, AutoModel
 from label_relaxation import lr_torch, lr_pairwise, lr_beta, rda_ce
-from baseline_loss_functions import GCELoss, NCELoss
+from sentence_transformers import SentenceTransformer
+from baseline_loss_functions import GCELoss, NCELoss, AUELoss, EvidenceSmoothingLoss, AGCELoss
+
+def _row_minmax_norm(x: torch.Tensor, eps: float = 1e-8) -> torch.Tensor:
+    x_min, _ = x.min(dim=1, keepdim=True)
+    x_max, _ = x.max(dim=1, keepdim=True)
+    denom = (x_max - x_min).clamp_min(eps)
+    out = (x - x_min) / denom
+    out = torch.nan_to_num(out, nan=0.0, posinf=0.0, neginf=0.0)
+    return out
+
+def _soft_label_ce(logits: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
+    logp = F.log_softmax(logits, dim=-1)
+    return -(targets * logp).sum(dim=1).mean()
+
+
 
 class E5Ranker(torch.nn.Module):
     def __init__(self,device=None, params=None,pos_lambda: float = 0.001,
@@ -17,8 +32,8 @@ class E5Ranker(torch.nn.Module):
         self.neg_lambda = neg_lambda
         self.alpha = alpha
         self.margin = margin
-        #self.model = AutoModel.from_pretrained('intfloat/e5-base-v2')
-        self.model = AutoModel.from_pretrained('bert-base-uncased')
+        self.model = AutoModel.from_pretrained('intfloat/e5-base-v2')
+        #self.model = AutoModel.from_pretrained("nvidia/llama-embed-nemotron-8b", trust_remote_code=True, torch_dtype=torch.float16, attn_implementation="flash_attention_2" if torch.cuda.is_available() else "eager")
         #self.loss_fn = InfoNCE()
         if device==None:
             self.device = torch.device(
@@ -31,6 +46,7 @@ class E5Ranker(torch.nn.Module):
         last_hidden = last_hidden_states.masked_fill(~attention_mask[..., None].bool(), 0.0)
         return last_hidden.sum(dim=1) / attention_mask.sum(dim=1)[..., None]
     def encode(self,batch):
+        batch.pop('token_type_ids', None)
         return self.model(**batch)
 
     def encode_context(self,batch):
@@ -120,6 +136,20 @@ class E5Ranker(torch.nn.Module):
             #print(epoch)
             return loss, scores
 
+        if self.params['aue_loss'] == 'yes':
+            batch_size, num_classes = scores.size()
+            loss_fn = AUELoss.AUELoss(
+                num_classes=num_classes
+            )
+            loss = loss_fn(scores, target)
+            #print("------------loss is ++++++++++++++++++++")
+            #print(loss)
+
+            #print("Epochs ................................")
+            #print(epoch)
+
+            return loss, scores
+
         if self.params['mbls'] == 'yes':
             return self.mbls_forward(scores, target)
         if self.params['acls'] == 'yes':
@@ -135,6 +165,61 @@ class E5Ranker(torch.nn.Module):
             loss = F.cross_entropy(scores, target, reduction="mean")
         
         #loss = F.cross_entropy(scores, target, reduction="mean")
+        return loss, scores
+
+    def wsls_forward(
+            self,
+            scores: torch.Tensor,  # [B, C]
+            target: torch.Tensor,  # [B]
+            ns_scores: torch.Tensor | None = None,  # optional, ignored here
+        ):
+        """
+        Weakly Supervised Label Smoothing using *off-diagonal* scores as weak labels.
+        Diagonal indices (target) are the true docs; all other columns are negatives.
+        """
+        print("Applying weakly supervised loss..................................")
+        B, C = scores.shape
+        device = scores.device
+        row_idx = torch.arange(B, device=device)
+
+        # epsilon schedule (optional two-stage)
+        eps_wsls = float(self.params.get('wsls_eps', 0.2))
+        try:
+            with open("epoch.txt", "r") as f:
+                cur_epoch = int(f.read().strip())
+        except Exception:
+            cur_epoch = 0
+        if self.params.get('wsls_two_stage', 'no') == 'yes':
+            switch_ep = int(self.params.get('wsls_switch_epoch', max(cur_epoch + 1, 1)))
+            if cur_epoch >= switch_ep:
+                eps_wsls = 0.0
+
+        # optional temperature to shape negatives
+        tau = float(self.params.get('wsls_tau', 1.0))
+
+        # ---- weak distribution from off-diagonals ----
+        s = scores.detach()
+        if tau != 1.0:
+            s = s / tau
+
+        # exclude the diagonal from competing during normalization
+        s_neg = s.clone()
+        row_min = s_neg.min(dim=1, keepdim=True).values
+        s_neg[row_idx, target] = (row_min.squeeze(1) - 1.0)  # ensure strictly below all negatives
+
+        # min-max normalize row-wise -> [0,1]
+        w = _row_minmax_norm(s_neg)
+
+        # set gold index to neutral mass 1/C, then renormalize to a prob. distribution
+        w[row_idx, target] = 1.0 / C
+        w = w / w.sum(dim=1, keepdim=True).clamp_min(1e-8)
+
+        # ---- final soft targets: (1-ε)*onehot + ε*w ----
+        one_hot = F.one_hot(target, num_classes=C).float()
+        tgt_soft = (1.0 - eps_wsls) * one_hot + eps_wsls * w
+
+        # ---- compute loss ----
+        loss = _soft_label_ce(scores, tgt_soft)
         return loss, scores
 
     def get_reg(self, inputs, targets):
@@ -415,6 +500,54 @@ class E5Ranker(torch.nn.Module):
             #print(epoch)
 
             return loss, scores
+
+        if self.params['aue_loss'] == 'yes':
+            batch_size, num_classes = scores.size()
+            loss_fn = AUELoss.AUELoss(
+                num_classes=num_classes
+            )
+            loss = loss_fn(scores, target)
+            #print("------------loss is ++++++++++++++++++++")
+            #print(loss)
+
+            #print("Epochs ................................")
+            #print(epoch)
+
+            return loss, scores
+
+        if self.params['agce'] == 'yes':
+            batch_size, num_classes = scores.size()
+            loss_fn = AGCELoss.AGCELoss(
+                num_classes=num_classes
+            )
+            loss = loss_fn(scores, target)
+            #print("------------loss is ++++++++++++++++++++")
+            #print(loss)
+
+            #print("Epochs ................................")
+            #print(epoch)
+
+            return loss, scores
+
+        # ----- EBLS with k-reciprocal neighborhoods -----
+        if self.params.get('ebls', 'no') == 'yes':
+            eps = 0.1
+            k   = 5 # no of neighbors
+            lam = 0.5
+            metric = 'cosine'  # 'cosine' or 'dot'
+
+            loss, _ = EvidenceSmoothingLoss.ebls_loss_rows(
+                scores=scores,  # [Q, C]
+                cand_embs=candidate_embeddings.detach(),  # [C, D]
+                target=target,  # [Q] gold column per row (you already have this)
+                eps=eps, k=k, lam=lam, metric=metric,
+                detach_evidence=True
+            )
+
+            return loss, scores
+
+        if self.params.get('wsls', 'no') == 'yes':
+            return self.wsls_forward(scores, target)
 
         if self.params['mbls'] == 'yes':
             return self.mbls_forward(scores, target)

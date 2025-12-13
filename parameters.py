@@ -322,6 +322,30 @@ class RankingParser(argparse.ArgumentParser):
             help="Applying NCE loss: yes or no",
         )
         parser.add_argument(
+            "--aue_loss",
+            default='no',
+            type=str,
+            help="Applying AUE loss: yes or no",
+        )
+        parser.add_argument(
+            "--ebls",
+            default='no',
+            type=str,
+            help="Applying AUE loss: yes or no",
+        )
+        parser.add_argument(
+            "--wsls",
+            default='no',
+            type=str,
+            help="Applying AUE loss: yes or no",
+        )
+        parser.add_argument(
+            "--agce",
+            default='no',
+            type=str,
+            help="Applying AGCE loss: yes or no",
+        )
+        parser.add_argument(
             "--smooth2relax",
             default='no',
             type=str,

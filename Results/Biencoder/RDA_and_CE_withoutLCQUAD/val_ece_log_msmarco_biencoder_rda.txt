@@ -1,0 +1,31 @@
+Epoch 5, Validation ECE = 0.0343
+
+# without rda, noise ratio = 5
+Epoch 0, Validation ECE = 0.0645
+Epoch 0, Validation ECE = 0.0073
+Epoch 1, Validation ECE = 0.0025
+Epoch 1, Validation ECE = 0.0019
+Epoch 2, Validation ECE = 0.0019
+Epoch 2, Validation ECE = 0.0019
+Epoch 3, Validation ECE = 0.0019
+Epoch 3, Validation ECE = 0.0019
+Epoch 4, Validation ECE = 0.0019
+Epoch 4, Validation ECE = 0.0019
+Epoch 5, Validation ECE = 0.0019
+Epoch 5, Validation ECE = 0.0019
+Epoch 5, Validation ECE = 0.0343
+Epoch 0, Validation ECE = 0.2201
+
+
+# with rda, noise ratio = 5
+Epoch 0, Validation ECE = 0.3795
+Epoch 1, Validation ECE = 0.3749
+Epoch 1, Validation ECE = 0.5151
+Epoch 2, Validation ECE = 0.5205
+Epoch 2, Validation ECE = 0.5205
+Epoch 3, Validation ECE = 0.5205
+Epoch 3, Validation ECE = 0.5205
+Epoch 4, Validation ECE = 0.5205
+Epoch 4, Validation ECE = 0.5205
+Epoch 5, Validation ECE = 0.5205
+Epoch 5, Validation ECE = 0.5205

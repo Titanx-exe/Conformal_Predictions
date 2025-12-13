@@ -1,0 +1,179 @@
+####Noise ratio taken as:  1
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.9041979362101313
+Results in Epoch 1 : 0.9073639774859287
+Results in Epoch 2 : 0.9073639774859287
+Results in Epoch 3 : 0.9073639774859287
+Results in Epoch 4 : 0.9073639774859287
+Results in Epoch 5 : 0.9073639774859287
+####Noise ratio taken as:  2
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.8825046904315197
+Results in Epoch 1 : 0.8853189493433395
+Results in Epoch 2 : 0.8853189493433395
+Results in Epoch 3 : 0.8853189493433395
+Results in Epoch 4 : 0.8853189493433395
+Results in Epoch 5 : 0.8853189493433395
+####Noise ratio taken as:  3
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.8587007504690432
+Results in Epoch 1 : 0.8467401500938087
+Results in Epoch 2 : 0.8467401500938087
+Results in Epoch 3 : 0.8467401500938087
+Results in Epoch 4 : 0.8467401500938087
+Results in Epoch 5 : 0.8467401500938087
+####Noise ratio taken as:  4
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.8150797373358349
+Results in Epoch 1 : 0.7476547842401501
+Results in Epoch 2 : 0.7476547842401501
+Results in Epoch 3 : 0.7476547842401501
+Results in Epoch 4 : 0.7476547842401501
+Results in Epoch 5 : 0.7476547842401501
+####Noise ratio taken as:  5
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.5806754221388368
+Results in Epoch 1 : 0.5657833020637899
+Results in Epoch 2 : 0.5657833020637899
+Results in Epoch 3 : 0.5657833020637899
+Results in Epoch 4 : 0.5657833020637899
+Results in Epoch 5 : 0.5657833020637899
+####Noise ratio taken as:  0
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.9095919324577861
+Results in Epoch 1 : 0.9111163227016885
+Results in Epoch 2 : 0.9111163227016885
+Results in Epoch 3 : 0.9111163227016885
+Results in Epoch 4 : 0.9111163227016885
+Results in Epoch 5 : 0.9111163227016885
+####Noise ratio taken as:  1
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.9009146341463414
+Results in Epoch 1 : 0.9041979362101313
+Results in Epoch 2 : 0.9041979362101313
+Results in Epoch 3 : 0.9041979362101313
+Results in Epoch 4 : 0.9041979362101313
+Results in Epoch 5 : 0.9041979362101313
+####Noise ratio taken as:  2
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.8793386491557224
+Results in Epoch 1 : 0.887312382739212
+Results in Epoch 2 : 0.887312382739212
+Results in Epoch 3 : 0.887312382739212
+Results in Epoch 4 : 0.887312382739212
+Results in Epoch 5 : 0.887312382739212
+####Noise ratio taken as:  3
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.8475609756097561
+Results in Epoch 1 : 0.8556519699812383
+Results in Epoch 2 : 0.8556519699812383
+Results in Epoch 3 : 0.8556519699812383
+Results in Epoch 4 : 0.8556519699812383
+Results in Epoch 5 : 0.8556519699812383
+####Noise ratio taken as:  4
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.7252579737335835
+Results in Epoch 1 : 0.737687617260788
+Results in Epoch 2 : 0.737687617260788
+Results in Epoch 3 : 0.737687617260788
+Results in Epoch 4 : 0.737687617260788
+Results in Epoch 5 : 0.737687617260788
+####Noise ratio taken as:  5
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.7102485928705441
+Results in Epoch 1 : 0.6999296435272045
+Results in Epoch 2 : 0.6999296435272045
+Results in Epoch 3 : 0.6999296435272045
+Results in Epoch 4 : 0.6999296435272045
+Results in Epoch 5 : 0.6999296435272045
+####Noise ratio taken as:  0
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.9070121951219512
+Results in Epoch 1 : 0.9080675422138836
+Results in Epoch 2 : 0.9080675422138836
+Results in Epoch 3 : 0.9080675422138836
+Results in Epoch 4 : 0.9080675422138836
+Results in Epoch 5 : 0.9080675422138836
+####Noise ratio taken as:  1
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.9012664165103189
+Results in Epoch 1 : 0.9025562851782364
+Results in Epoch 2 : 0.9025562851782364
+Results in Epoch 3 : 0.9025562851782364
+Results in Epoch 4 : 0.9025562851782364
+Results in Epoch 5 : 0.9025562851782364
+####Noise ratio taken as:  2
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.8852016885553471
+Results in Epoch 1 : 0.8860225140712945
+Results in Epoch 2 : 0.8860225140712945
+Results in Epoch 3 : 0.8860225140712945
+Results in Epoch 4 : 0.8860225140712945
+Results in Epoch 5 : 0.8860225140712945
+####Noise ratio taken as:  3
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.8578799249530957
+Results in Epoch 1 : 0.8625703564727955
+Results in Epoch 2 : 0.8625703564727955
+Results in Epoch 3 : 0.8625703564727955
+Results in Epoch 4 : 0.8625703564727955
+Results in Epoch 5 : 0.8625703564727955
+####Noise ratio taken as:  4
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.7718105065666041
+Results in Epoch 1 : 0.7580909943714822
+Results in Epoch 2 : 0.7580909943714822
+Results in Epoch 3 : 0.7580909943714822
+Results in Epoch 4 : 0.7580909943714822
+Results in Epoch 5 : 0.7580909943714822
+####Noise ratio taken as:  5
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.6525562851782364
+Results in Epoch 1 : 0.5838414634146342
+Results in Epoch 2 : 0.5838414634146342
+Results in Epoch 3 : 0.5838414634146342
+Results in Epoch 4 : 0.5838414634146342
+Results in Epoch 5 : 0.5838414634146342
+####Noise ratio taken as:  0
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.9049015009380863
+Results in Epoch 1 : 0.9111163227016885
+Results in Epoch 2 : 0.9111163227016885
+Results in Epoch 3 : 0.9111163227016885
+Results in Epoch 4 : 0.9111163227016885
+Results in Epoch 5 : 0.9111163227016885
+####Noise ratio taken as:  1
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.9071294559099438
+Results in Epoch 1 : 0.9066604127579737
+Results in Epoch 2 : 0.9066604127579737
+Results in Epoch 3 : 0.9066604127579737
+Results in Epoch 4 : 0.9066604127579737
+Results in Epoch 5 : 0.9066604127579737
+####Noise ratio taken as:  2
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.87312382739212
+Results in Epoch 1 : 0.8745309568480301
+Results in Epoch 2 : 0.8745309568480301
+Results in Epoch 3 : 0.8745309568480301
+Results in Epoch 4 : 0.8745309568480301
+Results in Epoch 5 : 0.8745309568480301
+####Noise ratio taken as:  3
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.8480300187617261
+Results in Epoch 1 : 0.8585834896810507
+Results in Epoch 2 : 0.8585834896810507
+Results in Epoch 3 : 0.8585834896810507
+Results in Epoch 4 : 0.8585834896810507
+Results in Epoch 5 : 0.8585834896810507
+####Noise ratio taken as:  4
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.7108348968105066
+Results in Epoch 1 : 0.6803470919324578
+Results in Epoch 2 : 0.6803470919324578
+Results in Epoch 3 : 0.6803470919324578
+Results in Epoch 4 : 0.6803470919324578
+Results in Epoch 5 : 0.6803470919324578
+####Noise ratio taken as:  5
+##Relaxation factor taken as:  0.0
+Results in Epoch 0 : 0.5347091932457786

@@ -1,0 +1,4 @@
+Results in Epoch 0 : 0.187051131928181
+Results in Epoch 0 : 0.23918568763845696
+Results in Epoch 0 : 0.28892271662763436
+Results in Epoch 1 : 0.2817974238875876

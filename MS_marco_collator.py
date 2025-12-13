@@ -132,3 +132,35 @@ class E5collator:
         repr = ["query: " + self.queries[question]["text"] for question in batch]
         batch = self.tokenizer(repr, max_length=512, padding=True, truncation=True, return_tensors='pt')
         return batch.to(self.device)
+
+class Llama3Collator:
+    def __init__(self, tokenizer, device, queries):
+        self.tokenizer = tokenizer
+        self.queries = queries
+        self.documents = None
+        self.device = device
+        print("✓ Llama3Collator initialized for MS MARCO")
+    
+    def collate(self, batch, is_passage):
+        if is_passage:
+            # Documents dict is set dynamically by handler
+            if self.documents is None:
+                return batch  # Return raw IDs if documents not yet loaded
+            repr = [self.documents[doc_id] for doc_id in batch]
+        else:
+            repr = [self.queries[query_id]["text"] for query_id in batch]
+        return repr
+    
+    def collate_entities(self, batch):
+        # Documents dict is set dynamically by handler
+        if self.documents is None:
+            raise ValueError("documents dict not set! Handler should call reload_current_data() first.")
+        repr = [self.documents[doc_id] for doc_id in batch]
+        tokenized = self.tokenizer(repr, max_length=128, padding=True, truncation=True, return_tensors='pt')
+        return tokenized.to(self.device)
+    
+    def collate_context(self, batch):
+        repr = [self.queries[query_id]["text"] for query_id in batch]
+        tokenized = self.tokenizer(repr, max_length=128, padding=True, truncation=True, return_tensors='pt')
+        return tokenized.to(self.device)
+

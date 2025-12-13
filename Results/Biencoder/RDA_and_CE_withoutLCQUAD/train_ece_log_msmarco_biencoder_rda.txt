@@ -1,0 +1,15 @@
+# without rda, noise ratio = 3
+Epoch 0, Training ECE = 0.0517
+Epoch 1, Training ECE = 0.0421
+Epoch 2, Training ECE = 0.0615
+Epoch 3, Training ECE = 0.0651
+Epoch 4, Training ECE = 0.0655
+Epoch 5, Training ECE = 0.0659
+
+# with rda, noise ratio = 5
+Epoch 0, Training ECE = 0.4817
+Epoch 1, Training ECE = 0.4909
+Epoch 2, Training ECE = 0.5104
+Epoch 3, Training ECE = 0.5195
+Epoch 4, Training ECE = 0.5199
+Epoch 5, Training ECE = 0.5213

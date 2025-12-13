@@ -1,5 +1,6 @@
 
-import training_msmarco, generic_training
+import training_msmarco
+import generic_training
 import optuna
 from functools import partial
 

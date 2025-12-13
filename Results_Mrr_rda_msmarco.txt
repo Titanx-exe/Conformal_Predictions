@@ -1,0 +1,6 @@
+####Noise ratio taken as:  0
+##Smoothing factor taken as:  0.0
+####Noise ratio taken as:  0
+##Smoothing factor taken as:  0.0
+####Noise ratio taken as:  0
+##Smoothing factor taken as:  0.0

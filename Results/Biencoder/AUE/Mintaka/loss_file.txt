@@ -1,0 +1,552 @@
+Smoothing factor taken as:  0.0
+Average loss in this epoch 12.487349867512421
+Average loss in the previous epoch: 12.487349867512421
+Total loss so far is: [12.487349867512421]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.7324966743934
+Average loss in the previous epoch: 12.487349867512421
+Total loss so far is: [12.487349867512421, 11.7324966743934]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.698208557254523
+Average loss in the previous epoch: 11.7324966743934
+Total loss so far is: [12.487349867512421, 11.7324966743934, 11.698208557254523]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.822738876455785
+Average loss in the previous epoch: 11.698208557254523
+Total loss so far is: [12.487349867512421, 11.7324966743934, 11.698208557254523, 11.822738876455785]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.724720060705092
+Average loss in the previous epoch: 11.822738876455785
+Total loss so far is: [12.487349867512421, 11.7324966743934, 11.698208557254523, 11.822738876455785, 11.724720060705092]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.70946134494688
+Average loss in the previous epoch: 11.724720060705092
+Total loss so far is: [12.487349867512421, 11.7324966743934, 11.698208557254523, 11.822738876455785, 11.724720060705092, 11.70946134494688]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.842202030110819
+Average loss in the previous epoch: 13.842202030110819
+Total loss so far is: [13.842202030110819]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.560197824006446
+Average loss in the previous epoch: 13.842202030110819
+Total loss so far is: [13.842202030110819, 13.560197824006446]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.451128992743419
+Average loss in the previous epoch: 13.560197824006446
+Total loss so far is: [13.842202030110819, 13.560197824006446, 13.451128992743419]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.583197289747044
+Average loss in the previous epoch: 13.451128992743419
+Total loss so far is: [13.842202030110819, 13.560197824006446, 13.451128992743419, 13.583197289747044]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.480267812850801
+Average loss in the previous epoch: 13.583197289747044
+Total loss so far is: [13.842202030110819, 13.560197824006446, 13.451128992743419, 13.583197289747044, 13.480267812850801]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.519756310374445
+Average loss in the previous epoch: 13.480267812850801
+Total loss so far is: [13.842202030110819, 13.560197824006446, 13.451128992743419, 13.583197289747044, 13.480267812850801, 13.519756310374445]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.641799170101754
+Average loss in the previous epoch: 15.641799170101754
+Total loss so far is: [15.641799170101754]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.306059406386789
+Average loss in the previous epoch: 15.641799170101754
+Total loss so far is: [15.641799170101754, 15.306059406386789]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.284958101708428
+Average loss in the previous epoch: 15.306059406386789
+Total loss so far is: [15.641799170101754, 15.306059406386789, 15.284958101708428]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.259780939695794
+Average loss in the previous epoch: 15.284958101708428
+Total loss so far is: [15.641799170101754, 15.306059406386789, 15.284958101708428, 15.259780939695794]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.30751271908802
+Average loss in the previous epoch: 15.259780939695794
+Total loss so far is: [15.641799170101754, 15.306059406386789, 15.284958101708428, 15.259780939695794, 15.30751271908802]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.235423734261019
+Average loss in the previous epoch: 15.30751271908802
+Total loss so far is: [15.641799170101754, 15.306059406386789, 15.284958101708428, 15.259780939695794, 15.30751271908802, 15.235423734261019]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.320641656102044
+Average loss in the previous epoch: 17.320641656102044
+Total loss so far is: [17.320641656102044]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.612515610724387
+Average loss in the previous epoch: 17.320641656102044
+Total loss so far is: [17.320641656102044, 16.612515610724387]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.597215736896395
+Average loss in the previous epoch: 16.612515610724387
+Total loss so far is: [17.320641656102044, 16.612515610724387, 16.597215736896395]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.670893829758402
+Average loss in the previous epoch: 16.597215736896395
+Total loss so far is: [17.320641656102044, 16.612515610724387, 16.597215736896395, 16.670893829758402]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.578754808083293
+Average loss in the previous epoch: 16.670893829758402
+Total loss so far is: [17.320641656102044, 16.612515610724387, 16.597215736896395, 16.670893829758402, 16.578754808083293]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.610932844436142
+Average loss in the previous epoch: 16.578754808083293
+Total loss so far is: [17.320641656102044, 16.612515610724387, 16.597215736896395, 16.670893829758402, 16.578754808083293, 16.610932844436142]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.831791863566156
+Average loss in the previous epoch: 17.831791863566156
+Total loss so far is: [17.831791863566156]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.880053128529525
+Average loss in the previous epoch: 17.831791863566156
+Total loss so far is: [17.831791863566156, 17.880053128529525]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.837678105988843
+Average loss in the previous epoch: 17.880053128529525
+Total loss so far is: [17.831791863566156, 17.880053128529525, 17.837678105988843]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.834998398107498
+Average loss in the previous epoch: 17.837678105988843
+Total loss so far is: [17.831791863566156, 17.880053128529525, 17.837678105988843, 17.834998398107498]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.85019545749892
+Average loss in the previous epoch: 17.834998398107498
+Total loss so far is: [17.831791863566156, 17.880053128529525, 17.837678105988843, 17.834998398107498, 17.85019545749892]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.897924261039353
+Average loss in the previous epoch: 17.85019545749892
+Total loss so far is: [17.831791863566156, 17.880053128529525, 17.837678105988843, 17.834998398107498, 17.85019545749892, 17.897924261039353]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.728175997613192
+Average loss in the previous epoch: 11.728175997613192
+Total loss so far is: [11.728175997613192]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 10.943816906968655
+Average loss in the previous epoch: 11.728175997613192
+Total loss so far is: [11.728175997613192, 10.943816906968655]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 10.95070766466165
+Average loss in the previous epoch: 10.943816906968655
+Total loss so far is: [11.728175997613192, 10.943816906968655, 10.95070766466165]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.06541967101671
+Average loss in the previous epoch: 10.95070766466165
+Total loss so far is: [11.728175997613192, 10.943816906968655, 10.95070766466165, 11.06541967101671]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.010389591663909
+Average loss in the previous epoch: 11.06541967101671
+Total loss so far is: [11.728175997613192, 10.943816906968655, 10.95070766466165, 11.06541967101671, 11.010389591663909]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 10.958614878545934
+Average loss in the previous epoch: 11.010389591663909
+Total loss so far is: [11.728175997613192, 10.943816906968655, 10.95070766466165, 11.06541967101671, 11.010389591663909, 10.958614878545934]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 12.09775343405327
+Average loss in the previous epoch: 12.09775343405327
+Total loss so far is: [12.09775343405327]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.893013150817069
+Average loss in the previous epoch: 12.09775343405327
+Total loss so far is: [12.09775343405327, 11.893013150817069]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.870753478930878
+Average loss in the previous epoch: 11.893013150817069
+Total loss so far is: [12.09775343405327, 11.893013150817069, 11.870753478930878]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.94902465745198
+Average loss in the previous epoch: 11.870753478930878
+Total loss so far is: [12.09775343405327, 11.893013150817069, 11.870753478930878, 11.94902465745198]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.931834730233929
+Average loss in the previous epoch: 11.94902465745198
+Total loss so far is: [12.09775343405327, 11.893013150817069, 11.870753478930878, 11.94902465745198, 11.931834730233929]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.89706414236418
+Average loss in the previous epoch: 11.931834730233929
+Total loss so far is: [12.09775343405327, 11.893013150817069, 11.870753478930878, 11.94902465745198, 11.931834730233929, 11.89706414236418]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 14.467883468754087
+Average loss in the previous epoch: 14.467883468754087
+Total loss so far is: [14.467883468754087]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.778120005890724
+Average loss in the previous epoch: 14.467883468754087
+Total loss so far is: [14.467883468754087, 13.778120005890724]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.85049755072883
+Average loss in the previous epoch: 13.778120005890724
+Total loss so far is: [14.467883468754087, 13.778120005890724, 13.85049755072883]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.953882033469188
+Average loss in the previous epoch: 13.85049755072883
+Total loss so far is: [14.467883468754087, 13.778120005890724, 13.85049755072883, 13.953882033469188]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.854917444463185
+Average loss in the previous epoch: 13.953882033469188
+Total loss so far is: [14.467883468754087, 13.778120005890724, 13.85049755072883, 13.953882033469188, 13.854917444463185]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.825103835618673
+Average loss in the previous epoch: 13.854917444463185
+Total loss so far is: [14.467883468754087, 13.778120005890724, 13.85049755072883, 13.953882033469188, 13.854917444463185, 13.825103835618673]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.548729072450838
+Average loss in the previous epoch: 15.548729072450838
+Total loss so far is: [15.548729072450838]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.163608072436054
+Average loss in the previous epoch: 15.548729072450838
+Total loss so far is: [15.548729072450838, 15.163608072436054]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.195751940933095
+Average loss in the previous epoch: 15.163608072436054
+Total loss so far is: [15.548729072450838, 15.163608072436054, 15.195751940933095]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.1142892675346
+Average loss in the previous epoch: 15.195751940933095
+Total loss so far is: [15.548729072450838, 15.163608072436054, 15.195751940933095, 15.1142892675346]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.157161487226627
+Average loss in the previous epoch: 15.1142892675346
+Total loss so far is: [15.548729072450838, 15.163608072436054, 15.195751940933095, 15.1142892675346, 15.157161487226627]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.100360984782688
+Average loss in the previous epoch: 15.157161487226627
+Total loss so far is: [15.548729072450838, 15.163608072436054, 15.195751940933095, 15.1142892675346, 15.157161487226627, 15.100360984782688]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.00732912525848
+Average loss in the previous epoch: 17.00732912525848
+Total loss so far is: [17.00732912525848]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.69849129746743
+Average loss in the previous epoch: 17.00732912525848
+Total loss so far is: [17.00732912525848, 16.69849129746743]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.719305345531694
+Average loss in the previous epoch: 16.69849129746743
+Total loss so far is: [17.00732912525848, 16.69849129746743, 16.719305345531694]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.803381286305537
+Average loss in the previous epoch: 16.719305345531694
+Total loss so far is: [17.00732912525848, 16.69849129746743, 16.719305345531694, 16.803381286305537]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.63094044285867
+Average loss in the previous epoch: 16.803381286305537
+Total loss so far is: [17.00732912525848, 16.69849129746743, 16.719305345531694, 16.803381286305537, 16.63094044285867]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.783229448024766
+Average loss in the previous epoch: 16.63094044285867
+Total loss so far is: [17.00732912525848, 16.69849129746743, 16.719305345531694, 16.803381286305537, 16.63094044285867, 16.783229448024766]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.908453893588153
+Average loss in the previous epoch: 17.908453893588153
+Total loss so far is: [17.908453893588153]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.520244458784834
+Average loss in the previous epoch: 17.908453893588153
+Total loss so far is: [17.908453893588153, 17.520244458784834]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.59317228085484
+Average loss in the previous epoch: 17.520244458784834
+Total loss so far is: [17.908453893588153, 17.520244458784834, 17.59317228085484]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.522366826991874
+Average loss in the previous epoch: 17.59317228085484
+Total loss so far is: [17.908453893588153, 17.520244458784834, 17.59317228085484, 17.522366826991874]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.5710164375579
+Average loss in the previous epoch: 17.522366826991874
+Total loss so far is: [17.908453893588153, 17.520244458784834, 17.59317228085484, 17.522366826991874, 17.5710164375579]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.642627278590197
+Average loss in the previous epoch: 17.5710164375579
+Total loss so far is: [17.908453893588153, 17.520244458784834, 17.59317228085484, 17.522366826991874, 17.5710164375579, 17.642627278590197]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.473554544795501
+Average loss in the previous epoch: 11.473554544795501
+Total loss so far is: [11.473554544795501]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.082213666834251
+Average loss in the previous epoch: 11.473554544795501
+Total loss so far is: [11.473554544795501, 11.082213666834251]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 10.94977952496125
+Average loss in the previous epoch: 11.082213666834251
+Total loss so far is: [11.473554544795501, 11.082213666834251, 10.94977952496125]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.107272058135232
+Average loss in the previous epoch: 10.94977952496125
+Total loss so far is: [11.473554544795501, 11.082213666834251, 10.94977952496125, 11.107272058135232]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.041619327873308
+Average loss in the previous epoch: 11.107272058135232
+Total loss so far is: [11.473554544795501, 11.082213666834251, 10.94977952496125, 11.107272058135232, 11.041619327873308]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 10.97281494521399
+Average loss in the previous epoch: 11.041619327873308
+Total loss so far is: [11.473554544795501, 11.082213666834251, 10.94977952496125, 11.107272058135232, 11.041619327873308, 10.97281494521399]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 12.55867766157734
+Average loss in the previous epoch: 12.55867766157734
+Total loss so far is: [12.55867766157734]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 12.33741544951957
+Average loss in the previous epoch: 12.55867766157734
+Total loss so far is: [12.55867766157734, 12.33741544951957]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 12.32887434709933
+Average loss in the previous epoch: 12.33741544951957
+Total loss so far is: [12.55867766157734, 12.33741544951957, 12.32887434709933]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 12.262454417651124
+Average loss in the previous epoch: 12.32887434709933
+Total loss so far is: [12.55867766157734, 12.33741544951957, 12.32887434709933, 12.262454417651124]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 12.352071318178714
+Average loss in the previous epoch: 12.262454417651124
+Total loss so far is: [12.55867766157734, 12.33741544951957, 12.32887434709933, 12.262454417651124, 12.352071318178714]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 12.23337137667428
+Average loss in the previous epoch: 12.352071318178714
+Total loss so far is: [12.55867766157734, 12.33741544951957, 12.32887434709933, 12.262454417651124, 12.352071318178714, 12.23337137667428]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 14.417863279993647
+Average loss in the previous epoch: 14.417863279993647
+Total loss so far is: [14.417863279993647]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.319699744060904
+Average loss in the previous epoch: 14.417863279993647
+Total loss so far is: [14.417863279993647, 13.319699744060904]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.285172952421505
+Average loss in the previous epoch: 13.319699744060904
+Total loss so far is: [14.417863279993647, 13.319699744060904, 13.285172952421505]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.302034444104828
+Average loss in the previous epoch: 13.285172952421505
+Total loss so far is: [14.417863279993647, 13.319699744060904, 13.285172952421505, 13.302034444104828]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.275589594778252
+Average loss in the previous epoch: 13.302034444104828
+Total loss so far is: [14.417863279993647, 13.319699744060904, 13.285172952421505, 13.302034444104828, 13.275589594778252]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.24871507210113
+Average loss in the previous epoch: 13.275589594778252
+Total loss so far is: [14.417863279993647, 13.319699744060904, 13.285172952421505, 13.302034444104828, 13.275589594778252, 13.24871507210113]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.039481825674525
+Average loss in the previous epoch: 16.039481825674525
+Total loss so far is: [16.039481825674525]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.402857568850376
+Average loss in the previous epoch: 16.039481825674525
+Total loss so far is: [16.039481825674525, 15.402857568850376]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.496650537452703
+Average loss in the previous epoch: 15.402857568850376
+Total loss so far is: [16.039481825674525, 15.402857568850376, 15.496650537452703]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.577104064831875
+Average loss in the previous epoch: 15.496650537452703
+Total loss so far is: [16.039481825674525, 15.402857568850376, 15.496650537452703, 15.577104064831875]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.530759082494933
+Average loss in the previous epoch: 15.577104064831875
+Total loss so far is: [16.039481825674525, 15.402857568850376, 15.496650537452703, 15.577104064831875, 15.530759082494933]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.470077477526694
+Average loss in the previous epoch: 15.530759082494933
+Total loss so far is: [16.039481825674525, 15.402857568850376, 15.496650537452703, 15.577104064831875, 15.530759082494933, 15.470077477526694]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.911565697920505
+Average loss in the previous epoch: 16.911565697920505
+Total loss so far is: [16.911565697920505]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.765711683714375
+Average loss in the previous epoch: 16.911565697920505
+Total loss so far is: [16.911565697920505, 16.765711683714375]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.74690239149533
+Average loss in the previous epoch: 16.765711683714375
+Total loss so far is: [16.911565697920505, 16.765711683714375, 16.74690239149533]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.691582390842754
+Average loss in the previous epoch: 16.74690239149533
+Total loss so far is: [16.911565697920505, 16.765711683714375, 16.74690239149533, 16.691582390842754]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.763573299287994
+Average loss in the previous epoch: 16.691582390842754
+Total loss so far is: [16.911565697920505, 16.765711683714375, 16.74690239149533, 16.691582390842754, 16.763573299287994]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.790530633608554
+Average loss in the previous epoch: 16.763573299287994
+Total loss so far is: [16.911565697920505, 16.765711683714375, 16.74690239149533, 16.691582390842754, 16.763573299287994, 16.790530633608554]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.80765344643874
+Average loss in the previous epoch: 17.80765344643874
+Total loss so far is: [17.80765344643874]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.56561630311287
+Average loss in the previous epoch: 17.80765344643874
+Total loss so far is: [17.80765344643874, 17.56561630311287]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.610917335533724
+Average loss in the previous epoch: 17.56561630311287
+Total loss so far is: [17.80765344643874, 17.56561630311287, 17.610917335533724]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.574928571945215
+Average loss in the previous epoch: 17.610917335533724
+Total loss so far is: [17.80765344643874, 17.56561630311287, 17.610917335533724, 17.574928571945215]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.654850014497676
+Average loss in the previous epoch: 17.574928571945215
+Total loss so far is: [17.80765344643874, 17.56561630311287, 17.610917335533724, 17.574928571945215, 17.654850014497676]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 17.627443673732525
+Average loss in the previous epoch: 17.654850014497676
+Total loss so far is: [17.80765344643874, 17.56561630311287, 17.610917335533724, 17.574928571945215, 17.654850014497676, 17.627443673732525]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.45469054028799
+Average loss in the previous epoch: 11.45469054028799
+Total loss so far is: [11.45469054028799]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.082914371852254
+Average loss in the previous epoch: 11.45469054028799
+Total loss so far is: [11.45469054028799, 11.082914371852254]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 10.996330942771515
+Average loss in the previous epoch: 11.082914371852254
+Total loss so far is: [11.45469054028799, 11.082914371852254, 10.996330942771515]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.043756492536554
+Average loss in the previous epoch: 10.996330942771515
+Total loss so far is: [11.45469054028799, 11.082914371852254, 10.996330942771515, 11.043756492536554]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.071315417010137
+Average loss in the previous epoch: 11.043756492536554
+Total loss so far is: [11.45469054028799, 11.082914371852254, 10.996330942771515, 11.043756492536554, 11.071315417010137]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 10.998719505881736
+Average loss in the previous epoch: 11.071315417010137
+Total loss so far is: [11.45469054028799, 11.082914371852254, 10.996330942771515, 11.043756492536554, 11.071315417010137, 10.998719505881736]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 12.60614142479394
+Average loss in the previous epoch: 12.60614142479394
+Total loss so far is: [12.60614142479394]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.702084008964656
+Average loss in the previous epoch: 12.60614142479394
+Total loss so far is: [12.60614142479394, 11.702084008964656]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.739864702324233
+Average loss in the previous epoch: 11.702084008964656
+Total loss so far is: [12.60614142479394, 11.702084008964656, 11.739864702324233]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.735343880649532
+Average loss in the previous epoch: 11.739864702324233
+Total loss so far is: [12.60614142479394, 11.702084008964656, 11.739864702324233, 11.735343880649532]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.835500094102706
+Average loss in the previous epoch: 11.735343880649532
+Total loss so far is: [12.60614142479394, 11.702084008964656, 11.739864702324233, 11.735343880649532, 11.835500094102706]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 11.715464644669419
+Average loss in the previous epoch: 11.835500094102706
+Total loss so far is: [12.60614142479394, 11.702084008964656, 11.739864702324233, 11.735343880649532, 11.835500094102706, 11.715464644669419]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 13.779520791935077
+Average loss in the previous epoch: 13.779520791935077
+Total loss so far is: [13.779520791935077]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 14.290955129637105
+Average loss in the previous epoch: 13.779520791935077
+Total loss so far is: [13.779520791935077, 14.290955129637105]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 14.133845805225363
+Average loss in the previous epoch: 14.290955129637105
+Total loss so far is: [13.779520791935077, 14.290955129637105, 14.133845805225363]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 14.113952973503839
+Average loss in the previous epoch: 14.133845805225363
+Total loss so far is: [13.779520791935077, 14.290955129637105, 14.133845805225363, 14.113952973503839]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 14.235603527907855
+Average loss in the previous epoch: 14.113952973503839
+Total loss so far is: [13.779520791935077, 14.290955129637105, 14.133845805225363, 14.113952973503839, 14.235603527907855]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 14.192668823070392
+Average loss in the previous epoch: 14.235603527907855
+Total loss so far is: [13.779520791935077, 14.290955129637105, 14.133845805225363, 14.113952973503839, 14.235603527907855, 14.192668823070392]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.4870169082476
+Average loss in the previous epoch: 15.4870169082476
+Total loss so far is: [15.4870169082476]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.140089449974598
+Average loss in the previous epoch: 15.4870169082476
+Total loss so far is: [15.4870169082476, 15.140089449974598]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 14.939974393014968
+Average loss in the previous epoch: 15.140089449974598
+Total loss so far is: [15.4870169082476, 15.140089449974598, 14.939974393014968]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.17820299435754
+Average loss in the previous epoch: 14.939974393014968
+Total loss so far is: [15.4870169082476, 15.140089449974598, 14.939974393014968, 15.17820299435754]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.039119509423294
+Average loss in the previous epoch: 15.17820299435754
+Total loss so far is: [15.4870169082476, 15.140089449974598, 14.939974393014968, 15.17820299435754, 15.039119509423294]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 15.111097699535176
+Average loss in the previous epoch: 15.039119509423294
+Total loss so far is: [15.4870169082476, 15.140089449974598, 14.939974393014968, 15.17820299435754, 15.039119509423294, 15.111097699535176]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.9378323053788
+Average loss in the previous epoch: 16.9378323053788
+Total loss so far is: [16.9378323053788]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.428282570826703
+Average loss in the previous epoch: 16.9378323053788
+Total loss so far is: [16.9378323053788, 16.428282570826703]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.40055360828296
+Average loss in the previous epoch: 16.428282570826703
+Total loss so far is: [16.9378323053788, 16.428282570826703, 16.40055360828296]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.25289714872236
+Average loss in the previous epoch: 16.40055360828296
+Total loss so far is: [16.9378323053788, 16.428282570826703, 16.40055360828296, 16.25289714872236]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.3303682216924
+Average loss in the previous epoch: 16.25289714872236
+Total loss so far is: [16.9378323053788, 16.428282570826703, 16.40055360828296, 16.25289714872236, 16.3303682216924]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 16.318960838288532
+Average loss in the previous epoch: 16.3303682216924
+Total loss so far is: [16.9378323053788, 16.428282570826703, 16.40055360828296, 16.25289714872236, 16.3303682216924, 16.318960838288532]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 18.295651318659804
+Average loss in the previous epoch: 18.295651318659804
+Total loss so far is: [18.295651318659804]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 18.293581931942693
+Average loss in the previous epoch: 18.295651318659804
+Total loss so far is: [18.295651318659804, 18.293581931942693]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 18.245086380201126
+Average loss in the previous epoch: 18.293581931942693
+Total loss so far is: [18.295651318659804, 18.293581931942693, 18.245086380201126]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 18.26204075077378
+Average loss in the previous epoch: 18.245086380201126
+Total loss so far is: [18.295651318659804, 18.293581931942693, 18.245086380201126, 18.26204075077378]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 18.15334843464579
+Average loss in the previous epoch: 18.26204075077378
+Total loss so far is: [18.295651318659804, 18.293581931942693, 18.245086380201126, 18.26204075077378, 18.15334843464579]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 18.233497818480842
+Average loss in the previous epoch: 18.15334843464579
+Total loss so far is: [18.295651318659804, 18.293581931942693, 18.245086380201126, 18.26204075077378, 18.15334843464579, 18.233497818480842]

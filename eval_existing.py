@@ -1,9 +1,12 @@
 import Evaluator
 from parameters import RankingParser
 import torch
-from collator import Biencoder_Collator,E5collator
+from collator import Biencoder_Collator,E5collator,Qwen3Collator,Llama3Collator,Llama3LBWCollator
 from models.BiEncoder import BiEncoderRanker
 from models.E5 import E5Ranker
+from models.qwen3 import Qwen3Ranker
+from models.llama3 import Llama3Ranker
+from models.Llama3_LBW import Llama3LBWRanker
 import data_processing
 from data_processing import Aida_joint_el
 from transformers import AutoTokenizer
@@ -53,7 +56,18 @@ def compute_model_ece_over_eval(model, entities, collator, device, max_candidate
             #for e5
             inputs = {k: v.to(device) for k, v in batch.items()}
             outputs = model.encode(inputs)
-            embeddings = model.average_pool(outputs.last_hidden_state, inputs['attention_mask'])
+            if isinstance(model, Qwen3Ranker):
+                # Qwen3 uses last_token_pool + normalization
+                embeddings = model.last_token_pool(outputs.last_hidden_state, inputs['attention_mask'])
+                embeddings = torch.nn.functional.normalize(embeddings, p=2, dim=1)
+            elif isinstance(model, E5Ranker):
+                # E5 uses average_pool
+                embeddings = model.average_pool(outputs.last_hidden_state, inputs['attention_mask'])
+            elif isinstance(model, Llama3Ranker):
+                # Llama3 uses weighted average pooling
+                embeddings = model.weighted_average_pool(outputs.hidden_states[-1], inputs['attention_mask'])
+            else:
+                raise ValueError(f"Unsupported model type: {type(model)}")
 
 
             #ctx_embed, doc_embed = torch.split(embeddings, embeddings.size(0) // 2)
@@ -105,19 +119,19 @@ for i in range(10):
     #for biencoder
     #params["path_to_model"]="model/epoch_"+str(i)+"/pytorch_model.bin"
     #model=BiEncoderRanker(params)
-    tk = BertTokenizer.from_pretrained(params["bert_model"], do_lower_case=params["lowercase"])
+    ## tk = BertTokenizer.from_pretrained(params["bert_model"], do_lower_case=params["lowercase"])
     #for e5
-    model = E5Ranker()
-    model.load_state_dict(torch.load("model/epoch_"+str(i)+"/pytorch_model.bin", weights_only=True))
-    model.to(device)
+    ## model = E5Ranker()
+    ## model.load_state_dict(torch.load("model/epoch_"+str(i)+"/pytorch_model.bin", weights_only=True))
+    ## model.to(device)
 
     #for biencoder
     #collator = Biencoder_Collator(tokenizer=model.tokenizer,args=params, device=device)
     #for e5
     #tokenizer = AutoTokenizer.from_pretrained('intfloat/e5-base-v2')
     #for BERT
-    tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
-    collator = E5collator(tokenizer=tokenizer,device=device)
+    ## tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
+    ## collator = E5collator(tokenizer=tokenizer,device=device)
     #for aida
 
    #
@@ -125,6 +139,41 @@ for i in range(10):
     #entities_train,dk,_=data_processing.process_lcquad_file("data/train/lcquad.json")
     #evaluator = Evaluator.IndexEvaluator(params=params, collator=collator)
     # for mintaka
+    if params["found_model"] == "e5":
+        model = E5Ranker(device=device, params=params)
+        model.load_state_dict(torch.load("model/epoch_"+str(i)+"/pytorch_model.bin", weights_only=True))
+        model.to(device)
+        
+        tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
+        collator = E5collator(tokenizer=tokenizer, device=device)
+    
+    # for Qwen3 (ADD THIS)
+    elif params["found_model"] == "qwen3":
+        model = Qwen3Ranker(device=device, params=params)
+        model.load_state_dict(torch.load("model/epoch_"+str(i)+"/pytorch_model.bin", weights_only=True))
+        model.to(device)
+        
+        # Use tokenizer from model (already configured with left padding)
+        tokenizer = model.tokenizer
+        collator = Qwen3Collator(tokenizer=tokenizer, device=device)
+    elif params["found_model"] == "llama3":
+        model = Llama3Ranker(device=device, params=params)
+        model.load_state_dict(torch.load("model/epoch_"+str(i)+"/pytorch_model.bin", weights_only=True))
+        model.to(device)
+        tokenizer = model.tokenizer
+        collator = Llama3Collator(tokenizer=tokenizer, device=device)
+
+    elif params["found_model"] == "llama3_lbw":
+        from models.Llama3_LBW import Llama3LBWRanker
+        from collator import Llama3LBWCollator
+        model = Llama3LBWRanker(device=device, params=params)
+        model.load_state_dict(torch.load("model/epoch_"+str(i)+"/pytorch_model.bin", weights_only=True))
+        model.to(device)
+        tokenizer = model.tokenizer
+        collator = Llama3LBWCollator(tokenizer=tokenizer, device=device)
+    
+    else:
+        raise ValueError(f"Unsupported model type: {params['found_model']}")
     entities_train, dk, _ = data_processing.process_minitaka_file("data/mintaka/mintaka_train.json")
     evaluator = Evaluator.IndexEvaluator(params=params, collator=collator,filehandler=data_processing.process_minitaka_file, file="data/mintaka/mintaka_test.json")
 

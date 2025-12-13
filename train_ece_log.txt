@@ -1,0 +1,4 @@
+Epoch 0, Training ECE = 0.3235
+Epoch 0, Training ECE = 0.3946
+Epoch 0, Training ECE = 0.5217
+Epoch 1, Training ECE = 0.5422

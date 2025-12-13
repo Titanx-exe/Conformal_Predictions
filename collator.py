@@ -281,3 +281,192 @@ class E5collator:
         repr = ["query: " + text for text in batch]
         batch = self.tokenizer(repr, max_length=512, padding=True, truncation=True, return_tensors='pt')
         return batch.to(self.device)
+
+class Qwen3Collator:
+    """
+    Collator for Qwen3 Embedding model.
+    Qwen3 requires instruction-based formatting for queries, but not for documents.
+    """
+    def __init__(self, tokenizer, device):
+        self.tokenizer = tokenizer
+        self.entity_text_dict = pickle.load(open("data/ent_descriptions_update.pkl", "rb"))
+        self.device = device
+    
+    def collate(self, batch, is_passage):
+        """
+        Format inputs according to Qwen3 requirements:
+        - Queries: Can use instructions (optional but recommended)
+        - Documents: No prefix needed
+        """
+        if is_passage:
+            # Documents: no special prefix for Qwen3
+            repr_list = [
+                self.entity_text_dict[text] if text in self.entity_text_dict else text 
+                for text in batch
+            ]
+        else:
+            # Queries: optionally add instruction
+            # For simplicity, we use a generic retrieval instruction
+            # You can customize this based on your task
+            task_instruction = "Given a query, retrieve relevant documents"
+            repr_list = [
+                f"Instruct: {task_instruction}\nQuery: {text}" 
+                for text in batch
+            ]
+        return repr_list
+    
+    def collate_entities(self, batch):
+        repr_list = [
+            self.entity_text_dict[text] if text in self.entity_text_dict else text 
+            for text in batch
+        ]
+        batch_dict = self.tokenizer(repr_list, max_length=512, padding=True, truncation=True, return_tensors='pt')
+        return batch_dict.to(self.device)
+    
+    def collate_context(self, batch):
+        task_instruction = "Given a query, retrieve relevant documents"
+        repr_list = [f"Instruct: {task_instruction}\nQuery: {text}" for text in batch]
+        batch_dict = self.tokenizer(repr_list, max_length=512, padding=True, truncation=True, return_tensors='pt')
+        return batch_dict.to(self.device)
+
+class Llama3Collator:
+    """
+    Collator specifically designed for Llama3 decoder model.
+    
+    Key differences from E5collator:
+    - No "query:" and "passage:" prefixes
+    - Handles left-padding for causal LM
+    - Supports both entity-based (AIDA, LC-QuAD) and document-based (MS MARCO) datasets
+    """
+    
+    def __init__(self, tokenizer, device, queries=None, use_prompts=False):
+        self.tokenizer = tokenizer
+        self.queries = queries
+        self.documents = None  # For document-based datasets (MS MARCO)
+        self.device = device
+        self.use_prompts = use_prompts
+        
+        # CRITICAL FIX: Load entity descriptions for entity-based datasets (AIDA, LC-QuAD, Mintaka)
+        try:
+            self.entity_text_dict = pickle.load(open("data/ent_descriptions_update.pkl", "rb"))
+            print("✓ Loaded entity descriptions for Llama3Collator")
+        except FileNotFoundError:
+            print("⚠ Warning: entity descriptions not found, using raw entity IDs")
+            self.entity_text_dict = {}
+    
+    def collate(self, batch, is_passage):
+        """
+        Collate batch for Llama3 model.
+        
+        Args:
+            batch: List of query IDs, document IDs, or entity IDs
+            is_passage: True if encoding documents/entities, False if encoding queries
+        
+        Returns:
+            List of text strings (NOT tokenized - tokenization happens in trainer)
+        """
+        if is_passage:
+            # Documents/Entities: check if using documents dict or entity_text_dict
+            if self.documents is not None:
+                # Document-based dataset (MS MARCO)
+                if self.use_prompts:
+                    repr = [f"Document: {self.documents[cand]}" for cand in batch]
+                else:
+                    repr = [self.documents[cand] for cand in batch]
+            else:
+                # Entity-based dataset (AIDA, LC-QuAD, Mintaka)
+                # CRITICAL FIX: Use entity_text_dict, not documents
+                repr = [self.entity_text_dict[text] if text in self.entity_text_dict 
+                        else text for text in batch]
+        else:
+            # Queries
+            if self.queries is not None:
+                # Queries have structure like {'text': ...}
+                if self.use_prompts:
+                    repr = [f"Query: {self.queries[question]['text']}" for question in batch]
+                else:
+                    repr = [self.queries[question]["text"] for question in batch]
+            else:
+                # Raw text queries
+                if self.use_prompts:
+                    repr = [f"Query: {text}" for text in batch]
+                else:
+                    repr = batch
+        
+        return repr
+    
+    def collate_entities(self, batch):
+        """
+        Tokenize entities/documents.
+        
+        CRITICAL FIX: Use entity_text_dict for entity-based datasets,
+        documents dict for document-based datasets.
+        """
+        # Check if using entity-based or document-based dataset
+        if self.documents is not None:
+            # Document-based dataset (MS MARCO)
+            repr = [self.documents[cand] for cand in batch]
+        else:
+            # Entity-based dataset (AIDA, LC-QuAD, Mintaka)
+            repr = [self.entity_text_dict[text] if text in self.entity_text_dict 
+                    else text for text in batch]
+        
+        tokenized = self.tokenizer(repr, max_length=128, padding=True, truncation=True, return_tensors='pt')
+        return tokenized.to(self.device)
+    
+    def collate_context(self, batch):
+        """Tokenize queries"""
+        if self.queries is not None:
+            repr = [self.queries[question]["text"] for question in batch]
+        else:
+            repr = batch
+        
+        tokenized = self.tokenizer(repr, max_length=128, padding=True, truncation=True, return_tensors='pt')
+        return tokenized.to(self.device)
+
+
+class Llama3LBWCollator:
+    """
+    Collator for Llama3 using Look-Both-Ways strategy.
+    Enforces RIGHT PADDING.
+    """
+    def __init__(self, tokenizer, device):
+        self.tokenizer = tokenizer
+        self.device = device
+        self.tokenizer.padding_side = "right"
+        if self.tokenizer.pad_token is None:
+            self.tokenizer.pad_token = self.tokenizer.eos_token
+            
+        try:
+            self.entity_text_dict = pickle.load(open("data/ent_descriptions_update.pkl", "rb"))
+        except:
+            self.entity_text_dict = {}
+
+    def collate(self, batch, is_passage):
+        if is_passage:
+            repr_list = [
+                self.entity_text_dict[text] if text in self.entity_text_dict else text
+                for text in batch
+            ]
+        else:
+            task_instruction = "Retrieve relevant documents for this query: "
+            repr_list = [f"{task_instruction}{text}" for text in batch]
+        return repr_list
+
+    def collate_entities(self, batch):
+        repr_list = [
+            self.entity_text_dict[text] if text in self.entity_text_dict else text
+            for text in batch
+        ]
+        batch_dict = self.tokenizer(
+            repr_list, max_length=128, padding=True, truncation=True, return_tensors='pt'
+        )
+        return batch_dict.to(self.device)
+
+    def collate_context(self, batch):
+        task_instruction = "Retrieve relevant documents for this query: "
+        repr_list = [f"{task_instruction}{text}" for text in batch]
+        batch_dict = self.tokenizer(
+            repr_list, max_length=128, padding=True, truncation=True, return_tensors='pt'
+        )
+        return batch_dict.to(self.device)

@@ -216,7 +216,7 @@ def index_queries(model,queries,collator):
 def index_entities(model,entities,collator):
     print("encode entities")
     model.eval()
-    encodings = generateVectors(entities,model,25,collator)
+    encodings = generateVectors(entities,model,10,collator)
     idToIndex={}
     print("start geneationg vectors")
     x_dim=len(encodings)

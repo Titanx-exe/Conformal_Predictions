@@ -6,6 +6,9 @@ import torch
 from tqdm import tqdm, trange
 from parameters import RankingParser
 from models.E5 import E5Ranker
+from models.qwen3 import Qwen3Ranker
+from models.llama3 import Llama3Ranker
+from models.Llama3_LBW import Llama3LBWRanker
 import random
 import os
 from pytorch_transformers.tokenization_bert import BertTokenizer
@@ -52,6 +55,19 @@ def load_train_blink_Ranking_Model():
     # for BiEncoder
     if params["found_model"] == "biencoder":
         train_inst = Trainer.TrainerRanker(params=params, evaluate_after_batch=params["eval_interval"], device=device)
+
+    # for Llama3 (NEW)
+    if params["found_model"] == "llama3":
+        train_inst = Trainer.TrainerLlama3(params=params, evaluate_after_batch=params["eval_interval"], device=device)
+        print("✓ Using Llama3Ranker for dense retrieval")
+
+    if params["found_model"]=="llama3_lbw":
+        train_inst = Trainer.TrainerLlama3LBW(params=params, evaluate_after_batch=params["eval_interval"], device=device)
+
+
+    # for qwen3
+    if params["found_model"]=="qwen3":
+        train_inst = Trainer.TrainerQwen3(params=params, evaluate_after_batch=params["eval_interval"], device=device)
 
     #for aida
     if params["dataset"] == "aida":
@@ -120,22 +136,25 @@ def save_model(model, tokenizer, output_dir):
 
 def encode_documents(documents,model,collator):
     documents=list(documents)
-    data_loader = DataLoader(documents, shuffle=True, batch_size=100,
+    data_loader = DataLoader(documents, shuffle=True, batch_size=10,
                              collate_fn=collator.collate_context)
     #iter_ = tqdm(data_loader, desc="Encode Train Documents")
     doc_encodings = []
-    for step, batch in enumerate(data_loader):
-        if not isinstance(model,E5Ranker):
-            context_input = batch
-            # candidate_input = batch["candidate_input"]
-            # labels=[0 for i in range(batch["candidate_input"].size(0))]
-            # label_input = batch[0]["label_idx"].to(device)
-            # label_input = torch.LongTensor(torch.zeros(candidate_input.size(0),dtype=torch.int64)).to(device)
-            # context_input, candidate_input, label_input = batch
-            encodings = model.encode_context(context_input).tolist()
-        else:
-            encodings=model.encode_context(batch).tolist()
-        doc_encodings.extend(encodings)
+    with torch.no_grad():
+      for step, batch in enumerate(data_loader):
+          if not isinstance(model,E5Ranker) and not isinstance(model, Qwen3Ranker) and not isinstance(model, Llama3Ranker) and not isinstance(model, Llama3LBWRanker):
+              context_input = batch
+              # candidate_input = batch["candidate_input"]
+              # labels=[0 for i in range(batch["candidate_input"].size(0))]
+              # label_input = batch[0]["label_idx"].to(device)
+              # label_input = torch.LongTensor(torch.zeros(candidate_input.size(0),dtype=torch.int64)).to(device)
+              # context_input, candidate_input, label_input = batch
+              encodings = model.encode_context(context_input).tolist()
+          else:
+              encodings=model.encode_context(batch).tolist()
+          doc_encodings.extend(encodings)
+          if torch.cuda.is_available():
+                torch.cuda.empty_cache()
     encoding_map={}
     for i in range(len(doc_encodings)):
         encoding_map[documents[i]]=doc_encodings[i]
@@ -144,7 +163,8 @@ def encode_documents(documents,model,collator):
 def train():
     #trainer,evaluator, train_dataloader, optimizer, scheduler = load_train_only_Graph_Model(device)
     trainer, evaluator, train_dataloader, optimizer, scheduler,entities,documents,doc_to_ent = load_train_blink_Ranking_Model()
-    trainer.model.train()
+    # trainer.model.train()
+    trainer.model.eval()
     epochs= trainer.params['num_epochs']
     #print(evaluator.evaluate(trainer.model))
     index,results, mrr =evaluator.evaluate(trainer.model)
@@ -364,3 +384,5 @@ def compute_recall_at_k(logits, labels, k=5):
     correct = (topk_preds == labels).any(dim=1).float()  # shape: (batch_size,)
     recall_at_k = correct.mean().item()
     return recall_at_k
+
+train()

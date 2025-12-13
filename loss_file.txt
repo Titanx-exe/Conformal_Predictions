@@ -1,0 +1,16 @@
+Smoothing factor taken as:  0.0
+Average loss in this epoch 3.202561233146691
+Average loss in the previous epoch: 3.202561233146691
+Total loss so far is: [3.202561233146691]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 3.58809303257368
+Average loss in the previous epoch: 3.58809303257368
+Total loss so far is: [3.58809303257368]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 61.219113863959954
+Average loss in the previous epoch: 61.219113863959954
+Total loss so far is: [61.219113863959954]
+Smoothing factor taken as:  0.0
+Average loss in this epoch 30.4635249270937
+Average loss in the previous epoch: 61.219113863959954
+Total loss so far is: [61.219113863959954, 30.4635249270937]
