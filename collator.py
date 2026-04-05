@@ -470,3 +470,100 @@ class Llama3LBWCollator:
             repr_list, max_length=128, padding=True, truncation=True, return_tensors='pt'
         )
         return batch_dict.to(self.device)
+
+class LlamaDecoderCollator:
+    """
+    Collator for LlamaDecoder (Look-Both-Ways) model.
+    Uses RIGHT padding (critical for LBW).
+    """
+    def __init__(self, tokenizer, device):
+        self.tokenizer = tokenizer
+        self.device = device
+        self.tokenizer.padding_side = "right"
+        if self.tokenizer.pad_token is None:
+            self.tokenizer.pad_token = self.tokenizer.eos_token
+        
+        try:
+            self.entity_text_dict = pickle.load(open("data/ent_descriptions_update.pkl", "rb"))
+        except:
+            self.entity_text_dict = {}
+    
+    def collate(self, batch, is_passage):
+        if is_passage:
+            repr_list = [
+                self.entity_text_dict[text] if text in self.entity_text_dict else text
+                for text in batch
+            ]
+        else:
+            # Optional: add instruction prefix for queries
+            task_instruction = "Retrieve relevant documents: "
+            repr_list = [f"{task_instruction}{text}" for text in batch]
+        return repr_list
+    
+    def collate_entities(self, batch):
+        repr_list = [
+            self.entity_text_dict[text] if text in self.entity_text_dict else text
+            for text in batch
+        ]
+        batch_dict = self.tokenizer(
+            repr_list, max_length=128, padding=True, truncation=True, return_tensors='pt'
+        )
+        return batch_dict.to(self.device)
+    
+    def collate_context(self, batch):
+        task_instruction = "Retrieve relevant documents: "
+        repr_list = [f"{task_instruction}{text}" for text in batch]
+        batch_dict = self.tokenizer(
+            repr_list, max_length=128, padding=True, truncation=True, return_tensors='pt'
+        )
+        return batch_dict.to(self.device)
+
+
+class Qwen3DecoderCollator(LlamaDecoderCollator):
+    """
+    Collator for Qwen3 Decoder (Look-Both-Ways) model.
+    Uses RIGHT padding (critical for LBW).
+    Inherits from LlamaDecoderCollator - same collation logic.
+    """
+    def __init__(self, tokenizer, device):
+        self.tokenizer = tokenizer
+        self.device = device
+        self.tokenizer.padding_side = "right"
+        if self.tokenizer.pad_token is None:
+            self.tokenizer.pad_token = self.tokenizer.eos_token
+        
+        try:
+            self.entity_text_dict = pickle.load(open("data/ent_descriptions_update.pkl", "rb"))
+        except:
+            self.entity_text_dict = {}
+    
+    def collate(self, batch, is_passage):
+        if is_passage:
+            repr_list = [
+                self.entity_text_dict[text] if text in self.entity_text_dict else text
+                for text in batch
+            ]
+        else:
+            # Add instruction prefix for queries
+            task_instruction = "Instruct: Given a mention, find the corresponding Wikipedia entity.\nQuery: "
+            repr_list = [f"{task_instruction}{text}" for text in batch]
+        return repr_list
+        # Instruct: Given a mention and its surrounding context, retrieve relevant entity descriptions or candidate entities that disambiguate the mention\nMention:
+    
+    def collate_entities(self, batch):
+        repr_list = [
+            self.entity_text_dict[text] if text in self.entity_text_dict else text
+            for text in batch
+        ]
+        batch_dict = self.tokenizer(
+            repr_list, max_length=128, padding=True, truncation=True, return_tensors='pt'
+        )
+        return batch_dict.to(self.device)
+    
+    def collate_context(self, batch):
+        task_instruction = "Instruct: Given a mention, find the corresponding Wikipedia entity.\nQuery: "
+        repr_list = [f"{task_instruction}{text}" for text in batch]
+        batch_dict = self.tokenizer(
+            repr_list, max_length=128, padding=True, truncation=True, return_tensors='pt'
+        )
+        return batch_dict.to(self.device)

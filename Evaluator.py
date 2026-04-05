@@ -8,6 +8,8 @@ import indexing
 from models.E5 import E5Ranker
 from models.qwen3 import Qwen3Ranker
 from models.llama3 import Llama3Ranker
+from models.llama_decoder import LlamaDecoderRanker
+from models.qwen3_decoder import Qwen3DecoderRanker
 from torchmetrics.retrieval import RetrievalMRR
 
 def accuracy(out, labels):
@@ -205,7 +207,7 @@ class IndexEvaluator:
         doc_encodings=[]
         with torch.no_grad():
             for step, batch in enumerate(iter_):
-                if not isinstance(model,E5Ranker) and not isinstance(model, Qwen3Ranker) and not isinstance(model, Llama3Ranker):
+                if not isinstance(model,E5Ranker) and not isinstance(model, Qwen3Ranker) and not isinstance(model, Llama3Ranker) and not isinstance(model, LlamaDecoderRanker):
 
                     context_input = batch
                     #candidate_input = batch["candidate_input"]

@@ -1,4 +1,0 @@
-Epoch 0, Training Recall@5 = 0.6944
-Epoch 0, Training Recall@5 = 0.7928
-Epoch 0, Training Recall@5 = 0.8199
-Epoch 1, Training Recall@5 = 0.7958

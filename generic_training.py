@@ -9,6 +9,8 @@ from models.E5 import E5Ranker
 from models.qwen3 import Qwen3Ranker
 from models.llama3 import Llama3Ranker
 from models.Llama3_LBW import Llama3LBWRanker
+from models.llama_decoder import LlamaDecoderRanker
+from models.qwen3_decoder import Qwen3DecoderRanker
 import random
 import os
 from pytorch_transformers.tokenization_bert import BertTokenizer
@@ -64,17 +66,110 @@ def load_train_blink_Ranking_Model():
     if params["found_model"]=="llama3_lbw":
         train_inst = Trainer.TrainerLlama3LBW(params=params, evaluate_after_batch=params["eval_interval"], device=device)
 
+    # # Adapter lines
+    # params['lora_adapter_path'] = 'Finetuning/finetuned_models/llama-3.2-1b-lora/final'
+
+
+    if params["found_model"] == "llama_decoder":
+        train_inst = Trainer.TrainerLlamaDecoder(
+            params=params, 
+            evaluate_after_batch=params["eval_interval"], 
+            device=device
+        )
+        print("Using LlamaDecoderRanker (LBW) for dense retrieval")
+
 
     # for qwen3
     if params["found_model"]=="qwen3":
         train_inst = Trainer.TrainerQwen3(params=params, evaluate_after_batch=params["eval_interval"], device=device)
 
+    # for qwen3_decoder (LBW)
+    if params["found_model"] == "qwen3_decoder":
+        train_inst = Trainer.TrainerQwen3Decoder(
+            params=params,
+            evaluate_after_batch=params["eval_interval"],
+            device=device
+        )
+        print("Using Qwen3DecoderRanker (LBW) for dense retrieval")
+
     #for aida
-    if params["dataset"] == "aida":
-        dp=Aida_joint_el()
-        tk = BertTokenizer.from_pretrained(params["bert_model"], do_lower_case=params["lowercase"])
-        entities, documents, doc_to_ent=dp.read_ds_to_list("data/aida/wikidata/aida_train",tk)
+    # if params["dataset"] == "aida":
+    #     dp=Aida_joint_el()
+    #     tk = BertTokenizer.from_pretrained(params["bert_model"], do_lower_case=params["lowercase"])
+    #     entities, documents, doc_to_ent=dp.read_ds_to_list("data/aida/wikidata/aida_train",tk)
     #entities, documents, doc_to_ent = dp.read_ds_to_list("data/aida/wikidata/aida_train",tk)
+
+    if params["dataset"] == "aida":
+        dp = Aida_joint_el()
+        # Use Qwen3 tokenizer - model_id from params
+        from transformers import AutoTokenizer
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        entities, documents, doc_to_ent = dp.read_ds_to_list("data/aida/wikidata/aida_splits/aida_train", tk)
+
+    if params["dataset"] == "ace2004":
+        dp = Aida_joint_el()
+        # Use Qwen3 tokenizer - model_id from params
+        from transformers import AutoTokenizer
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        entities, documents, doc_to_ent = dp.read_ds_to_list("data/aida/wikidata/ace2004_splits/ACE2004_train", tk)
+
+    if params["dataset"] == "aquaint":
+        dp = Aida_joint_el()
+        # Use Qwen3 tokenizer - model_id from params
+        from transformers import AutoTokenizer
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        entities, documents, doc_to_ent = dp.read_ds_to_list("data/aida/wikidata/AQUAINT_splits/AQUAINT_train", tk)
+
+    if params["dataset"] == "iitb-fix":
+        dp = Aida_joint_el()
+        # Use Qwen3 tokenizer - model_id from params
+        from transformers import AutoTokenizer
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        entities, documents, doc_to_ent = dp.read_ds_to_list("data/aida/wikidata/iitb-fix_splits/iitb-fix_train", tk)
+
+    if params["dataset"] == "kore50":
+        dp = Aida_joint_el()
+        # Use Qwen3 tokenizer - model_id from params
+        from transformers import AutoTokenizer
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        entities, documents, doc_to_ent = dp.read_ds_to_list("data/aida/wikidata/KORE50_splits/KORE50_train", tk)
+
+    if params["dataset"] == "msnbc":
+        dp = Aida_joint_el()
+        # Use Qwen3 tokenizer - model_id from params
+        from transformers import AutoTokenizer
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        entities, documents, doc_to_ent = dp.read_ds_to_list("data/aida/wikidata/MSNBC_splits/MSNBC_train", tk)
+
+    if params["dataset"] == "n3reuters128":
+        dp = Aida_joint_el()
+        # Use Qwen3 tokenizer - model_id from params
+        from transformers import AutoTokenizer
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        entities, documents, doc_to_ent = dp.read_ds_to_list("data/aida/wikidata/N3-Reuters-128_splits/N3-Reuters-128_train", tk)
+
+    if params["dataset"] == "n3rss500":
+        dp = Aida_joint_el()
+        # Use Qwen3 tokenizer - model_id from params
+        from transformers import AutoTokenizer
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        entities, documents, doc_to_ent = dp.read_ds_to_list("data/aida/wikidata/N3-RSS-500_splits/N3-RSS-500_train", tk)
+
+    if params["dataset"] == "spotlight":
+        dp = Aida_joint_el()
+        # Use Qwen3 tokenizer - model_id from params
+        from transformers import AutoTokenizer
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        entities, documents, doc_to_ent = dp.read_ds_to_list("data/aida/wikidata/spotlight_splits/spotlight_train", tk)
 
     '''
     queries= {}
@@ -110,8 +205,59 @@ def load_train_blink_Ranking_Model():
     '''
     #filehandler=data_processing.process_lcquad_file
     if params["dataset"] == "aida":
-        tk = BertTokenizer.from_pretrained(params["bert_model"], do_lower_case=params["lowercase"])
-        evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,filehandler=dp.read_ds_to_list,file="data/aida/wikidata/aida_testa",tokenizer=tk)
+        # Use Qwen3 tokenizer - model_id from params
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,filehandler=dp.read_ds_to_list,file="data/aida/wikidata/aida_splits/aida_testa",tokenizer=tk)
+
+    if params["dataset"] == "ace2004":
+        # Use Qwen3 tokenizer - model_id from params
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,filehandler=dp.read_ds_to_list,file="data/aida/wikidata/ace2004_splits/ACE2004_testa",tokenizer=tk)
+
+    if params["dataset"] == "aquaint":
+        # Use Qwen3 tokenizer - model_id from params
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,filehandler=dp.read_ds_to_list,file="data/aida/wikidata/AQUAINT_splits/AQUAINT_testa",tokenizer=tk)
+
+    if params["dataset"] == "iitb-fix":
+        # Use Qwen3 tokenizer - model_id from params
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,filehandler=dp.read_ds_to_list,file="data/aida/wikidata/iitb-fix_splits/iitb-fix_testa",tokenizer=tk)
+
+    if params["dataset"] == "kore50":
+        # Use Qwen3 tokenizer - model_id from params
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,filehandler=dp.read_ds_to_list,file="data/aida/wikidata/KORE50_splits/KORE50_testa",tokenizer=tk)
+
+    if params["dataset"] == "msnbc":
+        # Use Qwen3 tokenizer - model_id from params
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,filehandler=dp.read_ds_to_list,file="data/aida/wikidata/MSNBC_splits/MSNBC_testa",tokenizer=tk)
+
+    if params["dataset"] == "n3reuters128":
+        # Use Qwen3 tokenizer - model_id from params
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,filehandler=dp.read_ds_to_list,file="data/aida/wikidata/N3-Reuters-128_splits/N3-Reuters-128_testa",tokenizer=tk)
+
+    if params["dataset"] == "n3rss500":
+        # Use Qwen3 tokenizer - model_id from params
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,filehandler=dp.read_ds_to_list,file="data/aida/wikidata/N3-RSS-500_splits/N3-RSS-500_testa",tokenizer=tk)
+
+    if params["dataset"] == "spotlight":
+        # Use Qwen3 tokenizer - model_id from params
+        model_id = params.get('model_id', 'meta-llama/Llama-3.2-3B')
+        tk = AutoTokenizer.from_pretrained(model_id)
+        evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,filehandler=dp.read_ds_to_list,file="data/aida/wikidata/spotlight_splits/spotlight_testa",tokenizer=tk)
+
     if params["dataset"] == "mintaka":
         evaluator_inst = Evaluator.IndexEvaluator(params=params, collator=train_inst.collator,
                                               filehandler=data_processing.process_minitaka_file, file="data/mintaka/mintaka_test.json")
@@ -186,6 +332,11 @@ def train():
             #+"##Smoothing factor taken as: " + ' ' + str(trainer.params['label_smoothness']) + '\n')
     f1.close()
     encoding_map = encode_documents(documents, trainer.model, trainer.collator)
+
+    # Exit early if only evaluation is requested
+    if trainer.params.get('evaluate', False):
+        print("Evaluation complete. Exiting (--evaluate flag was set).")
+        return
 
     base_smoothing = float(trainer.params['base_smoothing_rate'])
     avg_loss = []

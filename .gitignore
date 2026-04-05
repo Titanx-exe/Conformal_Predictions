@@ -1,2 +1,10 @@
 data/
 myenv/
+data/
+Finetuning/finetuned_models/
+Finetuning/Datasets/
+Finetuning/Log/
+Finetuning/Loss
+*.jsonl
+*.log
+

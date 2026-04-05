@@ -13,6 +13,10 @@ from transformers import AutoTokenizer
 from torch.utils.data import DataLoader
 from models.Llama3_LBW import Llama3LBWRanker
 from collator import Llama3LBWCollator
+from models.llama_decoder import LlamaDecoderRanker
+from collator import LlamaDecoderCollator
+from models.qwen3_decoder import Qwen3DecoderRanker
+from collator import Qwen3DecoderCollator
 
 class TrainerRanker:
     def __init__(self, params, evaluate_after_batch,  device):
@@ -411,5 +415,89 @@ class TrainerLlama3LBW:
         token_input = {k: v.to(self.device) for k, v in token_input.items()}
         labels = torch.tensor(batch[2], device=self.device)
 
+        loss, logits = self.model(token_input, original_query_count, labels)
+        return logits, loss
+
+class TrainerLlamaDecoder:
+    def __init__(self, params, evaluate_after_batch, device):
+        self.grad_acc_steps = params["gradient_accumulation_steps"]
+        self.params = params
+        self.evaluate_after = evaluate_after_batch
+        self.device = device
+        
+        self.model = LlamaDecoderRanker(device, params)
+        self.tokenizer = self.model.tokenizer
+        self.collator = LlamaDecoderCollator(tokenizer=self.tokenizer, device=self.device)
+        self.model.to(device)
+    
+    def getOptimizerAndSheduler(self, len_train_Data):
+        optimizer = standard_optimizer.get_bert_optimizer(
+            [self.model],
+            'all_encoder_layers_llama_decoder',  # Need to add this pattern
+            self.params["learning_rate"],
+            fp16=self.params.get("fp16")
+        )
+        scheduler = standard_optimizer.get_scheduler(self.params, optimizer, len_train_Data)
+        return optimizer, scheduler
+    
+    def make_forward_pass(self, batch, step):
+        queries = batch[0]
+        queries = self.collator.collate(queries, is_passage=False)
+        
+        documents = batch[1]
+        documents = self.collator.collate(documents, is_passage=True)
+        
+        original_query_count = len(queries)
+        combined_text = queries + documents
+        
+        token_input = self.tokenizer(
+            combined_text, max_length=128, padding=True, truncation=True, return_tensors='pt'
+        )
+        token_input = {k: v.to(self.device) for k, v in token_input.items()}
+        labels = torch.tensor(batch[2], device=self.device)
+        
+        loss, logits = self.model(token_input, original_query_count, labels)
+        return logits, loss
+
+
+class TrainerQwen3Decoder:
+    """Trainer for Qwen3 Decoder model with Look-Both-Ways support."""
+    def __init__(self, params, evaluate_after_batch, device):
+        self.grad_acc_steps = params["gradient_accumulation_steps"]
+        self.params = params
+        self.evaluate_after = evaluate_after_batch
+        self.device = device
+        
+        self.model = Qwen3DecoderRanker(device, params)
+        self.tokenizer = self.model.tokenizer
+        self.collator = Qwen3DecoderCollator(tokenizer=self.tokenizer, device=self.device)
+        self.model.to(device)
+    
+    def getOptimizerAndSheduler(self, len_train_Data):
+        optimizer = standard_optimizer.get_bert_optimizer(
+            [self.model],
+            'all_encoder_layers_qwen3_decoder',
+            self.params["learning_rate"],
+            fp16=self.params.get("fp16")
+        )
+        scheduler = standard_optimizer.get_scheduler(self.params, optimizer, len_train_Data)
+        return optimizer, scheduler
+    
+    def make_forward_pass(self, batch, step):
+        queries = batch[0]
+        queries = self.collator.collate(queries, is_passage=False)
+        
+        documents = batch[1]
+        documents = self.collator.collate(documents, is_passage=True)
+        
+        original_query_count = len(queries)
+        combined_text = queries + documents
+        
+        token_input = self.tokenizer(
+            combined_text, max_length=128, padding=True, truncation=True, return_tensors='pt'
+        )
+        token_input = {k: v.to(self.device) for k, v in token_input.items()}
+        labels = torch.tensor(batch[2], device=self.device)
+        
         loss, logits = self.model(token_input, original_query_count, labels)
         return logits, loss

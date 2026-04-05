@@ -32,7 +32,8 @@ class E5Ranker(torch.nn.Module):
         self.neg_lambda = neg_lambda
         self.alpha = alpha
         self.margin = margin
-        self.model = AutoModel.from_pretrained('intfloat/e5-base-v2')
+        # self.model = AutoModel.from_pretrained('intfloat/e5-base-v2')
+        self.model = AutoModel.from_pretrained('intfloat/multilingual-e5-large')
         #self.model = AutoModel.from_pretrained("nvidia/llama-embed-nemotron-8b", trust_remote_code=True, torch_dtype=torch.float16, attn_implementation="flash_attention_2" if torch.cuda.is_available() else "eager")
         #self.loss_fn = InfoNCE()
         if device==None:

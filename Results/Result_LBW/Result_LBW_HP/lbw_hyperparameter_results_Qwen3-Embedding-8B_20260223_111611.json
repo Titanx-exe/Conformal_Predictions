@@ -1,0 +1,5354 @@
+{
+  "timestamp": "20260223_111611",
+  "model_id": "Qwen/Qwen3-Embedding-8B",
+  "all_results": [
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 36,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.43333,
+        "ece": 0.14286,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 414
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 35,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.54898,
+        "ece": 0.28571,
+        "recall": 0.7619047619047619
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 208
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 34,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.81429,
+        "ece": 0.71429,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 293
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 33,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.80952,
+        "ece": 0.71429,
+        "recall": 0.9523809523809523
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 282
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 32,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.88095,
+        "ece": 0.85714,
+        "recall": 0.9523809523809523
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 322
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 31,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.80952,
+        "ece": 0.71429,
+        "recall": 0.9523809523809523
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 286
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 30,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.80612,
+        "ece": 0.71429,
+        "recall": 0.9523809523809523
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 301
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 29,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.80952,
+        "ece": 0.71429,
+        "recall": 0.9523809523809523
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 291
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 28,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.80952,
+        "ece": 0.71429,
+        "recall": 0.9523809523809523
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 294
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 27,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.80952,
+        "ece": 0.71429,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 308
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 26,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.80952,
+        "ece": 0.71429,
+        "recall": 0.9523809523809523
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 299
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 25,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.81429,
+        "ece": 0.71429,
+        "recall": 0.8571428571428571
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 324
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 24,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.88571,
+        "ece": 0.85714,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 338
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 23,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.88095,
+        "ece": 0.85714,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 343
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 22,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.80612,
+        "ece": 0.71429,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 325
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 21,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.87302,
+        "ece": 0.85714,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 349
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 20,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.8,
+        "ece": 0.71429,
+        "recall": 0.8571428571428571
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 352
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 19,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.80159,
+        "ece": 0.71429,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 332
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 18,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.75,
+        "ece": 0.71429,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 356
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 17,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.80159,
+        "ece": 0.71429,
+        "recall": 0.9523809523809523
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 320
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 16,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.7619,
+        "ece": 0.71429,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 353
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 15,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.74286,
+        "ece": 0.71429,
+        "recall": 0.8571428571428571
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 378
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 14,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.74286,
+        "ece": 0.71429,
+        "recall": 0.8571428571428571
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 381
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 13,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.77778,
+        "ece": 0.71429,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 351
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 12,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.80952,
+        "ece": 0.71429,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 331
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 11,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.7619,
+        "ece": 0.71429,
+        "recall": 0.8571428571428571
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 377
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 10,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.76327,
+        "ece": 0.71429,
+        "recall": 0.8571428571428571
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 376
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 9,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.78231,
+        "ece": 0.71429,
+        "recall": 0.8095238095238095
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 380
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 8,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.76786,
+        "ece": 0.71429,
+        "recall": 0.8095238095238095
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 388
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 7,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.75873,
+        "ece": 0.71429,
+        "recall": 0.8571428571428571
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 386
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 6,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.77976,
+        "ece": 0.71429,
+        "recall": 0.8571428571428571
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 376
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 5,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.60714,
+        "ece": 0.42857,
+        "recall": 0.7619047619047619
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 356
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 4,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.45714,
+        "ece": 0.28571,
+        "recall": 0.7619047619047619
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 249
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 3,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.45374,
+        "ece": 0.28571,
+        "recall": 0.7619047619047619
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 255
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 2,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.44921,
+        "ece": 0.28571,
+        "recall": 0.6190476190476191
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 307
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 1,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 452
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 36,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.44048,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 386
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 35,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.49048,
+        "ece": 0.42857,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 468
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 34,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.42857,
+        "ece": 0.28571,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 465
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 33,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.36803,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 421
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 32,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.49206,
+        "ece": 0.42857,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 573
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 31,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.36786,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 456
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 30,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.38095,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 440
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 29,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.375,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 415
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 28,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.38571,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 403
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 27,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.38946,
+        "ece": 0.28571,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 377
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 26,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.375,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 453
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 25,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.40952,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 388
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 24,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.39762,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 431
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 23,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.41905,
+        "ece": 0.28571,
+        "recall": 0.6190476190476191
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 343
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 22,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.37381,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 461
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 21,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.36667,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 438
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 20,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.47619,
+        "ece": 0.42857,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 456
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 19,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.48469,
+        "ece": 0.42857,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 480
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 18,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.38571,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 416
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 17,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.39048,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 414
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 16,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 544
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 15,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.42857,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 387
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 14,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35873,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 494
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 13,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.41667,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 401
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 12,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.37302,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 444
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 11,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35,
+        "ece": 0.28571,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 606
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 10,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 540
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 9,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 543
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 8,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.36905,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 479
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 7,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.37041,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 451
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 6,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 549
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 5,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35714,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 508
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 4,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.36905,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 486
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 3,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 496
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 2,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35714,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 543
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 1,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 559
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 36,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.42517,
+        "ece": 0.28571,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 377
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 35,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.4373,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 325
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 34,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.55357,
+        "ece": 0.42857,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 387
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 33,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.52517,
+        "ece": 0.42857,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 398
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 32,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.48889,
+        "ece": 0.42857,
+        "recall": 0.7142857142857143
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 401
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 31,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.48929,
+        "ece": 0.42857,
+        "recall": 0.7142857142857143
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 402
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 30,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.41587,
+        "ece": 0.28571,
+        "recall": 0.7142857142857143
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 334
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 29,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.40159,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 356
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 28,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.4,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 359
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 27,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.40476,
+        "ece": 0.28571,
+        "recall": 0.6190476190476191
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 378
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 26,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35714,
+        "ece": 0.14286,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 405
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 25,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35714,
+        "ece": 0.14286,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 408
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 24,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35714,
+        "ece": 0.14286,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 443
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 23,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35714,
+        "ece": 0.14286,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 446
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 22,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35714,
+        "ece": 0.14286,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 449
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 21,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35714,
+        "ece": 0.14286,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 452
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 20,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.33333,
+        "ece": 0.14286,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 495
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 19,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.33333,
+        "ece": 0.14286,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 498
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 18,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.39286,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 474
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 17,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.36905,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 505
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 16,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 515
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 15,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 518
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 14,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 521
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 13,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 524
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 12,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 527
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 11,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 530
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 10,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 533
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 9,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 536
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 8,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 539
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 7,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 542
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 6,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 545
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 5,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 548
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 4,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 551
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 3,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 554
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 2,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 557
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 1,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 560
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 36,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.42517,
+        "ece": 0.28571,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 405
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 35,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.30952,
+        "ece": 0.0,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 477
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 34,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.5,
+        "ece": 0.28571,
+        "recall": 0.7142857142857143
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 297
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 33,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.57143,
+        "ece": 0.42857,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 391
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 32,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.57143,
+        "ece": 0.42857,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 394
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 31,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.57143,
+        "ece": 0.42857,
+        "recall": 0.7142857142857143
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 383
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 30,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.57143,
+        "ece": 0.42857,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 399
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 29,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.5,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 315
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 28,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.51429,
+        "ece": 0.28571,
+        "recall": 0.7142857142857143
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 296
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 27,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.51429,
+        "ece": 0.28571,
+        "recall": 0.7142857142857143
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 299
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 26,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.46429,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 340
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 25,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.47619,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 333
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 24,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.47619,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 336
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 23,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.47619,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 339
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 22,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.47619,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 342
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 21,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.47619,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 345
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 20,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.47619,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 348
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 19,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.47619,
+        "ece": 0.28571,
+        "recall": 0.7142857142857143
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 331
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 18,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.45238,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 362
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 17,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.47619,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 355
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 16,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.47619,
+        "ece": 0.28571,
+        "recall": 0.7619047619047619
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 324
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 15,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.45714,
+        "ece": 0.28571,
+        "recall": 0.7142857142857143
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 341
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 14,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.45714,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 364
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 13,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.52381,
+        "ece": 0.42857,
+        "recall": 0.7142857142857143
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 402
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 12,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.52381,
+        "ece": 0.42857,
+        "recall": 0.7142857142857143
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 405
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 11,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.45238,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 371
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 10,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.45238,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 374
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 9,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.45238,
+        "ece": 0.28571,
+        "recall": 0.6190476190476191
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 385
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 8,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.45238,
+        "ece": 0.28571,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 379
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 7,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.44898,
+        "ece": 0.28571,
+        "recall": 0.6190476190476191
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 393
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 6,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.44898,
+        "ece": 0.28571,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 413
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 5,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.44643,
+        "ece": 0.28571,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 417
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 4,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.41905,
+        "ece": 0.28571,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 437
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 3,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.40476,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 528
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 2,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.38095,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 554
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 1,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR",
+      "combined_rank": 594
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 36,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.19524,
+        "ece": 0.14286,
+        "recall": 0.14285714285714285
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 633
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 35,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.40238,
+        "ece": 0.28571,
+        "recall": 0.38095238095238093
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 589
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 34,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.10238,
+        "ece": 0.0,
+        "recall": 0.19047619047619047
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 586
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 33,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3,
+        "ece": 0.14286,
+        "recall": 0.2857142857142857
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 595
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 32,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.07143,
+        "ece": 0.0,
+        "recall": 0.047619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 625
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 31,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.04898,
+        "ece": 0.0,
+        "recall": 0.09523809523809523
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 631
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 30,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.20714,
+        "ece": 0.14286,
+        "recall": 0.19047619047619047
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 627
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 29,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.05714,
+        "ece": 0.0,
+        "recall": 0.09523809523809523
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 628
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 28,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.0619,
+        "ece": 0.0,
+        "recall": 0.09523809523809523
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 628
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 27,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.03373,
+        "ece": 0.0,
+        "recall": 0.09523809523809523
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 642
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 26,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.04762,
+        "ece": 0.0,
+        "recall": 0.047619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 648
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 25,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.06071,
+        "ece": 0.0,
+        "recall": 0.14285714285714285
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 618
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 24,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.02381,
+        "ece": 0.0,
+        "recall": 0.047619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 656
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 23,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.05714,
+        "ece": 0.0,
+        "recall": 0.14285714285714285
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 623
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 22,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.04762,
+        "ece": 0.0,
+        "recall": 0.09523809523809523
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 645
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 21,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.03571,
+        "ece": 0.0,
+        "recall": 0.09523809523809523
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 648
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 20,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.09048,
+        "ece": 0.0,
+        "recall": 0.14285714285714285
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 608
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 19,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.06349,
+        "ece": 0.0,
+        "recall": 0.14285714285714285
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 625
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 18,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.06803,
+        "ece": 0.0,
+        "recall": 0.14285714285714285
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 624
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 17,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.17857,
+        "ece": 0.14286,
+        "recall": 0.14285714285714285
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 643
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 16,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.07755,
+        "ece": 0.0,
+        "recall": 0.23809523809523808
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 603
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 15,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.28571,
+        "ece": 0.14286,
+        "recall": 0.2857142857142857
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 602
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 14,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35714,
+        "ece": 0.14286,
+        "recall": 0.38095238095238093
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 567
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 13,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.29048,
+        "ece": 0.14286,
+        "recall": 0.38095238095238093
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 593
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 12,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.43333,
+        "ece": 0.28571,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 431
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 11,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3254,
+        "ece": 0.14286,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 533
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 10,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.45238,
+        "ece": 0.28571,
+        "recall": 0.6190476190476191
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 400
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 9,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.55238,
+        "ece": 0.42857,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 419
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 8,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.52857,
+        "ece": 0.42857,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 486
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 7,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.42857,
+        "ece": 0.28571,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 558
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 6,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.23214,
+        "ece": 0.14286,
+        "recall": 0.2857142857142857
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 614
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 5,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.20635,
+        "ece": 0.14286,
+        "recall": 0.2857142857142857
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 624
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 4,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.21429,
+        "ece": 0.14286,
+        "recall": 0.19047619047619047
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 635
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 3,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.15873,
+        "ece": 0.0,
+        "recall": 0.23809523809523808
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 595
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 2,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.22619,
+        "ece": 0.0,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 552
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 1,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.40476,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 540
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 36,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.43929,
+        "ece": 0.28571,
+        "recall": 0.6190476190476191
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 413
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 35,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.425,
+        "ece": 0.28571,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 446
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 34,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.41667,
+        "ece": 0.28571,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 453
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 33,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.54167,
+        "ece": 0.42857,
+        "recall": 0.6190476190476191
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 435
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 32,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.48214,
+        "ece": 0.42857,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 479
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 31,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.52619,
+        "ece": 0.42857,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 431
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 30,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.50476,
+        "ece": 0.42857,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 472
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 29,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.62041,
+        "ece": 0.57143,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 428
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 28,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.49405,
+        "ece": 0.42857,
+        "recall": 0.6190476190476191
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 456
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 27,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.38571,
+        "ece": 0.28571,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 481
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 26,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.54048,
+        "ece": 0.42857,
+        "recall": 0.6666666666666666
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 433
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 25,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.5119,
+        "ece": 0.42857,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 502
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 24,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.38492,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 512
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 23,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.52857,
+        "ece": 0.42857,
+        "recall": 0.6190476190476191
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 447
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 22,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.5119,
+        "ece": 0.42857,
+        "recall": 0.6190476190476191
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 457
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 21,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.37857,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 521
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 20,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.40952,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 495
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 19,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.39762,
+        "ece": 0.28571,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 475
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 18,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.48095,
+        "ece": 0.42857,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 492
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 17,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.47755,
+        "ece": 0.42857,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 524
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 16,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.37857,
+        "ece": 0.28571,
+        "recall": 0.6190476190476191
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 476
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 15,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.41429,
+        "ece": 0.28571,
+        "recall": 0.6190476190476191
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 447
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 14,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.39286,
+        "ece": 0.28571,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 483
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 13,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3869,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 519
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 12,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.42262,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 496
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 11,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.37778,
+        "ece": 0.28571,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 505
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 10,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.38492,
+        "ece": 0.28571,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 499
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 9,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.39286,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 521
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 8,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.38492,
+        "ece": 0.28571,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 503
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 7,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 663
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 6,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35714,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 612
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 5,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.38333,
+        "ece": 0.28571,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 538
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 4,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.36905,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 601
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 3,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 670
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 2,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.38095,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 591
+    },
+    {
+      "config": {
+        "architecture": "EXTEND",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 1,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 675
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 36,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.27755,
+        "ece": 0.14286,
+        "recall": 0.38095238095238093
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 603
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 35,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.25397,
+        "ece": 0.14286,
+        "recall": 0.3333333333333333
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 614
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 34,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.21905,
+        "ece": 0.14286,
+        "recall": 0.23809523809523808
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 633
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 33,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.27857,
+        "ece": 0.14286,
+        "recall": 0.2857142857142857
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 617
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 32,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.31349,
+        "ece": 0.14286,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 582
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 31,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35119,
+        "ece": 0.14286,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 567
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 30,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.375,
+        "ece": 0.14286,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 502
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 29,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.37755,
+        "ece": 0.14286,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 418
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 28,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.44898,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 543
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 27,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.42857,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 557
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 26,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.39286,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 586
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 25,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.39762,
+        "ece": 0.28571,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 616
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 24,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35969,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 659
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 23,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35969,
+        "ece": 0.28571,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 694
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 22,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35969,
+        "ece": 0.28571,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 697
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 21,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.36111,
+        "ece": 0.28571,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 695
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 20,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35952,
+        "ece": 0.28571,
+        "recall": 0.38095238095238093
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 712
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 19,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35952,
+        "ece": 0.28571,
+        "recall": 0.38095238095238093
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 715
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 18,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.36111,
+        "ece": 0.28571,
+        "recall": 0.38095238095238093
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 712
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 17,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.35952,
+        "ece": 0.28571,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 707
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 16,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 649
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 15,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 652
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 14,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 655
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 13,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 658
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 12,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 661
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 11,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 664
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 10,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 667
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 9,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 670
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 8,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 673
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 7,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 676
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 6,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 679
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 5,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 682
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 4,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 685
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 3,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 688
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 2,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 691
+    },
+    {
+      "config": {
+        "architecture": "EXTRA",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 1,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 694
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 36,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.27755,
+        "ece": 0.14286,
+        "recall": 0.38095238095238093
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 616
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 35,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.49683,
+        "ece": 0.42857,
+        "recall": 0.38095238095238093
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 623
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 34,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.11905,
+        "ece": 0.0,
+        "recall": 0.19047619047619047
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 605
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 33,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.33333,
+        "ece": 0.14286,
+        "recall": 0.38095238095238093
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 604
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 32,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.08929,
+        "ece": 0.0,
+        "recall": 0.14285714285714285
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 620
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 31,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.06429,
+        "ece": 0.0,
+        "recall": 0.14285714285714285
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 635
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 30,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.20516,
+        "ece": 0.14286,
+        "recall": 0.2857142857142857
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 639
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 29,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.05595,
+        "ece": 0.0,
+        "recall": 0.14285714285714285
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 643
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 28,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.06548,
+        "ece": 0.0,
+        "recall": 0.09523809523809523
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 647
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 27,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.0496,
+        "ece": 0.0,
+        "recall": 0.14285714285714285
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 648
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 26,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.07143,
+        "ece": 0.0,
+        "recall": 0.047619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 652
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 25,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.08333,
+        "ece": 0.0,
+        "recall": 0.19047619047619047
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 619
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 24,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.03571,
+        "ece": 0.0,
+        "recall": 0.047619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 674
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 23,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.07857,
+        "ece": 0.0,
+        "recall": 0.19047619047619047
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 623
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 22,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.05238,
+        "ece": 0.0,
+        "recall": 0.09523809523809523
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 662
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 21,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.07143,
+        "ece": 0.0,
+        "recall": 0.09523809523809523
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 652
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 20,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.11111,
+        "ece": 0.0,
+        "recall": 0.14285714285714285
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 632
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 19,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.0873,
+        "ece": 0.0,
+        "recall": 0.14285714285714285
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 638
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 18,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.07143,
+        "ece": 0.0,
+        "recall": 0.09523809523809523
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 657
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 17,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.07143,
+        "ece": 0.0,
+        "recall": 0.09523809523809523
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 660
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 16,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.07755,
+        "ece": 0.0,
+        "recall": 0.23809523809523808
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 626
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 15,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.29762,
+        "ece": 0.14286,
+        "recall": 0.2857142857142857
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 623
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 14,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.33333,
+        "ece": 0.14286,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 594
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 13,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.30612,
+        "ece": 0.14286,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 581
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 12,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.32143,
+        "ece": 0.14286,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 580
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 11,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.28452,
+        "ece": 0.14286,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 609
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 10,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.42857,
+        "ece": 0.28571,
+        "recall": 0.6190476190476191
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 481
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 9,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.43946,
+        "ece": 0.28571,
+        "recall": 0.6190476190476191
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 473
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 8,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.34762,
+        "ece": 0.14286,
+        "recall": 0.5714285714285714
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 475
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 7,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.32993,
+        "ece": 0.14286,
+        "recall": 0.5238095238095238
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 513
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 6,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.26825,
+        "ece": 0.14286,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 617
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 5,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.23214,
+        "ece": 0.14286,
+        "recall": 0.2857142857142857
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 642
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 4,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.15714,
+        "ece": 0.0,
+        "recall": 0.2857142857142857
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 613
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 3,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.23214,
+        "ece": 0.0,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 582
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 2,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.22619,
+        "ece": 0.0,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 564
+    },
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 1,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.40476,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BACK",
+      "combined_rank": 625
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 36,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.43333,
+        "ece": 0.14286,
+        "recall": 0.42857142857142855
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 475
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 35,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.54898,
+        "ece": 0.28571,
+        "recall": 0.7619047619047619
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 364
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 34,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.81429,
+        "ece": 0.71429,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 331
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 33,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.80952,
+        "ece": 0.71429,
+        "recall": 0.9523809523809523
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 322
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 32,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.88095,
+        "ece": 0.85714,
+        "recall": 0.9523809523809523
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 336
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 31,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.80952,
+        "ece": 0.71429,
+        "recall": 0.9523809523809523
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 326
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 30,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.80612,
+        "ece": 0.71429,
+        "recall": 0.9523809523809523
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 336
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 29,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.80952,
+        "ece": 0.71429,
+        "recall": 0.9523809523809523
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 331
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 28,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.80952,
+        "ece": 0.71429,
+        "recall": 0.9523809523809523
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 334
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 27,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.80952,
+        "ece": 0.71429,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 351
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 26,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.80952,
+        "ece": 0.71429,
+        "recall": 0.9523809523809523
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 339
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 25,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.81429,
+        "ece": 0.71429,
+        "recall": 0.8571428571428571
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 359
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 24,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.88571,
+        "ece": 0.85714,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 354
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 23,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.88095,
+        "ece": 0.85714,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 360
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 22,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.80612,
+        "ece": 0.71429,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 363
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 21,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.87302,
+        "ece": 0.85714,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 365
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 20,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.8,
+        "ece": 0.71429,
+        "recall": 0.8571428571428571
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 386
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 19,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.80159,
+        "ece": 0.71429,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 370
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 18,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.75,
+        "ece": 0.71429,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 393
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 17,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.80159,
+        "ece": 0.71429,
+        "recall": 0.9523809523809523
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 355
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 16,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.7619,
+        "ece": 0.71429,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 391
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 15,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.74286,
+        "ece": 0.71429,
+        "recall": 0.8571428571428571
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 413
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 14,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.74286,
+        "ece": 0.71429,
+        "recall": 0.8571428571428571
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 416
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 13,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.77778,
+        "ece": 0.71429,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 388
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 12,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.80952,
+        "ece": 0.71429,
+        "recall": 0.9047619047619048
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 374
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 11,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.7619,
+        "ece": 0.71429,
+        "recall": 0.8571428571428571
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 412
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 10,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.76327,
+        "ece": 0.71429,
+        "recall": 0.8571428571428571
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 410
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 9,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.78231,
+        "ece": 0.71429,
+        "recall": 0.8095238095238095
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 408
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 8,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.76786,
+        "ece": 0.71429,
+        "recall": 0.8095238095238095
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 416
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 7,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.75873,
+        "ece": 0.71429,
+        "recall": 0.8571428571428571
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 420
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 6,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.77976,
+        "ece": 0.71429,
+        "recall": 0.8571428571428571
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 410
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 5,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.60714,
+        "ece": 0.42857,
+        "recall": 0.7619047619047619
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 391
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 4,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.45714,
+        "ece": 0.28571,
+        "recall": 0.7619047619047619
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 407
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 3,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.45374,
+        "ece": 0.28571,
+        "recall": 0.7619047619047619
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 411
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 2,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.44921,
+        "ece": 0.28571,
+        "recall": 0.6190476190476191
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 473
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 1,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.3619,
+        "ece": 0.28571,
+        "recall": 0.47619047619047616
+      },
+      "success": true,
+      "test_type": "BIDIR_MASK0",
+      "combined_rank": 708
+    }
+  ],
+  "top3_by_mrr": [
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 24,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.88571,
+        "ece": 0.85714,
+        "recall": 0.9047619047619048
+      }
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 24,
+        "num_unsink_layers": 0,
+        "mask_type": "MASK0"
+      },
+      "metrics": {
+        "mrr": 0.88571,
+        "ece": 0.85714,
+        "recall": 0.9047619047619048
+      }
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 32,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.88095,
+        "ece": 0.85714,
+        "recall": 0.9523809523809523
+      }
+    }
+  ],
+  "top3_by_recall": [
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 33,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.80952,
+        "ece": 0.71429,
+        "recall": 0.9523809523809523
+      }
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 32,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.88095,
+        "ece": 0.85714,
+        "recall": 0.9523809523809523
+      }
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 31,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.80952,
+        "ece": 0.71429,
+        "recall": 0.9523809523809523
+      }
+    }
+  ],
+  "top3_by_ece": [
+    {
+      "config": {
+        "architecture": "INTER",
+        "num_bidir_layers": 35,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.30952,
+        "ece": 0.0,
+        "recall": 0.47619047619047616
+      }
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 34,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.10238,
+        "ece": 0.0,
+        "recall": 0.19047619047619047
+      }
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 0,
+        "num_unsink_layers": 32,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.07143,
+        "ece": 0.0,
+        "recall": 0.047619047619047616
+      }
+    }
+  ],
+  "top3_overall": [
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 35,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.54898,
+        "ece": 0.28571,
+        "recall": 0.7619047619047619
+      }
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 4,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.45714,
+        "ece": 0.28571,
+        "recall": 0.7619047619047619
+      }
+    },
+    {
+      "config": {
+        "architecture": "INPLACE",
+        "num_bidir_layers": 3,
+        "num_unsink_layers": 0,
+        "mask_type": "BACK"
+      },
+      "metrics": {
+        "mrr": 0.45374,
+        "ece": 0.28571,
+        "recall": 0.7619047619047619
+      }
+    }
+  ]
+}

@@ -30,6 +30,8 @@ patterns_optimizer = {
     'all_encoder_layers_llama3': ['additional', 'model.layers'],
     'all_encoder_layers_llama3_lbw': ['additional', 'model.layers'],
     'all': ['additional', 'bert_model.encoder.layer', 'bert_model.embeddings'],
+    'all_encoder_layers_llama_decoder': ['additional', 'model.layers'],
+    'all_encoder_layers_qwen3_decoder': ['additional', 'model.layers'],
 
 }
 
