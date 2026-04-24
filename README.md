@@ -4,6 +4,8 @@ Recommended to use a virtual environment
 Inside the virtual environment
 
 git clone <repository>
+Add the data folder
+Add the models_local folder to keep all the models locally
 Run pip install -r requirements.txt
 
 ---
