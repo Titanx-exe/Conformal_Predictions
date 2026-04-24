@@ -311,6 +311,7 @@ class LlamaModel(LlamaPreTrainedModel):
             [LlamaDecoderLayer(config, layer_idx) for layer_idx in range(config.num_hidden_layers)]
         )
         self.norm = LlamaRMSNorm(config.hidden_size, eps=config.rms_norm_eps)
+        # Note: rotary_emb is now inside each attention layer (old-style approach)
         self.gradient_checkpointing = False
 
         # -----------------------------------------------------------------------------------------------------------------

@@ -7,4 +7,6 @@ Finetuning/Log/
 Finetuning/Loss
 *.jsonl
 *.log
+Results/
+models_local/
 

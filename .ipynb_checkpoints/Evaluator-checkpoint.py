@@ -267,7 +267,7 @@ class IndexEvaluator:
         print(f"**************************** Validation ECE: {ece_value:.5f}")
         with open("epoch.txt", "r") as f:
             data = f.read()  # Reads entire content as a string
-            e = data
+            e = data)
 
         with open("val_ece_log.txt", "a+") as f_ece:
             f_ece.write(f"Epoch {e}, Validation ECE = {ece_value:.4f}\n")
