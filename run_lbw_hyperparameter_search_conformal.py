@@ -82,6 +82,8 @@ def run_experiment(
     num_unsink: int,
     mask_type: str,
     model_id: str = None,
+    found_model: str = None,
+    type_optimization: str = None,
     lora_adapter_path: str = None,
     lora_epoch: str = "final",
     conformal_K: int = 40,
@@ -106,7 +108,33 @@ def run_experiment(
     if cal_split != "testb":
         cal_file = f"{cal_file}_{cal_split}.nif"
 
-    cmd = BASE_COMMAND + [
+    if found_model is None:
+        if "llama" in model_id.lower():
+            found_model = "llama_decoder"
+        else:
+            found_model = "qwen3_decoder"
+
+    if type_optimization is None:
+        if "llama" in model_id.lower():
+            type_optimization = "all_encoder_layers_llama_decoder"
+        else:
+            type_optimization = "all_encoder_layers_qwen3_decoder"
+
+    # Filter out '--found_model' and '--type_optimization' from BASE_COMMAND if present
+    base_cmd_filtered = []
+    skip = False
+    for item in BASE_COMMAND:
+        if skip:
+            skip = False
+            continue
+        if item in ["--found_model", "--type_optimization"]:
+            skip = True
+            continue
+        base_cmd_filtered.append(item)
+
+    cmd = base_cmd_filtered + [
+        "--found_model", found_model,
+        "--type_optimization", type_optimization,
         "--gpu_id", gpu_id,
         "--dataset", dataset,
         "--model_id", model_id,
@@ -172,6 +200,8 @@ def run_bidir_tests(
     conformal_epsilon: float,
     conformal_coverage: str,
     model_id: str = None,
+    found_model: str = None,
+    type_optimization: str = None,
     lora_adapter_path: str = None,
     lora_epoch: str = "final",
     conformal_K: int = 40,
@@ -189,7 +219,8 @@ def run_bidir_tests(
                 run_experiment(
                     gpu_id, dataset, conformal_method, conformal_epsilon,
                     conformal_coverage, arch, num_layers, 0, "BACK",
-                    model_id, lora_adapter_path, lora_epoch,
+                    model_id, found_model, type_optimization,
+                    lora_adapter_path, lora_epoch,
                     conformal_K, conformal_delta,
                     results_dir=results_dir, cal_split=cal_split,
                 )
@@ -204,6 +235,8 @@ def run_back_tests(
     conformal_epsilon: float,
     conformal_coverage: str,
     model_id: str = None,
+    found_model: str = None,
+    type_optimization: str = None,
     lora_adapter_path: str = None,
     lora_epoch: str = "final",
     conformal_K: int = 40,
@@ -221,7 +254,8 @@ def run_back_tests(
                 run_experiment(
                     gpu_id, dataset, conformal_method, conformal_epsilon,
                     conformal_coverage, arch, 0, num_layers, "BACK",
-                    model_id, lora_adapter_path, lora_epoch,
+                    model_id, found_model, type_optimization,
+                    lora_adapter_path, lora_epoch,
                     conformal_K, conformal_delta,
                     results_dir=results_dir, cal_split=cal_split,
                 )
@@ -236,6 +270,8 @@ def run_mask0_tests(
     conformal_epsilon: float,
     conformal_coverage: str,
     model_id: str = None,
+    found_model: str = None,
+    type_optimization: str = None,
     lora_adapter_path: str = None,
     lora_epoch: str = "final",
     conformal_K: int = 40,
@@ -252,7 +288,8 @@ def run_mask0_tests(
             run_experiment(
                 gpu_id, dataset, conformal_method, conformal_epsilon,
                 conformal_coverage, "INPLACE", num_layers, 0, "MASK0",
-                model_id, lora_adapter_path, lora_epoch,
+                model_id, found_model, type_optimization,
+                lora_adapter_path, lora_epoch,
                 conformal_K, conformal_delta,
                 results_dir=results_dir, cal_split=cal_split,
             )
@@ -323,6 +360,10 @@ def main():
     parser.add_argument("--gpu_id", type=str, default="0", help="GPU ID")
     parser.add_argument("--dataset", type=str, default="ace2004", help="Dataset name")
     parser.add_argument("--model_id", type=str, default=DEFAULT_MODEL_ID)
+    parser.add_argument("--found_model", type=str, default=None,
+                        help="Model architecture (e.g., qwen3_decoder, llama_decoder)")
+    parser.add_argument("--type_optimization", type=str, default=None,
+                        help="Type optimization (e.g., all_encoder_layers_qwen3_decoder, all_encoder_layers_llama_decoder)")
     parser.add_argument("--lora_adapter_path", type=str, default=None)
     parser.add_argument("--lora_epoch", type=str, default="final")
     parser.add_argument("--results_dir", type=str, default=None,
@@ -338,7 +379,7 @@ def main():
     parser.add_argument("--conformal_delta", type=float, default=1e-8)
     parser.add_argument("--calibration_split", type=str, default="testb",
                         choices=["testb", "test10", "test20"],
-                        help="Calibration split to use (testb=original, test10=10% removed, test20=20% removed)")
+                        help="Calibration split to use (testb=original, test10=10%% removed, test20=20%% removed)")
     args = parser.parse_args()
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -353,7 +394,8 @@ def main():
         all_results.extend(run_bidir_tests(
             args.dataset, args.gpu_id, args.conformal_method,
             args.conformal_epsilon, args.conformal_coverage,
-            args.model_id, args.lora_adapter_path, args.lora_epoch,
+            args.model_id, args.found_model, args.type_optimization,
+            args.lora_adapter_path, args.lora_epoch,
             args.conformal_K, args.conformal_delta,
             results_dir=args.results_dir, cal_split=args.calibration_split,
         ))
@@ -361,7 +403,8 @@ def main():
         all_results.extend(run_back_tests(
             args.dataset, args.gpu_id, args.conformal_method,
             args.conformal_epsilon, args.conformal_coverage,
-            args.model_id, args.lora_adapter_path, args.lora_epoch,
+            args.model_id, args.found_model, args.type_optimization,
+            args.lora_adapter_path, args.lora_epoch,
             args.conformal_K, args.conformal_delta,
             results_dir=args.results_dir, cal_split=args.calibration_split,
         ))
@@ -369,7 +412,8 @@ def main():
         all_results.extend(run_mask0_tests(
             args.dataset, args.gpu_id, args.conformal_method,
             args.conformal_epsilon, args.conformal_coverage,
-            args.model_id, args.lora_adapter_path, args.lora_epoch,
+            args.model_id, args.found_model, args.type_optimization,
+            args.lora_adapter_path, args.lora_epoch,
             args.conformal_K, args.conformal_delta,
             results_dir=args.results_dir, cal_split=args.calibration_split,
         ))

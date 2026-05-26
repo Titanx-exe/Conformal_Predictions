@@ -32,15 +32,34 @@ class E5Ranker(torch.nn.Module):
         self.neg_lambda = neg_lambda
         self.alpha = alpha
         self.margin = margin
-        # self.model = AutoModel.from_pretrained('intfloat/e5-base-v2')
-        # '//data//upb//users//h//hpurohit//profiles//unix//cs//RR_Retrieval//Robust_Ranking//RobustRanking//models_local//E5_AIDA//pytorch_model.bin'
-        # self.model = AutoModel.from_pretrained('intfloat/multilingual-e5-large')
-        self.model = AutoModel.from_pretrained('intfloat/e5-base-v2')
-
         
-        state_dict = torch.load('//data//upb//users//h//hpurohit//profiles//unix//cs//RR_Retrieval//Robust_Ranking//RobustRanking//models_local//E5_AIDA//pytorch_model.bin', map_location='cpu')
-        state_dict = {k.removeprefix('model.'): v for k, v in state_dict.items()}
-        self.model.load_state_dict(state_dict)
+        import os
+        # Load base model from local cache if it exists, otherwise from Hugging Face
+        model_dir = './models_local/E5'
+        if os.path.exists(model_dir):
+            self.model = AutoModel.from_pretrained(model_dir)
+        else:
+            self.model = AutoModel.from_pretrained('intfloat/e5-base-v2')
+
+        # Try to load local finetuned weights if they exist (both relative & absolute fallback)
+        local_weight_path = './models_local/E5_AIDA/pytorch_model.bin'
+        abs_weight_path = '//data//upb//users//h//hpurohit//profiles//unix//cs//RR_Retrieval//Robust_Ranking//RobustRanking//models_local//E5_AIDA//pytorch_model.bin'
+        
+        loaded_weights = False
+        for path in [local_weight_path, abs_weight_path]:
+            if os.path.exists(path):
+                try:
+                    state_dict = torch.load(path, map_location='cpu')
+                    state_dict = {k.removeprefix('model.'): v for k, v in state_dict.items()}
+                    self.model.load_state_dict(state_dict)
+                    print(f"Loaded local E5 weights from: {path}")
+                    loaded_weights = True
+                    break
+                except Exception as e:
+                    print(f"Warning: Failed to load local weights from {path}: {e}")
+                    
+        if not loaded_weights:
+            print("Warning: Fine-tuned E5 weights (pytorch_model.bin) not found. Running with base e5-base-v2 model.")
 
         
         #self.model = AutoModel.from_pretrained("nvidia/llama-embed-nemotron-8b", trust_remote_code=True, torch_dtype=torch.float16, attn_implementation="flash_attention_2" if torch.cuda.is_available() else "eager")

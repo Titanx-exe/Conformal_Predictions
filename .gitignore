@@ -1,6 +1,6 @@
-data/
+data
+models_local
 myenv/
-data/
 Finetuning/finetuned_models/
 Finetuning/Datasets/
 Finetuning/Log/
@@ -8,5 +8,10 @@ Finetuning/Loss
 *.jsonl
 *.log
 Results/
-models_local/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.idea/
+.vscode/
+
 

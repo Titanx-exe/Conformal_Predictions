@@ -74,39 +74,61 @@ def download_model(model_id: str, output_dir: str):
     return local_path
 
 
+SHORTHANDS = {
+    "llama": ("meta-llama/Llama-3.2-1B", "./models_local/llama-3.2-1B"),
+    "qwen": ("Qwen/Qwen3-Embedding-0.6B", "./models_local/qwen3-embedding-0.6B"),
+    "e5": ("intfloat/e5-base-v2", "./models_local/E5"),
+}
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Download HuggingFace model to local folder",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-    # Download Llama-3.2-1B
+    # Download using shorthand aliases:
+    python3 download_model.py --model_id llama
+    python3 download_model.py --model_id qwen
+    python3 download_model.py --model_id e5
+    
+    # Download with custom outputs:
     python3 download_model.py --model_id meta-llama/Llama-3.2-1B --output_dir ./models_local/llama-3.2-1B
-    
-    # Download Llama-3.2-3B
-    python3 download_model.py --model_id meta-llama/Llama-3.2-3B --output_dir ./models_local/llama-3.2-3B
-    
-    # Download Qwen3-Embedding-0.6B
-    python3 download_model.py --model_id Qwen/Qwen3-Embedding-0.6B --output_dir ./models_local/qwen3-embedding-0.6B
         """,
     )
     parser.add_argument(
         "--model_id",
         type=str,
         required=True,
-        help="HuggingFace model ID (e.g., meta-llama/Llama-3.2-1B)",
+        help="HuggingFace model ID or shorthand alias (llama, qwen, e5)",
     )
     parser.add_argument(
         "--output_dir",
         type=str,
-        required=True,
-        help="Local directory to save the model (e.g., ./models_local/llama-3.2-1B)",
+        default=None,
+        help="Local directory to save the model. Defaults to ./models_local/<model_name>",
     )
 
     args = parser.parse_args()
 
+    model_id = args.model_id
+    output_dir = args.output_dir
+
+    # Check shorthand
+    shorthand_key = model_id.lower().strip()
+    if shorthand_key in SHORTHANDS:
+        resolved_id, default_dir = SHORTHANDS[shorthand_key]
+        print(f"Resolving shorthand '{model_id}' -> Model ID: '{resolved_id}', Default Output Dir: '{default_dir}'")
+        model_id = resolved_id
+        if output_dir is None:
+            output_dir = default_dir
+
+    if output_dir is None:
+        model_name = model_id.split("/")[-1]
+        output_dir = os.path.join("./models_local", model_name)
+
     # Download the model
-    download_model(args.model_id, args.output_dir)
+    download_model(model_id, output_dir)
 
 
 if __name__ == "__main__":

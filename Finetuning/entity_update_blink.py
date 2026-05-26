@@ -51,7 +51,11 @@ except ImportError:
     sys.exit(1)
 
 # --- Configuration ---
-DATASET_PATH = "/upb/users/h/hpurohit/profiles/unix/cs/RR_Retrieval/Robust_Ranking/RobustRanking/data/aida/wikidata/BLINK/blink-train-kilt.jsonl"
+DATASET_PATH = os.path.join(PROJECT_ROOT, "data", "aida", "wikidata", "BLINK", "blink-train-kilt.jsonl")
+ABS_DATASET_PATH = "/upb/users/h/hpurohit/profiles/unix/cs/RR_Retrieval/Robust_Ranking/RobustRanking/data/aida/wikidata/BLINK/blink-train-kilt.jsonl"
+
+if not os.path.exists(DATASET_PATH) and os.path.exists(ABS_DATASET_PATH):
+    DATASET_PATH = ABS_DATASET_PATH
 ENTITY_DESC_PKL = os.path.join(PROJECT_ROOT, "data", "entity_descriptions.pkl")
 ENTITY_DESC_UPDATE_PKL = os.path.join(PROJECT_ROOT, "data", "ent_descriptions_update.pkl")
 

@@ -29,7 +29,11 @@ CALIBRATION_FILE_MAP = {
     "spotlight": "data/aida/wikidata/spotlight_splits/spotlight_testb",
 }
 
-DEFAULT_BIENCODER_PATH = "/upb/users/h/hpurohit/profiles/unix/cs/RR_Retrieval/Robust_Ranking/RobustRanking/models_local/BLINK_AIDA/pytorch_model.bin"
+DEFAULT_BIENCODER_PATH = "./models_local/BLINK_AIDA/pytorch_model.bin"
+ABS_BIENCODER_PATH = "/upb/users/h/hpurohit/profiles/unix/cs/RR_Retrieval/Robust_Ranking/RobustRanking/models_local/BLINK_AIDA/pytorch_model.bin"
+
+if not os.path.exists(DEFAULT_BIENCODER_PATH) and os.path.exists(ABS_BIENCODER_PATH):
+    DEFAULT_BIENCODER_PATH = ABS_BIENCODER_PATH
 
 def _extract_float(output: str, pattern: str) -> float:
     m = re.search(pattern, output)

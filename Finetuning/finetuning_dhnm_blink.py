@@ -31,7 +31,11 @@ LOSS_LOG_PATH = "Loss/qwen3-0.6b_dhnm_attn_mlp_blink_1m.jsonl"
 # DATASET_PATH = "Datasets/aida_finetune.jsonl"
 # OUTPUT_DIR = "finetuned_models/llama_3.2_1b_blink1m_lora_attn_mlp_aida_stage2_e100"
 # LOSS_LOG_PATH = "Loss/llama_1b_blink1m_attn_mlp_aida_stage2_no_dhnm_e100.jsonl"
-EXTERNAL_ENTITIES_PKL = "/upb/users/h/hpurohit/profiles/unix/cs/RR_Retrieval/Robust_Ranking/RobustRanking/data/ent_descriptions_update.pkl"
+EXTERNAL_ENTITIES_PKL = "../data/ent_descriptions_update.pkl"
+ABS_EXTERNAL_ENTITIES_PKL = "/upb/users/h/hpurohit/profiles/unix/cs/RR_Retrieval/Robust_Ranking/RobustRanking/data/ent_descriptions_update.pkl"
+
+if not os.path.exists(EXTERNAL_ENTITIES_PKL) and os.path.exists(ABS_EXTERNAL_ENTITIES_PKL):
+    EXTERNAL_ENTITIES_PKL = ABS_EXTERNAL_ENTITIES_PKL
 
 # LoRA
 LORA_R = 16

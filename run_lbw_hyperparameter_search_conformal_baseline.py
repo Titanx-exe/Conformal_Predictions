@@ -69,6 +69,8 @@ def run_experiment(
     num_unsink: int,
     mask_type: str,
     model_id: str = None,
+    found_model: str = None,
+    type_optimization: str = None,
     lora_adapter_path: str = None,
     lora_epoch: str = "final",
     results_dir: str = None,
@@ -77,7 +79,33 @@ def run_experiment(
     if model_id is None:
         model_id = DEFAULT_MODEL_ID
 
-    cmd = BASE_COMMAND + [
+    if found_model is None:
+        if "llama" in model_id.lower():
+            found_model = "llama_decoder"
+        else:
+            found_model = "qwen3_decoder"
+
+    if type_optimization is None:
+        if "llama" in model_id.lower():
+            type_optimization = "all_encoder_layers_llama_decoder"
+        else:
+            type_optimization = "all_encoder_layers_qwen3_decoder"
+
+    # Filter out '--found_model' and '--type_optimization' from BASE_COMMAND if present
+    base_cmd_filtered = []
+    skip = False
+    for item in BASE_COMMAND:
+        if skip:
+            skip = False
+            continue
+        if item in ["--found_model", "--type_optimization"]:
+            skip = True
+            continue
+        base_cmd_filtered.append(item)
+
+    cmd = base_cmd_filtered + [
+        "--found_model", found_model,
+        "--type_optimization", type_optimization,
         "--gpu_id", gpu_id,
         "--dataset", dataset,
         "--model_id", model_id,
@@ -131,6 +159,8 @@ def run_bidir_tests(
     dataset: str,
     gpu_id: str,
     model_id: str = None,
+    found_model: str = None,
+    type_optimization: str = None,
     lora_adapter_path: str = None,
     lora_epoch: str = "final",
     results_dir: str = None,
@@ -144,7 +174,8 @@ def run_bidir_tests(
             results.append(
                 run_experiment(
                     gpu_id, dataset, arch, num_layers, 0, "BACK",
-                    model_id, lora_adapter_path, lora_epoch,
+                    model_id, found_model, type_optimization,
+                    lora_adapter_path, lora_epoch,
                     results_dir=results_dir,
                 )
             )
@@ -155,6 +186,8 @@ def run_back_tests(
     dataset: str,
     gpu_id: str,
     model_id: str = None,
+    found_model: str = None,
+    type_optimization: str = None,
     lora_adapter_path: str = None,
     lora_epoch: str = "final",
     results_dir: str = None,
@@ -168,7 +201,8 @@ def run_back_tests(
             results.append(
                 run_experiment(
                     gpu_id, dataset, arch, 0, num_layers, "BACK",
-                    model_id, lora_adapter_path, lora_epoch,
+                    model_id, found_model, type_optimization,
+                    lora_adapter_path, lora_epoch,
                     results_dir=results_dir,
                 )
             )
@@ -179,6 +213,8 @@ def run_mask0_tests(
     dataset: str,
     gpu_id: str,
     model_id: str = None,
+    found_model: str = None,
+    type_optimization: str = None,
     lora_adapter_path: str = None,
     lora_epoch: str = "final",
     results_dir: str = None,
@@ -191,7 +227,8 @@ def run_mask0_tests(
         results.append(
             run_experiment(
                 gpu_id, dataset, "INPLACE", num_layers, 0, "MASK0",
-                model_id, lora_adapter_path, lora_epoch,
+                model_id, found_model, type_optimization,
+                lora_adapter_path, lora_epoch,
                 results_dir=results_dir,
             )
         )
@@ -274,6 +311,10 @@ def main():
     parser.add_argument("--gpu_id", type=str, default="0", help="GPU ID")
     parser.add_argument("--dataset", type=str, default="ace2004", help="Dataset name")
     parser.add_argument("--model_id", type=str, default=DEFAULT_MODEL_ID)
+    parser.add_argument("--found_model", type=str, default=None,
+                        help="Model architecture (e.g., qwen3_decoder, llama_decoder)")
+    parser.add_argument("--type_optimization", type=str, default=None,
+                        help="Type optimization (e.g., all_encoder_layers_qwen3_decoder, all_encoder_layers_llama_decoder)")
     parser.add_argument("--lora_adapter_path", type=str, default=None)
     parser.add_argument("--lora_epoch", type=str, default="final")
     parser.add_argument("--results_dir", type=str, default=None)
@@ -291,18 +332,21 @@ def main():
     if args.test in ["all", "bidir"]:
         all_results.extend(run_bidir_tests(
             args.dataset, args.gpu_id, args.model_id,
+            args.found_model, args.type_optimization,
             args.lora_adapter_path, args.lora_epoch,
             results_dir=args.results_dir,
         ))
     if args.test in ["all", "back"]:
         all_results.extend(run_back_tests(
             args.dataset, args.gpu_id, args.model_id,
+            args.found_model, args.type_optimization,
             args.lora_adapter_path, args.lora_epoch,
             results_dir=args.results_dir,
         ))
     if args.test in ["all", "mask0"]:
         all_results.extend(run_mask0_tests(
             args.dataset, args.gpu_id, args.model_id,
+            args.found_model, args.type_optimization,
             args.lora_adapter_path, args.lora_epoch,
             results_dir=args.results_dir,
         ))
