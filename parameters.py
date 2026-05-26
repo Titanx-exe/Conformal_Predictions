@@ -167,6 +167,12 @@ class RankingParser(argparse.ArgumentParser):
             help="choose between lcquad, mintaka and aida",
         )
         parser.add_argument(
+            "--results_dir",
+            default=None,
+            type=str,
+            help="Root directory for per-document prediction JSON logs. Default: None (uses baseline_results/ or conformal_results/ in cwd).",
+        )
+        parser.add_argument(
             "--found_model",
             default="e5",
             type=str,
@@ -479,6 +485,69 @@ class RankingParser(argparse.ArgumentParser):
             "--save_topk_result",
             action="store_true",
             help="Whether to save prediction results.",
+        )
+        parser.add_argument(
+            "--set_predictor",
+            default="topk",
+            choices=["topk", "scoret", "npmp", "platt", "conformal"],
+            type=str,
+            help="Prediction set mode: topk, scoret, npmp, platt temperature-scaled mass, or conformal filtering.",
+        )
+        parser.add_argument(
+            "--score_threshold",
+            default=0.8,
+            type=float,
+            help="Similarity score threshold used when --set_predictor scoret.",
+        )
+        parser.add_argument(
+            "--npmp_epsilon",
+            default=0.1,
+            type=float,
+            help="Error rate epsilon for --set_predictor npmp; target cumulative mass is 1 - epsilon.",
+        )
+        parser.add_argument(
+            "--platt_temperature",
+            default=1.0,
+            type=float,
+            help="Temperature T for --set_predictor platt. Probabilities use softmax(score / T).",
+        )
+        parser.add_argument(
+            "--conformal_method",
+            default="minmax",
+            choices=["softmax", "minmax", "margin"],
+            type=str,
+            help="Nonconformity method for --set_predictor conformal.",
+        )
+        parser.add_argument(
+            "--conformal_epsilon",
+            default=0.1,
+            type=float,
+            help="Desired error rate for conformal filtering; targets (1-epsilon) coverage.",
+        )
+        parser.add_argument(
+            "--conformal_coverage",
+            default="entity",
+            choices=["entity", "document"],
+            type=str,
+            help="Coverage mode for conformal: entity pools all gold scores, document pools worst per doc.",
+        )
+        parser.add_argument(
+            "--calibration_file",
+            default=None,
+            type=str,
+            help="Path to calibration data file (testb) for conformal filtering.",
+        )
+        parser.add_argument(
+            "--conformal_delta",
+            default=1e-8,
+            type=float,
+            help="Small constant for min-max normalization denominator in conformal filtering.",
+        )
+        parser.add_argument(
+            "--conformal_K",
+            default=100,
+            type=int,
+            help="Candidate pool size K for conformal calibration and test retrieval.",
         )
         parser.add_argument(
             "--encode_batch_size",

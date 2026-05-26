@@ -27,6 +27,17 @@ device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")
 
 
+def set_seed(seed):
+    import numpy as np
+
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
 
 max_candsize=5
 add_gold_mention=True
@@ -41,6 +52,7 @@ def load_train_blink_Ranking_Model():
     args = parser.parse_args()
     print(args)
     params = args.__dict__
+    set_seed(params["seed"])
     global device
     device=torch.device(
             "cuda:"+str(params["gpu_id"]) if torch.cuda.is_available() else "cpu")

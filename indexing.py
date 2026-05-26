@@ -50,11 +50,17 @@ class DenseIndexer(object):
         D, I = self.search_knn(candidates, k)
 
         for d_row, i_row in zip(D, I):
-            self.last_scores.append(d_row)  # <-- ADD THIS LINE
-            found = [self.index_id_to_db_id[int(el)] for el in i_row]
+            found = []
+            scores = []
+            for score, el in zip(d_row, i_row):
+                idx = int(el)
+                if idx < 0:
+                    continue
+                found.append(self.index_id_to_db_id[idx])
+                scores.append(score)
             found_uris.append(found)
+            self.last_scores.append(numpy.array(scores, dtype=numpy.float32))
 
-        self.last_scores = numpy.array(self.last_scores)  # Convert to array for ECE computation
         return found_uris
 
 
