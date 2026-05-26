@@ -90,8 +90,8 @@ Datasets can be retrieved from the public repositories associated with the paper
 
 For local execution, place your extracted datasets in the `data/aida/wikidata/` directory.
 
-The 9 benchmark datasets utilized in our experiments are:
-* `ace2004`, `aida`, `aquaint`, `iitb-fix`, `kore50`, `msnbc`, `n3reuters128`, `n3rss500`, `spotlight`
+The 8 benchmark datasets utilized in our experiments are:
+* `ace2004`, `aquaint`, `iitb-fix`, `kore50`, `msnbc`, `n3reuters128`, `n3rss500`, `spotlight`
 
 ---
 
