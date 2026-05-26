@@ -28,7 +28,7 @@ This repository contains the complete implementation of Conformal Prediction met
 ---
 
 ## Abstract Summary
-Candidate generation is a crucial first step in Entity Linking. While conventional techniques select a fixed number of candidates (e.g., Top-K), they lack mathematical guarantees regarding the inclusion of the correct entity. In this work, we introduce Conformal Prediction (CP) to dynamically generate candidate sets of variable size that are guaranteed to contain the target entity with a user-defined confidence level ($1-\epsilon$). We evaluate these methods across 9 standard datasets, demonstrating that CP significantly improves candidate generation reliability while maintaining compact set sizes.
+Candidate generation is a crucial first step in Entity Linking. While conventional techniques select a fixed number of candidates (e.g., Top-K), they lack mathematical guarantees regarding the inclusion of the correct entity. In this work, we introduce Conformal Prediction (CP) to dynamically generate candidate sets of variable size that are guaranteed to contain the target entity with a user-defined confidence level ($1-\epsilon$). We evaluate these methods across 8 standard datasets, demonstrating that CP significantly improves candidate generation reliability while maintaining compact set sizes.
 
 ---
 
