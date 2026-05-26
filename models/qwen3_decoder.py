@@ -1,9 +1,11 @@
 # models/qwen3_decoder.py
 
+import os
 import torch
 import torch.nn.functional as F
 from torch import Tensor
 from transformers import AutoTokenizer, AutoConfig
+from peft import PeftModel
 
 # Import custom Qwen3Model from Decoder folder
 from models.Decoder.modeling_qwen3 import Qwen3Model
@@ -46,6 +48,10 @@ class Qwen3DecoderRanker(torch.nn.Module):
             self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         else:
             self.device = device
+
+        # LoRA adapter configuration
+        lora_adapter_path = params.get("lora_adapter_path", None)
+        lora_epoch = params.get("lora_epoch", "final")
         
         # Model configuration - can be passed from params (e.g., from run_lbw_hyperparameter_search.py)
         model_id = params.get('model_id', 'Qwen/Qwen3-Embedding-0.6B')
@@ -77,6 +83,20 @@ class Qwen3DecoderRanker(torch.nn.Module):
             torch_dtype=dtype,
         )
         self.model.to(self.device)
+
+        if lora_adapter_path is not None:
+            full_adapter_path = os.path.join(lora_adapter_path, lora_epoch)
+            print(f"  Loading Qwen3 LoRA adapter from: {full_adapter_path}")
+            self.model = PeftModel.from_pretrained(
+                self.model,
+                full_adapter_path,
+                local_files_only=True,
+            )
+            self.model = self.model.merge_and_unload()
+            self.model.to(self.device)
+            print(f"  Qwen3 LoRA adapter loaded and merged successfully: {full_adapter_path}")
+        else:
+            print("  No Qwen3 LoRA adapter provided; using base model.")
         
         print(f"  Qwen3DecoderRanker initialized on {self.device}")
         print(f"  Architecture: {self.config.architecture}")

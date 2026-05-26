@@ -33,10 +33,19 @@ class E5Ranker(torch.nn.Module):
         self.alpha = alpha
         self.margin = margin
         # self.model = AutoModel.from_pretrained('intfloat/e5-base-v2')
-        self.model = AutoModel.from_pretrained('intfloat/multilingual-e5-large')
+        # '//data//upb//users//h//hpurohit//profiles//unix//cs//RR_Retrieval//Robust_Ranking//RobustRanking//models_local//E5_AIDA//pytorch_model.bin'
+        # self.model = AutoModel.from_pretrained('intfloat/multilingual-e5-large')
+        self.model = AutoModel.from_pretrained('intfloat/e5-base-v2')
+
+        
+        state_dict = torch.load('//data//upb//users//h//hpurohit//profiles//unix//cs//RR_Retrieval//Robust_Ranking//RobustRanking//models_local//E5_AIDA//pytorch_model.bin', map_location='cpu')
+        state_dict = {k.removeprefix('model.'): v for k, v in state_dict.items()}
+        self.model.load_state_dict(state_dict)
+
+        
         #self.model = AutoModel.from_pretrained("nvidia/llama-embed-nemotron-8b", trust_remote_code=True, torch_dtype=torch.float16, attn_implementation="flash_attention_2" if torch.cuda.is_available() else "eager")
         #self.loss_fn = InfoNCE()
-        if device==None:
+        if device==None: 
             self.device = torch.device(
                 "cuda" if torch.cuda.is_available() else "cpu"
             )

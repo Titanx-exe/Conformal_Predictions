@@ -95,12 +95,17 @@ class BiEncoderRanker(torch.nn.Module):
         if self.data_parallel:
             self.model = torch.nn.DataParallel(self.model)
 
+    # def load_model(self, fname, cpu=False):
+    #     if cpu:
+    #         # state_dict = torch.load(fname, map_location=lambda storage, location: "cpu")
+    #         state_dict = torch.load(fname, map_location=self.device)
+    #     else:
+    #         state_dict = torch.load(fname)
+    #     self.load_state_dict(state_dict)
+
     def load_model(self, fname, cpu=False):
-        if cpu:
-            # state_dict = torch.load(fname, map_location=lambda storage, location: "cpu")
-            state_dict = torch.load(fname, map_location=self.device)
-        else:
-            state_dict = torch.load(fname)
+        state_dict = torch.load(fname, map_location=self.device if cpu else 'cpu')
+        state_dict = {k.removeprefix('module.'): v for k, v in state_dict.items()}
         self.load_state_dict(state_dict)
 
     def build_model(self):
