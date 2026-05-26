@@ -1,6 +1,12 @@
+<div align="center">
+
 # Conformal Prediction for Reliable Candidate Generation in Entity Linking
 
 Official repository for the paper: **"Conformal Prediction for Reliable Candidate Generation in Entity Linking"**.
+
+![Conformal Predictions Logo](asset/logo.jpeg)
+
+</div>
 
 This repository contains the complete implementation of Conformal Prediction methods (Minimax, Softmax, and Margin) and Conformal Baselines (Top-K, Score-Threshold, and Platt Scaling) applied to autoregressive decoders (Llama-3) and dense embeddings (Qwen3, E5, and Biencoder) for candidate generation in Entity Linking (EL).
 
