@@ -211,7 +211,6 @@ If you use the datasets or code in this repository, please cite:
 ```bibtex
 @inproceedings{vollmers-etal-2025-contextual,
   title = "Contextual Augmentation for Entity Linking using Large Language Models",
-  author = "Vollmers, Daniel and Zahera, Hamada and Moussallem, Diego and Ngonga Ngomo, Axel-Cyrille",
   booktitle = "Proceedings of the 31st International Conference on Computational Linguistics",
   pages = "8535--8545",
   year = "2025",
@@ -220,8 +219,3 @@ If you use the datasets or code in this repository, please cite:
   url = "https://aclanthology.org/2025.coling-main.570/"
 }
 ```
-
-### Authors
-* **Daniel Vollmers**, **Hamada M. Zahera**, **Diego Moussallem**, **Axel-Cyrille Ngonga Ngomo**
-* Data Science Group, Paderborn University, Germany
-* Contact: `{daniel.vollmers, hamada.zahera, diego.moussallem, axel.ngonga}@uni-paderborn.de`
