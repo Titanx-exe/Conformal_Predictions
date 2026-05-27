@@ -86,7 +86,7 @@ pip install -r requirements.txt
 
 ### Dataset Retrieval
 Datasets can be retrieved from the public repositories associated with the paper:
-* *Contextual Augmentation for Entity Linking using Large Language Models*
+* *Contextual Augmentation for Entity Linking using Large Language Models, Vollmers et al.*
 
 For local execution, place your extracted datasets in the `data/aida/wikidata/` directory.
 
@@ -204,18 +204,3 @@ CUDA_VISIBLE_DEVICES="0,1,2" accelerate launch --num_processes 3 Finetuning/fine
 For further tuning and loss configuration details, please consult `parameters.py` and `Finetuning/finetuning_dhnm_blink.py`.
 
 ---
-
-## Citing & References
-If you use the datasets or code in this repository, please cite:
-
-```bibtex
-@inproceedings{
-  title = "Contextual Augmentation for Entity Linking using Large Language Models",
-  booktitle = "Proceedings of the 31st International Conference on Computational Linguistics",
-  pages = "8535--8545",
-  year = "2025",
-  address = "Abu Dhabi, UAE",
-  publisher = "Association for Computational Linguistics",
-  url = "https://aclanthology.org/2025.coling-main.570/"
-}
-```
