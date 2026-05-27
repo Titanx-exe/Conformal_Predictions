@@ -209,7 +209,7 @@ For further tuning and loss configuration details, please consult `parameters.py
 If you use the datasets or code in this repository, please cite:
 
 ```bibtex
-@inproceedings{vollmers-etal-2025-contextual,
+@inproceedings{
   title = "Contextual Augmentation for Entity Linking using Large Language Models",
   booktitle = "Proceedings of the 31st International Conference on Computational Linguistics",
   pages = "8535--8545",
